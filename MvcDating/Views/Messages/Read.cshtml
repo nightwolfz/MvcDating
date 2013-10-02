@@ -1,0 +1,40 @@
+﻿@model List<MvcDating.Models.MessageView>
+
+@{
+    ViewBag.Title = "Read";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Show all conversations", "Index")
+</p>
+
+<fieldset>
+    <legend>Conversation</legend>
+
+    @foreach (var item in Model)
+    {
+        <div class="display-label">
+             @item.UserName
+        </div>
+        <div class="display-label">
+             @item.Content
+        </div>
+        <hr>
+    }
+
+    @using(@Html.BeginForm("Create", "Messages", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.TextArea("Content", "", htmlAttributes: new { style = "border: 1px solid red;" })
+
+        <input name="ConversationId" type="hidden" value="@ViewBag.ConversationId" />
+        <p>
+        <input type="submit" value="Send" />
+        </p>
+    }
+    
+</fieldset>
+

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MvcDating.Models.ConversationView>
+
+@{
+    ViewBag.Title = "Conversations";
+}
+
+<h2>Conversations</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserPicture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserNameWith)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="~/Uploads/@item.UserPicture" />
+        </td>
+        <td>
+            @item.UserNameWith
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Timestamp)
+        </td>
+        <td>
+            @Html.ActionLink("Read", "Read", new { id = item.ConversationId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,77 @@
+﻿@model MvcDating.Models.Profile
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Situation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Summary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GoodAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MessageIf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.LocationCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.LocationCity)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Situation)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Summary)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.GoodAt)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.MessageIf)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit")
+        </td>
+    </tr>
+
+</table>

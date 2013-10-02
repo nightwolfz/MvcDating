@@ -1,0 +1,10 @@
+﻿<nav>
+    <ul id="menu">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        @if (Request.IsAuthenticated)
+        {
+            <li>@Html.ActionLink("Picture", "Index", "Pictures")</li>
+            <li>@Html.ActionLink("Messages", "Index", "Messages")</li>
+        }
+    </ul>
+</nav>

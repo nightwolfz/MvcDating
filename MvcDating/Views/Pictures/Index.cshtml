@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MvcDating.Models.Picture>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Upload new", "Create")
+</p>
+
+@if (Model.Count() == 0)
+{
+    <h4>No pictures found. Why not @Html.ActionLink("upload", "Create") some? :)</h4>
+}
+
+@foreach (var item in Model)
+{
+    <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId" style="float: left; margin-right: 4px;">
+        <img src="~/Uploads/@Html.DisplayFor(modelItem => item.Thumb)"><br />
+        <span>
+            <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Set as default</a>
+            <a class="deletePicture" style="float: right" itemscope itemid="@item.PictureId">X</a>
+        </span>
+    </div>
+}
+
+<script>
+    $(function () {
+        $("a.deletePicture").on("click", function () {
+            var itemid = $(this).attr('itemid');
+            $.ajax({
+                url: "/api/Pictures/" + itemid,
+                type: "DELETE",
+                success: function (data) {
+                    $(".pictureDiv[itemid=" + itemid + "]").fadeOut();
+                }
+            });
+        });
+        $("a.setDefaultPicture").on("click", function () {
+            var itemid = $(this).attr('itemid');
+            $.ajax({
+                url: "/api/Pictures/" + itemid,
+                type: "PUT",
+                success: function (data) {
+                    $(".pictureDiv").removeClass("pictureDefault");
+                    $(".pictureDiv[itemid=" + itemid + "]").addClass("pictureDefault");
+                    $(".setDefaultPicture").fadeIn();
+                    $(".setDefaultPicture[itemid=" + itemid + "]").fadeOut();
+                }
+            });
+        });
+
+    });
+</script>

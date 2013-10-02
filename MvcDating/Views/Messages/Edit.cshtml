@@ -1,0 +1,54 @@
+﻿@model MvcDating.Models.Conversation
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Conversation</legend>
+
+        @Html.HiddenFor(model => model.ConversationId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserIdTo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserIdTo)
+            @Html.ValidationMessageFor(model => model.UserIdTo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserIdFrom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserIdFrom)
+            @Html.ValidationMessageFor(model => model.UserIdFrom)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Timestamp)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Timestamp)
+            @Html.ValidationMessageFor(model => model.Timestamp)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

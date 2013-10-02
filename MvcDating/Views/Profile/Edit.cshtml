@@ -1,0 +1,103 @@
+﻿@model MvcDating.Models.ProfileView
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ProfileView</legend>
+
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Birthday)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Birthday)
+            @Html.ValidationMessageFor(model => model.Birthday)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LocationCountry)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LocationCountry)
+            @Html.ValidationMessageFor(model => model.LocationCountry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LocationCity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LocationCity)
+            @Html.ValidationMessageFor(model => model.LocationCity)
+        </div>
+
+        <div class="editor-label">
+            I'm 
+            @Html.DropDownListFor(model => model.Situation, new SelectList(Model.SituationItems, "Value", "Text"))
+            @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
+            and 
+            @Html.DropDownListFor(model => model.GenderItems, new SelectList(Model.GenderItems, "Value", "Text"))
+        </div>
+       
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Summary)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Summary)
+            @Html.ValidationMessageFor(model => model.Summary)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GoodAt)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GoodAt)
+            @Html.ValidationMessageFor(model => model.GoodAt)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MessageIf)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MessageIf)
+            @Html.ValidationMessageFor(model => model.MessageIf)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UpdatedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UpdatedDate)
+            @Html.ValidationMessageFor(model => model.UpdatedDate)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
