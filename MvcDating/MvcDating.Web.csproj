@@ -265,6 +265,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\attach.png" />
+    <Content Include="Content\Images\chat.png" />
+    <Content Include="Content\Images\delete.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Content\Scripts\jquery-2.0.3.intellisense.js" />

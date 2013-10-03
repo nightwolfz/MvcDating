@@ -10,7 +10,7 @@
     @Html.ActionLink("Upload new", "Create", null, new { @class = "button" })
 </p>
 
-@if (Model.Any())
+@if (!Model.Any())
 {
     <h4>No pictures found. Why not @Html.ActionLink("upload", "Create", null, new { @class = "button" }) some? :)</h4>
 }
@@ -21,7 +21,7 @@
         <img src="~/Uploads/@Html.DisplayFor(modelItem => item.Thumb)"><br />
         <span>
             <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Set as default</a>
-            <a class="deletePicture" style="float: right" itemscope itemid="@item.PictureId">X</a>
+            <a class="deletePicture" style="float: right" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /></a>
         </span>
     </div>
 }
