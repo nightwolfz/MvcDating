@@ -10,7 +10,6 @@ namespace MvcDating.Models
 {
     public class ProfileView
     {
-        [Key]
         public int UserId { get; set; }
 
         [Editable(false)]

@@ -7,12 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Upload new", "Create")
+    @Html.ActionLink("Upload new", "Create", null, new { @class = "button" })
 </p>
 
-@if (Model.Count() == 0)
+@if (Model.Any())
 {
-    <h4>No pictures found. Why not @Html.ActionLink("upload", "Create") some? :)</h4>
+    <h4>No pictures found. Why not @Html.ActionLink("upload", "Create", null, new { @class = "button" }) some? :)</h4>
 }
 
 @foreach (var item in Model)

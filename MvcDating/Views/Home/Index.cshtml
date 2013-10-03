@@ -1,11 +1,11 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <h1 class="title">@ViewBag.Title.</h1>
-        </div>
+﻿@section featured {
+    <section class="content-wrapper main-content clear-fix">
+        @foreach (string thumb in ViewBag.userPictures)
+        {
+            <div class="pictureFeatured">
+                <img src="~/Uploads/@thumb" />
+            </div>
+        }
     </section>
 }
 <h3>We suggest the following:</h3>

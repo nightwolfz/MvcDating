@@ -19,8 +19,6 @@ namespace MvcDating.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
-
-        public DbSet<ProfileView> ProfileViews { get; set; }
     }
 
     /**

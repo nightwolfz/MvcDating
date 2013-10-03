@@ -21,9 +21,9 @@ namespace MvcDating.Migrations
         protected override void Seed(MvcDating.Models.UsersContext context)
         {
             // Lets create two users
-            string _username = "nightwolfz";
-            string _betaname = "xerios";
-            string _password = "aaaaaa";
+            const string username = "nightwolfz";
+            const string betaname = "xerios";
+            const string password = "aaaaaa";
 
 
             // Must be same as in Filters/InitializeSimpleMembershipAttribute.cs
@@ -31,20 +31,18 @@ namespace MvcDating.Migrations
 
             // Add users and roles
             if (!Roles.RoleExists("Administrator")) Roles.CreateRole("Administrator");
-            if (!WebSecurity.UserExists(_username))
-            {
-                WebSecurity.CreateUserAndAccount(_username, _password/*, propertyValues: new {Email = "test@test.com"}*/);
-                WebSecurity.CreateUserAndAccount(_betaname, _password/*, propertyValues: new {Email = "test@test.com"}*/);
-            }
-            if (!Roles.GetRolesForUser(_username).Contains("Administrator")) Roles.AddUsersToRoles(new[] { _username, _betaname }, new[] { "Administrator" });
+            if (!WebSecurity.UserExists(username)) WebSecurity.CreateUserAndAccount(username, password/*, propertyValues: new {Email = "test@test.com"}*/);
+            if (!WebSecurity.UserExists(betaname)) WebSecurity.CreateUserAndAccount(betaname, password/*, propertyValues: new {Email = "test@test.com"}*/);
+            
+            if (!Roles.GetRolesForUser(username).Contains("Administrator")) Roles.AddUsersToRoles(new[] { username, betaname }, new[] { "Administrator" });
 
-            int UserIdToAdd = WebSecurity.GetUserId(_username);
-            int BetaIdToAdd = WebSecurity.GetUserId(_betaname);
+            int userIdToAdd = WebSecurity.GetUserId(username);
+            int betaIdToAdd = WebSecurity.GetUserId(betaname);
 
             // Initial data seed
             context.Profiles.AddOrUpdate(p => p.UserId, new Profile { 
-                UserId = UserIdToAdd, 
-                UserName = _username,
+                UserId = userIdToAdd, 
+                UserName = username,
                 Gender = "m",
                 Birthday = DateTime.ParseExact("27/03/1989 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
                 UpdatedDate = DateTime.Now,
@@ -52,8 +50,8 @@ namespace MvcDating.Migrations
                 LocationCity = "Brussels",
             });
             context.Profiles.AddOrUpdate(p => p.UserId, new Profile { 
-                UserId = BetaIdToAdd, 
-                UserName = _betaname, 
+                UserId = betaIdToAdd, 
+                UserName = betaname, 
                 Gender = "f" ,
                 Birthday = DateTime.ParseExact("27/03/1989 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
                 UpdatedDate = DateTime.Now,
@@ -65,20 +63,20 @@ namespace MvcDating.Migrations
             context.Pictures.AddOrUpdate(p => p.PictureId, new[]{
                     new Picture
                     {
-                        UserId = UserIdToAdd,
+                        UserId = userIdToAdd,
                         Src = "x_test.jpg",
                         Thumb = "s_test.jpg",
                         IsAvatar = true,
                         UploadedDate = DateTime.Now,
                         Comments = new List<Comment>
                         {
-                            new Comment() { UserId = UserIdToAdd, Content = "First!" },
-                            new Comment() { UserId = UserIdToAdd, Content = "Second!" },
+                            new Comment() { UserId = userIdToAdd, Content = "First!" },
+                            new Comment() { UserId = userIdToAdd, Content = "Second!" },
                         }
                     },
                     new Picture
                     {
-                        UserId = BetaIdToAdd,
+                        UserId = betaIdToAdd,
                         Src = "x_test.jpg",
                         Thumb = "s_test.jpg",
                         IsAvatar = true,
@@ -89,13 +87,13 @@ namespace MvcDating.Migrations
 
             context.Conversations.AddOrUpdate(p => p.ConversationId, new Conversation
             {
-                UserIdFrom = UserIdToAdd,
-                UserIdTo = BetaIdToAdd,
+                UserIdFrom = userIdToAdd,
+                UserIdTo = betaIdToAdd,
                 Timestamp = DateTime.Now,
                 Messages = new List<Message>
                 {
-                    new Message(){ Content = "Test content1!",  UserId = UserIdToAdd, Timestamp = DateTime.Now },
-                    new Message(){ Content = "Test content2!",  UserId = BetaIdToAdd, Timestamp = DateTime.Now },
+                    new Message(){ Content = "Test content1!",  UserId = userIdToAdd, Timestamp = DateTime.Now },
+                    new Message(){ Content = "Test content2!",  UserId = betaIdToAdd, Timestamp = DateTime.Now },
                 }
             });
 

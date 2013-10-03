@@ -1,77 +1,57 @@
-﻿@model MvcDating.Models.Profile
+﻿@model MvcDating.Models.ProfileView
 
-@{
-    ViewBag.Title = "Index";
+
+<h1>
+    @Html.DisplayFor(model => model.UserName)
+    @if (WebSecurity.IsCurrentUser(Model.UserName))
+    {
+        @Html.ActionLink("Edit profile", "Edit", null, new { @class = "button" })
+    }
+</h1>
+
+<div class="profileDetails">
+    <h4>@Html.DisplayNameFor(model => model.Birthday)</h4>
+    <div>
+        @Html.DisplayFor(model => model.Birthday)
+    </div>
+
+    <h4>@Html.DisplayNameFor(model => model.LocationCountry)</h4>
+    <div>
+        @Html.DisplayFor(model => model.LocationCountry)
+    </div>
+
+    <h4>@Html.DisplayNameFor(model => model.LocationCity)</h4>
+    <div>
+        @Html.DisplayFor(model => model.LocationCity)
+    </div>
+
+    <h4>@Html.DisplayNameFor(model => model.Situation)</h4>
+    <div>
+        @Html.DisplayFor(model => model.Situation)
+    </div>
+
+    <h4>@Html.DisplayNameFor(model => model.Summary)</h4>
+    <div>
+        @Html.DisplayFor(model => model.Summary)
+    </div>
+    
+@if (!Model.GoodAt.IsEmpty())
+{
+    <h4>@Html.DisplayNameFor(model => model.GoodAt) 
+        @Html.Raw(Model.UserId == WebSecurity.CurrentUserId ? "<a class='button'>Edit</a>":"")</h4>
+    <div>
+        @Html.DisplayFor(model => model.GoodAt)
+    </div>
 }
 
-<h2>Index</h2>
+    <h4>@Html.DisplayNameFor(model => model.MessageIf)</h4>
+    <div>
+        @Html.DisplayFor(model => model.MessageIf)
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationCountry)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationCity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Situation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Summary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GoodAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MessageIf)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </th>
-        <th></th>
-    </tr>
+    <h4>@Html.DisplayNameFor(model => model.UpdatedDate)</h4>
+    <div>
+        @Html.DisplayFor(model => model.UpdatedDate)
+    </div>
 
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.LocationCountry)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.LocationCity)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Situation)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Summary)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.GoodAt)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.MessageIf)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit")
-        </td>
-    </tr>
-
-</table>
+</div>

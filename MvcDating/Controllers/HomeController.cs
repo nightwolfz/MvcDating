@@ -11,7 +11,11 @@ namespace MvcDating.Controllers
     {
         private UsersContext db = new UsersContext();
 
-        public ActionResult Index() {
+        public ActionResult Index()
+        {
+
+            ViewBag.userPictures = (from p in db.Pictures where p.IsAvatar select p.Thumb).Take(5);
+
             return View();
         }
     }

@@ -25,7 +25,10 @@ namespace MvcDating.Controllers
         {
             var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
 
-            return View(profile);
+            Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
+            var profileview = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
+
+            return View(profileview);
         }
 
         //
