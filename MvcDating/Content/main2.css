@@ -1,6 +1,6 @@
 ﻿html {
-    background-color: #e4f1fe;
-    border-top: solid 10px #c71585;
+    background-color: #F2F2F2;
+    border-top: solid 10px #97292A;
     margin: 0;
     padding: 0;
 }
@@ -73,17 +73,7 @@ h5 a:link, h5 a:visited, h5 a:active {
     text-decoration: none;
 }
 
-.pictureDiv {
-    padding: 5px;
-    background: #e2e2e2;
-}
-.pictureDefault {
-    background: #a4d4e6;
-}
 
-.pictureFeatured {
-    float: left;
-}
 
 /* main layout
 ----------------------------------------------------------*/
@@ -103,9 +93,10 @@ header .content-wrapper {
     padding: 10px;
     min-height: 28px;
     border: 1px solid #cce4fd;
-    border-bottom: 7px solid #cce4fd;
+    border-bottom-width: 7px;
     margin-top: 20px;
 }
+
 
 footer {
     clear: both; font-size: .8em; height: 30px;
@@ -144,6 +135,18 @@ button, a.button, input[type="submit"], input[type="button"] {
     display: none;
 }
 
+.pictureDiv {
+    padding: 5px;
+    background: #cce4fd;
+}
+.pictureDefault {
+    background: #97292A;
+}
+
+.pictureFeatured {
+    float: left;
+}
+
 /* top menu & login
 ----------------------------------------------------------*/
 #topmenu, #login {
@@ -152,12 +155,12 @@ button, a.button, input[type="submit"], input[type="button"] {
     margin: 0 0 10px;
     text-align: right;
     background: #FFFFFC;
-    border: 1px solid #cce4fd;
-    border-top: 7px solid #cce4fd;
+    border: solid #97292A;
+    border-width: 7px 1px 1px 1px;
 }
 
-#topmenu { padding: 11px; border-right: 7px solid #cce4fd;}
-#login { padding: 10px; border-left: 7px solid #cce4fd;}
+#topmenu { padding: 11px; border-right-width: 7px;}
+#login { padding: 10px; border-left-width: 7px;}
 
 #login a {
     margin-left: 10px;

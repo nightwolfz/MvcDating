@@ -4,10 +4,8 @@
     ViewBag.Title = "Read";
 }
 
-<h2>Details</h2>
-
 <p>
-    @Html.ActionLink("Show all conversations", "Index")
+    @Html.ActionLink("Show all conversations", "Index", null, new { @class = "button" })
 </p>
 
 <fieldset>
@@ -15,13 +13,17 @@
 
     @foreach (var item in Model)
     {
-        <div class="display-label">
-             @item.UserName
+        <div class="message-wrapper clear-fix">
+            <div class="message-picture">
+                <img src="~/Uploads/@item.UserPicture" height="48" width="48" /><br />
+            </div>
+            <div class="message-content">
+                @item.Content
+                <hr>
+                <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
+                <span>@item.Timestamp</span>
+            </div>
         </div>
-        <div class="display-label">
-             @item.Content
-        </div>
-        <hr>
     }
 
     @using(@Html.BeginForm("Create", "Messages", FormMethod.Post))

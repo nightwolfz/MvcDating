@@ -1,10 +1,8 @@
 ﻿@model MvcDating.Models.Picture
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Chose a picture to upload.";
 }
-
-<h2>Chose a picture to upload.</h2>
 
 @using (Html.BeginForm("Create", "Pictures", FormMethod.Post, new { enctype = "multipart/form-data" }))
 { 

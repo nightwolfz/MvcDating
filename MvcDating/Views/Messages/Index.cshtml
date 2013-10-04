@@ -4,10 +4,8 @@
     ViewBag.Title = "Conversations";
 }
 
-<h2>Conversations</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button" })
 </p>
 <table>
     <tr>
@@ -35,7 +33,7 @@
             @Html.DisplayFor(modelItem => item.Timestamp)
         </td>
         <td>
-            @Html.ActionLink("Read", "Read", new { id = item.ConversationId })
+            @Html.ActionLink("Read", "Read", new { id = item.ConversationId }, new { @class = "button" })
         </td>
     </tr>
 }
