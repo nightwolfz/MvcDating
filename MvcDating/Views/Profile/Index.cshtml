@@ -1,4 +1,5 @@
-﻿@model MvcDating.Models.ProfileView
+﻿@using MvcDating.Helpers
+@model MvcDating.Models.ProfileView
 
 
 <h1>
@@ -12,23 +13,16 @@
 <div class="profileDetails">
     <h4>@Html.DisplayNameFor(model => model.Birthday)</h4>
     <div>
-        @Html.DisplayFor(model => model.Birthday)
+        @HelperFunctions.GetAge(Model.Birthday) / @Model.Gender
+        / @Html.DisplayFor(model => model.Orientation)
+        / @Html.DisplayFor(model => model.Situation)
     </div>
 
-    <h4>@Html.DisplayNameFor(model => model.LocationCountry)</h4>
     <div>
-        @Html.DisplayFor(model => model.LocationCountry)
+        @Html.DisplayFor(model => model.LocationCountry), @Html.DisplayFor(model => model.LocationCity)
     </div>
 
-    <h4>@Html.DisplayNameFor(model => model.LocationCity)</h4>
-    <div>
-        @Html.DisplayFor(model => model.LocationCity)
-    </div>
 
-    <h4>@Html.DisplayNameFor(model => model.Situation)</h4>
-    <div>
-        @Html.DisplayFor(model => model.Situation)
-    </div>
 
     <h4>@Html.DisplayNameFor(model => model.Summary)</h4>
     <div>

@@ -1,9 +1,10 @@
-﻿@section featured {
+﻿@using MvcDating.Helpers
+@section featured {
     <section class="content-wrapper main-content clear-fix">
         @foreach (string thumb in ViewBag.userPictures)
         {
             <div class="pictureFeatured">
-                <img alt="@thumb" src="~/Uploads/@thumb" />
+                <img src="~/Uploads/@thumb" class="picture" />
             </div>
         }
     </section>

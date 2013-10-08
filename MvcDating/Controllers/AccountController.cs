@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using System.Web;
@@ -17,6 +18,8 @@ namespace MvcDating.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private UsersContext db = new UsersContext();
+
         //
         // GET: /Account/Login
 
@@ -32,27 +35,45 @@ namespace MvcDating.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl) {
-            if (!ModelState.IsValid) {
-                ModelState.AddModelError("", "Model state invalid.");
-                return View(model);
-            }
+        public ActionResult Login(LoginModel model, string returnUrl)
+        {
 
-            if (!WebSecurity.UserExists(model.UserName)) {
-                ModelState.AddModelError("", "User " + model.UserName + " does not exist");
-                return View(model);
-            }
+            var profile = db.Profiles.SingleOrDefault(p => p.Email == model.Email);
+            if (profile != null)
+            {
+                var userName = profile.UserName;
 
-            if (!WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe)) {
-                ModelState.AddModelError("", "WebSecurity login invalid:" + model.UserName + " = " + model.Password);
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("", "Model state invalid.");
+                    return View(model);
+                }
+
+                if (!Membership.ValidateUser(userName, model.Password))
+                {
+                    ModelState.AddModelError("", "User for email " + model.Email + " does not exist");
+                    return View(model);
+                }
+
+                if (!WebSecurity.Login(userName, model.Password, persistCookie: model.RememberMe))
+                {
+                    ModelState.AddModelError("", "WebSecurity login invalid:" + userName + " = " + model.Password);
+                    return View(model);
+                }
+                if (ModelState.IsValid && WebSecurity.Login(userName, model.Password, persistCookie: model.RememberMe))
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+
             }
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe)) {
-                return RedirectToLocal(returnUrl);
+            else
+            {
+                ModelState.AddModelError("", "Profile entry not found in db.");
+                return View(model);
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "The email or password provided is incorrect.");
             return View(model);
         }
 
@@ -85,7 +106,17 @@ namespace MvcDating.Controllers
             if (ModelState.IsValid) {
                 // Attempt to register the user
                 try {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new
+                    {
+                        model.Email,
+                        model.Gender,
+                        Birthday = DateTime.ParseExact("01/01/1990 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+                        UpdatedDate = DateTime.Now,
+                        LocationCountry = "",
+                        LocationCity = "",
+                        Situation = 0,
+                        Orientation = 0,
+                    });
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
@@ -120,32 +151,42 @@ namespace MvcDating.Controllers
                 }
             }
 
-            return RedirectToAction("Manage", new { Message = message });
+            return RedirectToAction("ChangePassword", new { Message = message });
         }
+
 
         //
         // GET: /Account/Manage
 
-        public ActionResult Manage(ManageMessageId? message) {
+        public ActionResult Manage()
+        {
+            return View();
+        }
+
+
+        //
+        // GET: /Account/ChangePassword
+
+        public ActionResult ChangePassword(ManageMessageId? message) {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewBag.ReturnUrl = Url.Action("ChangePassword");
             return View();
         }
 
         //
-        // POST: /Account/Manage
+        // POST: /Account/ChangePassword
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage(LocalPasswordModel model) {
+        public ActionResult ChangePassword(LocalPasswordModel model) {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewBag.ReturnUrl = Url.Action("ChangePassword");
             if (hasLocalAccount) {
                 if (ModelState.IsValid) {
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
@@ -158,7 +199,7 @@ namespace MvcDating.Controllers
                     }
 
                     if (changePasswordSucceeded) {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
                     } else {
                         ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                     }
@@ -174,7 +215,7 @@ namespace MvcDating.Controllers
                 if (ModelState.IsValid) {
                     try {
                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        return RedirectToAction("ChangePassword", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
                     catch (Exception) {
                         ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
@@ -234,7 +275,7 @@ namespace MvcDating.Controllers
             string providerUserId = null;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId)) {
-                return RedirectToAction("Manage");
+                return RedirectToAction("ChangePassword");
             }
 
             if (ModelState.IsValid) {

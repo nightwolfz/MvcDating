@@ -1,0 +1,140 @@
+﻿/********************
+*   Mobile Styles   *
+********************/
+@media only screen and (max-width: 850px) {
+    #body {
+        padding: 0 10px;
+    }
+    section.feature {
+        float: none;
+        padding: 10px;
+        width: auto;
+
+        img {
+            color: @gray;
+            content: attr(alt);
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+    }
+
+    article, aside {
+        float: none;
+        width: 100%;
+    }
+
+    /* header
+    ----------------------------------------------------------*/
+    html, body {
+        border-top: 0;
+    }
+    ul#menu {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+
+        li {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    nav {
+        margin-bottom: 5px;
+    }
+
+        
+
+    #login {
+        font-size: .85em;
+        margin: 0 0 12px;
+        text-align: center;
+
+        a {
+            background: none;
+            color: @gray;
+            font-weight: 600;
+            margin: 2px;
+            padding: 0;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding: 0;
+        }
+
+        a:hover {
+            color: #333;
+        }
+
+        li {
+            display: inline;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+
+    /* main layout
+    ----------------------------------------------------------*/
+
+    .content-wrapper {
+        width: 100%;
+    }
+    header{
+        padding: 0 10px;
+        .content-wrapper {
+            width: 100%;
+        }
+        .site-title {
+            margin: 10px;
+            text-align: center;
+        }
+        .float-left, .float-right {
+            float: none;
+        }
+    } 
+
+
+    #loginForm {
+        border-right: none;
+        float: none;
+        width: auto;
+
+        .validation-error {
+            display: block;
+            margin-left: 15px;
+        }
+    }
+
+    #socialLoginForm {
+        margin-left: 0;
+        float: none;
+        width: auto;
+    }
+
+    textarea {
+        width: 98%;
+    }
+    input {
+        width: 100%;
+    }
+
+
+    /* footer
+    ----------------------------------------------------------*/
+    footer .float-left, footer .float-right {
+        float: none;
+    }
+
+    footer {
+        text-align: center;
+        height: auto;
+        padding: 10px 0;
+
+        p {
+            margin: 0;
+        }
+    }
+}

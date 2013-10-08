@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,16 +17,16 @@ namespace MvcDating.Helpers
         public string UploadAndRename(HttpPostedFileBase file)
         {
             string finalFileName = "x_" + DateTime.Now.ToFileTime() + Path.GetExtension(file.FileName);
-            return uploadAndResize(file, finalFileName);
+            return UploadAndResize(file, finalFileName);
         }
 
-        private string uploadAndResize(HttpPostedFileBase file, string fileName)
+        public string UploadAndResize(HttpPostedFileBase file, string fileName)
         {
             var path = Path.Combine(HttpContext.Current.Request.MapPath(ItemUploadFolderPath), fileName);
             string extension = Path.GetExtension(file.FileName);
 
             // Make sure the file is valid
-            if (!validateExtension(extension)) throw new Exception("Invalid image file extension");
+            if (!ValidateExtension(extension)) throw new Exception("Invalid image file extension");
 
             try
             {
@@ -34,7 +35,7 @@ namespace MvcDating.Helpers
                 Image imgOriginal = Image.FromFile(path);
 
                 // Small image
-                Image imgActualSmall = ScaleBySize(imgOriginal, 180);
+                Image imgActualSmall = ScaleBySize(imgOriginal, 150);
                 imgActualSmall.Save(path.Replace("x_", "s_"));
                 imgActualSmall.Dispose();
 
@@ -52,7 +53,7 @@ namespace MvcDating.Helpers
             }
         }
 
-        private bool validateExtension(string extension)
+        private static bool ValidateExtension(string extension)
         {
             extension = extension.ToLower();
             switch (extension)
@@ -99,7 +100,7 @@ namespace MvcDating.Helpers
             }
             // Width is greater than height, set Width = logoSize and resize height accordingly
 
-            Bitmap bmPhoto = new Bitmap((int)destWidth, (int)destHeight, PixelFormat.Format32bppPArgb);
+            var bmPhoto = new Bitmap((int)destWidth, (int)destHeight, PixelFormat.Format32bppPArgb);
             bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
 
             Graphics grPhoto = Graphics.FromImage(bmPhoto);
@@ -113,6 +114,15 @@ namespace MvcDating.Helpers
             grPhoto.Dispose();
 
             return bmPhoto;
+        }
+
+        public static string GetAge(DateTime birthday)
+        {
+            DateTime now = DateTime.Today;
+            int age = now.Year - birthday.Year;
+            if (now < birthday.AddYears(age)) age--;
+
+            return age.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

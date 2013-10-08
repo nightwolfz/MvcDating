@@ -16,6 +16,8 @@ namespace MvcDating.Models
         [DisplayName("Username")]
         public string UserName { get; set; }
 
+        public int Gender { get; set; }
+
         public IEnumerable<SelectListItem> GenderItems
         {
             get
@@ -33,7 +35,7 @@ namespace MvcDating.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Birthday must be set")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
 
         [DataType(DataType.Text)]
         [DisplayName("Country")]

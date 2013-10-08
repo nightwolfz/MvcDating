@@ -32,9 +32,11 @@ namespace MvcDating.Models
     public class Profile
     {
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public string Gender { get; set; }
+        public string Email { get; set; }
+        public int Gender { get; set; }
         public DateTime? Birthday { get; set; }
         public string LocationCountry { get; set; }
         public string LocationCity { get; set; }

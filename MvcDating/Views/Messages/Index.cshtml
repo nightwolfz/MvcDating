@@ -24,7 +24,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <img src="~/Uploads/@item.UserPicture" />
+            <img alt="@item.UserNameWith" src="~/Uploads/@item.UserPicture" class="picture" />
         </td>
         <td>
             @item.UserNameWith

@@ -1,3 +1,6 @@
+using System.Security.Principal;
+using System.Web.UI.WebControls;
+
 namespace MvcDating.Migrations
 {
     using MvcDating.Models;
@@ -27,39 +30,40 @@ namespace MvcDating.Migrations
 
 
             // Must be same as in Filters/InitializeSimpleMembershipAttribute.cs
-            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "UserId", "UserName", autoCreateTables: true);
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Profiles", "UserId", "UserName", autoCreateTables: true);
 
             // Add users and roles
             if (!Roles.RoleExists("Administrator")) Roles.CreateRole("Administrator");
-            if (!WebSecurity.UserExists(username)) WebSecurity.CreateUserAndAccount(username, password/*, propertyValues: new {Email = "test@test.com"}*/);
-            if (!WebSecurity.UserExists(betaname)) WebSecurity.CreateUserAndAccount(betaname, password/*, propertyValues: new {Email = "test@test.com"}*/);
-            
-            if (!Roles.GetRolesForUser(username).Contains("Administrator")) Roles.AddUsersToRoles(new[] { username, betaname }, new[] { "Administrator" });
+            if (!WebSecurity.UserExists(username)) WebSecurity.CreateUserAndAccount(username, password, new
+            {
+                Email = "nightwolfz@gmail.com",
+                Gender = 0,
+                Birthday = DateTime.ParseExact("27/03/1989 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+                UpdatedDate = DateTime.Now,
+                LocationCountry = "BE",
+                LocationCity = "Brussels",
+                Situation = 0,
+                Orientation = 0,
+            });
+
+            if (!WebSecurity.UserExists(betaname)) WebSecurity.CreateUserAndAccount(betaname, password, new
+            {
+                Email = "xerios@gmail.com",
+                Gender = 1,
+                Birthday = DateTime.ParseExact("08/04/1991 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+                UpdatedDate = DateTime.Now,
+                LocationCountry = "BE",
+                LocationCity = "Brussels",
+                Situation = 0,
+                Orientation = 0,
+            });
+
+            if (!Roles.GetRolesForUser(username).Contains("Administrator")) Roles.AddUsersToRoles(new[]{ username, betaname }, new[] { "Administrator" });
 
             int userIdToAdd = WebSecurity.GetUserId(username);
             int betaIdToAdd = WebSecurity.GetUserId(betaname);
 
             // Initial data seed
-            context.Profiles.AddOrUpdate(p => p.UserId, new Profile { 
-                UserId = userIdToAdd, 
-                UserName = username,
-                Gender = "m",
-                Birthday = DateTime.ParseExact("27/03/1989 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
-                UpdatedDate = DateTime.Now,
-                LocationCountry = "BE",
-                LocationCity = "Brussels",
-            });
-            context.Profiles.AddOrUpdate(p => p.UserId, new Profile { 
-                UserId = betaIdToAdd, 
-                UserName = betaname, 
-                Gender = "f" ,
-                Birthday = DateTime.ParseExact("27/03/1989 00:00:01 AM", "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
-                UpdatedDate = DateTime.Now,
-                LocationCountry = "BE",
-                LocationCity = "Brussels",
-            });
-
-
             context.Pictures.AddOrUpdate(p => p.PictureId, new[]{
                     new Picture
                     {

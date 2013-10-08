@@ -7,10 +7,13 @@
 @using (Html.BeginForm("Create", "Pictures", FormMethod.Post, new { enctype = "multipart/form-data" }))
 { 
     @Html.AntiForgeryToken()
-    <div>Please select some files</div>
-    <input name="imageData" type="file" multiple>
-    <input type="submit" />                     
+    <fieldset class="form">
+        <legend>Please select some files</legend>
+        <input name="imageData" type="file" multiple>
+        <input type="submit" />
+    </fieldset>
 }
+    
 
 @*
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))

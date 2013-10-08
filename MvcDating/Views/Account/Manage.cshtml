@@ -1,32 +1,27 @@
-﻿@model MvcDating.Models.LocalPasswordModel
-@{
-    ViewBag.Title = "Manage Account";
+﻿@{
+    ViewBag.Title = "Manage my account";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<style>
+    .main-content {
+        background: #3e79a5;
+    }
+    #manageForm h1 {
+        color: #fff;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 1px #777;
+    }
+    #manageForm .button:hover {
+        background: #1e90ff;
+    }
+    #manageForm .button {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+        text-shadow: 1px 1px 1px #777;
+    }
+</style>
 
-<p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
-
-@if (ViewBag.HasLocalPassword)
-{
-    @Html.Partial("_ChangePasswordPartial")
-}
-else
-{ 
-    @Html.Partial("_SetPasswordPartial")
-}
-
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
-
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<div id="manageForm">
+    <div>@Html.ActionLink("Edit profile", "Edit", "Profile", new { username = User.Identity.Name }, new { @class = "button" })</div>
+    <div>@Html.ActionLink("Change password", "ChangePassword", "Account", new { @class = "button" })</div>
+</div>

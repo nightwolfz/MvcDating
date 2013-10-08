@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace MvcDating.Models
 {
@@ -40,8 +41,8 @@ namespace MvcDating.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -52,11 +53,39 @@ namespace MvcDating.Models
         public bool RememberMe { get; set; }
     }
 
+    public class Gender
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+
+    }
+    public class Genders
+    {
+        public static List<Gender> GetList()
+        {
+            return new List<Gender>
+            {
+                new Gender() {Name = "Male", Value = 0},
+                new Gender() {Name = "Male", Value = 1},
+            };
+        }
+    }
+
+
     public class RegisterModel
     {
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Select your gender")]
+        [Display(Name = "Gender")]
+        public int Gender { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
