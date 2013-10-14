@@ -2,7 +2,7 @@
 
 @if (Model.Count > 0)
 {
-    <h3>Registered external logins</h3>
+    <h2>Registered external logins</h2>
     <table>
         <tbody>
         @foreach (MvcDating.Models.ExternalLogin externalLogin in Model)
@@ -18,13 +18,13 @@
                             <div>
                                 @Html.Hidden("provider", externalLogin.Provider)
                                 @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
-                                <input type="submit" value="Remove" title="Remove this @externalLogin.ProviderDisplayName credential from your account" />
+                                <input type="submit" class="bgred" value="Remove" title="Remove this @externalLogin.ProviderDisplayName credential from your account" />
                             </div>
                         }
                     }
                     else
                     {
-                        @: &nbsp;
+                        @: &bull;
                     }
                 </td>
             </tr>

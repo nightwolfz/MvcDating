@@ -2,11 +2,27 @@
 @royal: #97292a;
 @skyblue: #cce4fd;
 @gray: #888;
-@blue: #00AAEB;
+@lightblue: #00AAEB;
+@blue: #00A3FF;
 @darkblue: #0071B9;
+@red: #E4072B;
 
 .blueshadow(){text-shadow: 0 1px 1px #0067c1;}
 .anti-alias(){-webkit-text-stroke: 0.2px;}
+.grayshadow(){
+    .box-shadow(0px, 0px, 1px, 1px, #bbb);
+}
+
+.box-shadow(@x:0, @y:0, @blur:1px, @spread: 1px, @color: rgba(0,0,0,.15)){
+    -webkit-box-shadow:@x @y @blur @spread @color;
+    -moz-box-shadow: @x @y @blur @spread @color;
+    box-shadow: @x @y @blur @spread @color;
+}
+
+.border-radius(@px){
+    border-radius: @px;
+}
+
 
 
 html, body {
@@ -18,7 +34,7 @@ html, body {
     padding: 0;
 }
 body {
-    border-top: solid 10px @blue;
+    border-top: solid 10px @lightblue;
 }
 
 a, a:link, a:visited,a:active {
@@ -87,7 +103,7 @@ p {
 header {
     .content-wrapper {
         padding: 20px 0 0 0;
-        width: 780px;
+        box-shadow: none;
     }
 }
 footer {
@@ -99,36 +115,37 @@ footer {
     clear: both;
 }
 .main-content {
-    background: #fefefe;
     min-height: 28px;
     /*border: 1px solid #cce4fd;
     border-bottom-width: 7px;*/
     margin-top: 20px;
 }
 .content-title {
-    background: @blue;
+    background: @lightblue;
     padding: 4px 10px 4px 10px;
     h2 {
         color: #fff;
     }
 }
 .content-holder {
+    background: #fefefe;
     padding: 10px;
 }
 .content-wrapper {
     margin: 0 auto;
-    width: 780px
+    width: 780px;
+    .grayshadow();
 }
 
 
 .form {
     margin: 30px 0;
     padding: 4px 8px;
-    border: 1px solid @blue;
+    border: 1px solid @lightblue;
 
     legend {
         color:#fff;
-        background: @blue;
+        background: @lightblue;
         padding: 4px 8px;
         display: inline-block;
         text-align:left;
@@ -144,11 +161,12 @@ footer {
 
 button:hover, a.button:hover, input[type="submit"]:hover, input[type="button"]:hover {
     background: #2776BE;
+    background: darken(@blue, 20%);
 }
 
 button, a.button, input[type="submit"], input[type="button"] {
     color: #fff;
-    background: #00A3FF;
+    background: @blue;
     font-size: 12px;
     font-weight: normal;
     padding: 4px 10px;
@@ -159,6 +177,18 @@ button, a.button, input[type="submit"], input[type="button"] {
     cursor: pointer;
 }
 
+.bgred:hover {
+    background: darken(@red, 20%) !important;
+}
+.bgred {
+    background: @red !important;
+}
+
+img.picture {
+    width: 100px;
+    height: 75px;
+}
+
 /* profile
 ----------------------------------------------------------*/
 .live-editor {
@@ -166,10 +196,17 @@ button, a.button, input[type="submit"], input[type="button"] {
 }
 .pictureDiv {
     padding: 5px;
-    background: #cce4fd;
+    background: #fff;
+    margin-right: 4px;
+    .box-shadow(0, 1px, 2px, 0, #777);
+
+    .picture {
+        width: 168px;
+        height: 126px;
+    }
 }
 .pictureDefault {
-    background: #97292A;
+    background: #2E5B85;
 }
 .profileDetails {
     padding: 10px 0;
@@ -181,11 +218,43 @@ button, a.button, input[type="submit"], input[type="button"] {
     float: left;
 }
 
-img.picture {
-    width: 100px;
-    height: 75px;
-}
+.pictureDropDown {
+    width: 135px;
+    position: absolute;
+    margin-left: 34px;
+    margin-top: 9px;
 
+    a.pictureDropDownButton {
+        background: #fff;
+        padding: 4px;
+        .border-radius(3px);
+        .box-shadow(0, 0, 1px, 1px, #888);
+        float: right;
+    }
+    a.pictureDropDownButton:active {
+        background: #eee;
+    }
+
+    ul.pictureDropDownMenu {
+        background: #fbfbfb;
+        margin-top: 25px;
+        margin-bottom: 0;
+        .box-shadow(0, 0, 1px, 1px, #888);
+        display: none;
+    }
+
+    li {
+        list-style-type: none;
+        border-bottom: 2px solid #fff;
+        a {
+            padding: 4px 8px;
+            text-decoration: none;
+            display: block;
+        }
+    }
+
+
+}
 
 /* top menu & login
 ----------------------------------------------------------*/
@@ -300,7 +369,7 @@ aside {
 #loginForm {
     border-right: solid 2px #c8c8c8;
     float: left;
-    width: 55%;
+    width: 50%;
     .validation-summary-errors {
         ul {
             margin: 0;
@@ -488,6 +557,8 @@ input.input-validation-error {
 input:focus, textarea:focus {
     border: 1px solid #7ac0da;
 }
+
+
 /* tables
 ----------------------------------------------------------*/
 th.asc a:after, th.desc a:after {
@@ -552,5 +623,64 @@ th {
 
     a:hover {
         color: #000;
+    }
+}
+
+
+/* Modal pages
+----------------------------------------------------------*/
+.reveal-modal.xlarge {
+    width: 800px;
+    margin-left: -440px;
+}
+.reveal-modal.large {
+    width: 600px;
+    margin-left: -340px;
+}
+.reveal-modal.medium {
+    width: 400px;
+    margin-left: -240px;
+}
+.reveal-modal.small {
+    width: 200px;
+    margin-left: -140px;
+}
+.reveal-modal-bg {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    background: rgba(0,0,0,.8);
+    z-index: 100;
+    display: none;
+    top: 0;
+    left: 0;
+}
+.reveal-modal {
+    visibility: hidden;
+    top: 100px;
+    left: 50%;
+    margin-left: -300px;
+    width: 520px;
+    background: #eee;
+    position: absolute;
+    z-index: 101;
+    padding: 30px 40px 34px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+    -box-shadow: 0 0 10px rgba(0,0,0,.4);
+    .close-reveal-modal {
+        font-size: 22px;
+        line-height: .5;
+        position: absolute;
+        top: 8px;
+        right: 11px;
+        color: #aaa;
+        text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+        font-weight: bold;
+        cursor: pointer;
     }
 }

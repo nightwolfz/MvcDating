@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,13 +12,9 @@ namespace MvcDating.Helpers
      */
     public static class Extensions
     {
-        public static string Label(this HtmlHelper helper, string target, string text)
+        public static MvcHtmlString Image(this HtmlHelper helper, string src, string @class = "")
         {
-            return String.Format("<label for='{0}'>{1}</label>", target, text);
-        }
-        public static string Image(this HtmlHelper helper, string src, string @class = "picture")
-        {
-            return String.Format("<img src='{0}' class='{1}'/>", src, @class);
+            return MvcHtmlString.Create(String.Format("<img src='{0}' class='{1}'/>", VirtualPathUtility.ToAbsolute(src), @class));
         }
     }
 }

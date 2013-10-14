@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using MvcDating.Models;
@@ -28,13 +30,14 @@ namespace MvcDating.Controllers
 
             foreach (Conversation conv in conversations)
             {
-                int ConvoWithId = conv.UserIdFrom == WebSecurity.CurrentUserId ? conv.UserIdTo : conv.UserIdFrom;
+                int convoWithId = conv.UserIdFrom == WebSecurity.CurrentUserId ? conv.UserIdTo : conv.UserIdFrom;
 
                 conversationView.Add(new ConversationView()
                 {
                     ConversationId = conv.ConversationId,
-                    UserPicture = (from picture in db.Pictures where (picture.IsAvatar == true && picture.UserId == ConvoWithId) select picture.Thumb).SingleOrDefault(),
-                    UserNameWith = (from profile in db.Profiles where profile.UserId == ConvoWithId select profile.UserName).SingleOrDefault(),
+                    UserPicture = (from picture in db.Pictures where (picture.IsAvatar == true && picture.UserId == convoWithId) select picture.Thumb).SingleOrDefault(),
+                    UserNameWith = (from profile in db.Profiles where profile.UserId == convoWithId select profile.UserName).SingleOrDefault(),
+                    LastMessage = (from m in conv.Messages orderby m.Timestamp descending select m.Content).FirstOrDefault(),
                     Timestamp = DateTime.Now
                 });
             }
@@ -68,18 +71,36 @@ namespace MvcDating.Controllers
             }
 
             ViewBag.ConversationId = id;
+            ViewBag.UserIdWith = conversation.UserIdFrom != WebSecurity.CurrentUserId
+                               ? conversation.UserIdFrom
+                               : conversation.UserIdTo;
 
             return View(messageView.ToList());
         }
 
         //
         // GET: /Messages/Create
-        public ActionResult Create(int UserIdTo = 0)
+        // On: /Profile/{userName}
+        public ActionResult Create(int userId = 0)
         {
-            ViewBag.UserIdTo = UserIdTo;
-            return View();
+            var profile = db.Profiles.Find(userId);
+
+            ViewBag.userName = profile.UserName;
+            ViewBag.userPicture = (from p in db.Pictures where (p.UserId==userId && p.IsAvatar == true) select p.Thumb).FirstOrDefault();
+            return PartialView(new Message()
+            {
+                UserId = userId
+            });
         }
 
+        public Conversation GetConversation(int userId)
+        {
+            // See if a conversion already exists
+            return (from conv in db.Conversations
+                    where ((conv.UserIdTo == userId && conv.UserIdFrom == WebSecurity.CurrentUserId)
+                        || (conv.UserIdTo == WebSecurity.CurrentUserId && conv.UserIdFrom == userId))
+                    select conv).SingleOrDefault();
+        }
 
         //
         // POST: /Messages/Create
@@ -88,11 +109,34 @@ namespace MvcDating.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Message message)
         {
-            message.UserId = WebSecurity.CurrentUserId;
             message.Timestamp = DateTime.Now;
 
             if (ModelState.IsValid)
             {
+                // See if a conversion already exists
+                var conversation = GetConversation(message.UserId);
+
+                if (conversation == null)
+                {
+                    // Create new
+                    var newConversation = new Conversation()
+                    {
+                        UserIdFrom = WebSecurity.CurrentUserId,
+                        UserIdTo = message.UserId,
+                        Timestamp = DateTime.Now,
+                        Messages = new List<Message> { message }
+                    };
+                    message.ConversationId = newConversation.ConversationId;
+                    db.Conversations.Add(newConversation);
+                }
+                else
+                {
+                    message.UserId = WebSecurity.CurrentUserId;
+                    conversation.Messages.Add(message);
+                    conversation.Timestamp = DateTime.Now;
+                }
+
+
                 db.Messages.Add(message);
                 db.SaveChanges();
                 return RedirectToAction("Read", routeValues: new { id = message.ConversationId });

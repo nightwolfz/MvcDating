@@ -25,18 +25,8 @@
             </div>
         </div>
     }
-
-    @using(@Html.BeginForm("Create", "Messages", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        @Html.TextArea("Content", "", htmlAttributes: new { style = "border: 1px solid red;" })
-
-        <input name="ConversationId" type="hidden" value="@ViewBag.ConversationId" />
-        <p>
-        <input type="submit" value="Send" />
-        </p>
-    }
+    
+    @Html.Action("Create", "Messages", new { userId = ViewBag.UserIdWith } )
     
 </fieldset>
 

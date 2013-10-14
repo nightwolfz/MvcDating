@@ -8,6 +8,32 @@ using System.Web.Mvc;
 
 namespace MvcDating.Models
 {
+    public static class ProfileItems
+    {
+        public static Dictionary<int, string> Gender
+        {
+            get
+            {
+                return new Dictionary<int, string>(){ {0, "Male"}, {1, "Female"} };
+            }
+        }
+        public static Dictionary<int, string> Situation
+        {
+            get
+            {
+                return new Dictionary<int, string>() { { 0, "Single" }, { 1, "Seeing someone" }, { 2, "Married" } };
+            }
+        }
+        public static Dictionary<int, string> Orientation
+        {
+            get
+            {
+                return new Dictionary<int, string>() { { 0, "Straight" }, { 1, "Gay" }, { 2, "Bisexual" } };
+            }
+        }
+
+    }
+
     public class ProfileView
     {
         public int UserId { get; set; }
@@ -24,8 +50,8 @@ namespace MvcDating.Models
             {
                 var list = new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = "Male", Value = "0", Selected = true },
-                    new SelectListItem { Text = "Female", Value = "1" }
+                    new SelectListItem { Text = ProfileItems.Gender[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Gender[1], Value = "1" }
                 };
                 
                 return list;
@@ -56,9 +82,9 @@ namespace MvcDating.Models
             {
                 return new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = "Single", Value = "0", Selected = true },
-                    new SelectListItem { Text = "Seeing someone", Value = "1" },
-                    new SelectListItem { Text = "Married", Value = "2" }
+                    new SelectListItem { Text = ProfileItems.Situation[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Situation[1], Value = "1" },
+                    new SelectListItem { Text = ProfileItems.Situation[2], Value = "2" }
                 };
             }
         }
@@ -70,9 +96,9 @@ namespace MvcDating.Models
             {
                 return new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = "Straight", Value = "0", Selected = true },
-                    new SelectListItem { Text = "Gay", Value = "1" },
-                    new SelectListItem { Text = "Bisexual", Value = "2" }
+                    new SelectListItem { Text = ProfileItems.Orientation[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Orientation[1], Value = "1" },
+                    new SelectListItem { Text = ProfileItems.Orientation[2], Value = "2" }
                 };
             }
         }
@@ -127,6 +153,8 @@ namespace MvcDating.Models
         public string UserPicture { get; set; }
 
         public string UserNameWith { get; set; }// one-to-many
+
+        public string LastMessage { get; set; }
 
         [Timestamp]
         public DateTime? Timestamp { get; set; }

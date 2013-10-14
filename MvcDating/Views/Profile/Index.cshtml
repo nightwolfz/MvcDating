@@ -1,42 +1,57 @@
 ﻿@using MvcDating.Helpers
+@using MvcDating.Models
 @model MvcDating.Models.ProfileView
 
-
-<h1>
-    @Html.DisplayFor(model => model.UserName)
-    @if (WebSecurity.IsCurrentUser(Model.UserName))
-    {
-        @Html.ActionLink("Edit profile", "Edit", null, new { @class = "button" })
-    }
-</h1>
+<div id="createMessageModal" class="reveal-modal">
+    @*Html.Partial("~/Views/Messages/_CreatePartial.cshtml")*@
+    @Html.Action("Create", "Messages", new { userId = Model.UserId } )
+    <a class="close-reveal-modal">&#215;</a>
+</div>
 
 <div class="profileDetails">
-    <h4>@Html.DisplayNameFor(model => model.Birthday)</h4>
+    <h1>
+        @Html.DisplayFor(model => model.UserName)
+        @if (WebSecurity.IsCurrentUser(Model.UserName))
+        {
+            @Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"})
+        }
+        else
+        {
+            @Html.ActionLink("Send meesage", "Create", "Messages", new { userId = Model.UserId }, new { @class = "button", data_reveal_id = "createMessageModal"  })
+        }
+    </h1>
     <div>
-        @HelperFunctions.GetAge(Model.Birthday) / @Model.Gender
-        / @Html.DisplayFor(model => model.Orientation)
-        / @Html.DisplayFor(model => model.Situation)
-    </div>
-
-    <div>
+        @HelperFunctions.GetAge(Model.Birthday) / @ProfileItems.Gender[Model.Gender]
+        / @ProfileItems.Orientation[Model.Orientation]
+        / @ProfileItems.Situation[Model.Situation]
+        <br />
         @Html.DisplayFor(model => model.LocationCountry), @Html.DisplayFor(model => model.LocationCity)
     </div>
+</div>
 
+<div>
+    @foreach (var picture in Model.Pictures)
+    {
+        @Html.Image("~/Uploads/" + picture.Thumb, "picture")
+    }
+</div>
 
-
+<div>
     <h4>@Html.DisplayNameFor(model => model.Summary)</h4>
     <div>
         @Html.DisplayFor(model => model.Summary)
     </div>
-    
-@if (!Model.GoodAt.IsEmpty())
-{
-    <h4>@Html.DisplayNameFor(model => model.GoodAt) 
-        @Html.Raw(Model.UserId == WebSecurity.CurrentUserId ? "<a class='button'>Edit</a>":"")</h4>
-    <div>
-        @Html.DisplayFor(model => model.GoodAt)
-    </div>
-}
+
+    @if (!Model.GoodAt.IsEmpty())
+    {
+        <h4>
+            @Html.DisplayNameFor(model => model.GoodAt)
+        @Html.Raw(Model.UserId == WebSecurity.CurrentUserId ? "<a class='button'>Edit</a>" : "")
+    </h4>
+        <div>
+            @Html.DisplayFor(model => model.GoodAt)
+        </div>
+    }
 
     <h4>@Html.DisplayNameFor(model => model.MessageIf)</h4>
     <div>
@@ -47,5 +62,4 @@
     <div>
         @Html.DisplayFor(model => model.UpdatedDate)
     </div>
-
 </div>

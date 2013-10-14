@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MvcDating.Models.Picture>
+﻿@using MvcDating.Helpers
+@model IEnumerable<MvcDating.Models.Picture>
 
 @{
     ViewBag.Title = "Pictures";
@@ -15,18 +16,37 @@
 
 @foreach (var item in Model)
 {
-    <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId" style="float: left; margin-right: 4px;">
-        <img src="~/Uploads/@Html.DisplayFor(modelItem => item.Thumb)"><br />
-        <span>
-            <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Set as default</a>
-            <a class="deletePicture" style="float: right" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /></a>
-        </span>
+    <div style="float: left;">
+        <div class="pictureDropDown">
+        <a class="pictureDropDownButton">@Html.Image("~/Content/Images/pencil.png")</a>
+        <ul class="pictureDropDownMenu">
+            <li>
+                <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Make Profile Picture</a>
+            </li>
+            <li>
+                <a class="deletePicture" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /> Delete</a>
+            </li>
+        </ul>
+    </div>
+        <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId">
+            @Html.Image("~/Uploads/" + item.Thumb, "picture")
+            </div>
     </div>
 }
 
 <script>
     $(function () {
-        $("a.deletePicture").on("click", function () {
+        $("a.pictureDropDownButton").on("click", function() {
+            var dropDownMenu = $(this).parent().find(".pictureDropDownMenu");
+            dropDownMenu.fadeIn();
+            //console.log();
+        });
+        
+        $(".pictureDiv").parent().on("mouseleave", function() {
+            $(this).find(".pictureDropDownMenu").fadeOut();
+        });
+
+        $("a.deletePicture").on("click", function() {
             var itemid = $(this).attr('itemid');
             $.ajax({
                 url: "/api/Pictures/" + itemid,
@@ -36,7 +56,8 @@
                 }
             });
         });
-        $("a.setDefaultPicture").on("click", function () {
+        
+        $("a.setDefaultPicture").on("click", function() {
             var itemid = $(this).attr('itemid');
             $.ajax({
                 url: "/api/Pictures/" + itemid,

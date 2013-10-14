@@ -16,6 +16,9 @@ namespace MvcDating.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
         public string ExternalLoginData { get; set; }
     }
 

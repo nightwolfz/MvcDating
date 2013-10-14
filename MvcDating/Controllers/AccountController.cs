@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
@@ -251,6 +252,11 @@ namespace MvcDating.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
+
+            var userRandomId = (new Random()).Next(1, 13).ToString();
+            var userName = Regex.Replace(result.UserName, @"@(.*)", userRandomId);
+            var userEmail = result.UserName;
+
             if (User.Identity.IsAuthenticated) {
                 // If the current user is logged in add the new account
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
@@ -260,7 +266,10 @@ namespace MvcDating.Controllers
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
+                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
+                {
+                    UserName = userName, ExternalLoginData = loginData, Email = userEmail
+                });
             }
         }
 
@@ -280,20 +289,30 @@ namespace MvcDating.Controllers
 
             if (ModelState.IsValid) {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext()) {
-                    Profile user = db.Profiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null) {
+                using (db) {
+
+                    // Check if email and user already exists
+                    var email = db.Profiles.FirstOrDefault(u => u.Email.ToLower() == model.Email.ToLower());
+                    var user = db.Profiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+
+                    if (user == null && email == null)
+                    {
                         // Insert name into the profile table
-                        db.Profiles.Add(new Profile { UserName = model.UserName });
+                        db.Profiles.Add(new Profile { UserName = model.UserName, Email = model.Email });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
                         return RedirectToLocal(returnUrl);
-                    } else {
+                    }
+                    else if (user != null)
+                    {
                         ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "Email already exists. Please enter a different email.");
                     }
                 }
             }

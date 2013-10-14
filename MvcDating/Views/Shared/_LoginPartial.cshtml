@@ -1,6 +1,6 @@
 ﻿@if (Request.IsAuthenticated) {
     <text>
-        Hello, @Html.ActionLink(User.Identity.Name, User.Identity.Name, "Profile", routeValues: null, htmlAttributes: new { @class = "username", title = "My Profile" })!
+        Hello, @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })!
 
         [@Html.ActionLink("Manage", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })]
 

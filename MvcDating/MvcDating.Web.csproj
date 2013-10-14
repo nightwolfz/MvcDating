@@ -277,6 +277,8 @@
     <Content Include="Content\Images\chat.png" />
     <Content Include="Content\Images\delete.png" />
     <None Include="Content\main.less" />
+    <Content Include="Content\Images\pencil.png" />
+    <Content Include="Content\Scripts\jquery.reveal.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />
@@ -284,8 +286,6 @@
     <Content Include="Content\Scripts\jquery-2.0.3.js" />
     <Content Include="Content\Scripts\jquery-2.0.3.min.js" />
     <Content Include="Content\Scripts\jquery-2.0.3.min.map" />
-    <Content Include="Content\Scripts\jquery-ui-1.10.3.js" />
-    <Content Include="Content\Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />

@@ -4,7 +4,7 @@
         @foreach (string thumb in ViewBag.userPictures)
         {
             <div class="pictureFeatured">
-                <img src="~/Uploads/@thumb" class="picture" />
+                @Html.Image("~/Uploads/" + thumb, "picture")
             </div>
         }
     </section>

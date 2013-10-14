@@ -27,10 +27,12 @@
         </header>
         <div id="body">
             @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                <div class="content-title"><h2>@ViewBag.Title</h2></div>
-                <div class="content-holder clear-fix">
-                    @RenderBody()
+            <section class="main-content clear-fix">
+                <div class="content-wrapper">
+                    <div class="content-title"><h2>@ViewBag.Title</h2></div>
+                    <div class="content-holder clear-fix">
+                        @RenderBody()
+                    </div>
                 </div>
             </section>
         </div>

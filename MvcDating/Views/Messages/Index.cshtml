@@ -4,38 +4,72 @@
     ViewBag.Title = "Conversations";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "button" })
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserPicture)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserNameWith)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <img alt="@item.UserNameWith" src="~/Uploads/@item.UserPicture" class="picture" />
-        </td>
-        <td>
-            @item.UserNameWith
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.ActionLink("Read", "Read", new { id = item.ConversationId }, new { @class = "button" })
-        </td>
-    </tr>
+@if (!Model.Any())
+{
+    <h3>No conversations found. You can start messaging someone by going to their profile and clicking "message".</h3>
 }
 
-</table>
+<style>
+    .messagesIndex {
+        border: 1px solid #ddd;
+        border-width: 1px 0;
+        border-collapse: separate;
+        width: 100%;
+    }
+    .messagesIndex td:first-child{
+        width: 60px;
+    }
+    .messagesIndex td:last-child {
+        width: 9%;
+    }
+
+    .messagesIndex td:nth-child(3) {
+        width: 18%;
+    }
+
+    .messagesIndex .picture {
+        width: 50px;
+        height: 37px;
+    }
+
+    .messagesIndex span {
+        color: #999;
+    }
+
+    .messagesIndex .userName:hover {
+        background: none;
+        text-decoration: underline;
+    }
+    .messagesIndex .userName {
+        padding: 0;
+        color: #1f93e0;
+        font-size: 13px;
+        font-weight: bold;
+        font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+        text-decoration: none;
+    }
+</style>
+
+
+@foreach (var item in Model)
+{
+    <table class="messagesIndex">
+        <tr>
+            <td>
+                <img alt="@item.UserNameWith" src="~/Uploads/@item.UserPicture" class="picture" />
+            </td>
+            <td>
+                @Html.ActionLink(item.UserNameWith, "Index", "Profile", new { username = item.UserNameWith }, new { @class = "userName" })<br/>
+                <span>@Html.DisplayFor(modelItem => item.LastMessage)</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                @Html.ActionLink("Read", "Read", new { id = item.ConversationId }, new { @class = "button" })
+            </td>
+        </tr>
+    </table>
+}
+
+

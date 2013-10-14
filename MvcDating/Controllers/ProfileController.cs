@@ -25,10 +25,12 @@ namespace MvcDating.Controllers
         {
             var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
 
+            if (profile == null) throw new HttpException(404, "Profile not found");
+            
             Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
-            var profileview = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
+            var profileView = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
 
-            return View(profileview);
+            return View(profileView);
         }
 
         //
