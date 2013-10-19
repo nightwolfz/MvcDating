@@ -64,6 +64,9 @@ body {
         }
     }
 }
+ul {
+    -webkit-padding-start: 0;
+}
 .thumbnail,.img-thumbnail {
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
@@ -192,8 +195,16 @@ button, a.button, input[type="submit"], input[type="button"] {
 }
 
 img.picture {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.75);
     width: 100px;
     height: 75px;
+}
+
+.subMenu {
+    background: #E7E7FA;
+    padding: 8px 15px;
+    color: #000;
+    display: block;
 }
 
 /* profile
@@ -202,18 +213,18 @@ img.picture {
     display: none;
 }
 .pictureDiv {
-    padding: 5px;
+    padding: 2px;
     background: #fff;
     margin-right: 4px;
-    .box-shadow(0, 1px, 2px, 0, #777);
+    border: 1px solid #bbb;
 
-    .picture {
+    .pictureImg {
         width: 168px;
-        height: 126px;
+        height: auto;
     }
 }
 .pictureDefault {
-    background: #2E5B85;
+    background: #FF8B8B;
 }
 .profileDetails {
     padding: 10px 0;
@@ -225,22 +236,26 @@ img.picture {
     float: left;
 }
 
+a.pictureDropDownButton {
+    background: #fff;
+    padding: 4px;
+    position: absolute;
+    margin-left: 143px;
+    margin-top: 2px;
+    .border-radius(3px);
+    .box-shadow(0, 0, 1px, 1px, #888);
+}
+a.pictureDropDownButton:active {
+    background: #eee;
+}
+
 .pictureDropDown {
     width: 135px;
     position: absolute;
     margin-left: 34px;
     margin-top: 9px;
 
-    a.pictureDropDownButton {
-        background: #fff;
-        padding: 4px;
-        .border-radius(3px);
-        .box-shadow(0, 0, 1px, 1px, #888);
-        float: right;
-    }
-    a.pictureDropDownButton:active {
-        background: #eee;
-    }
+
 
     ul.pictureDropDownMenu {
         background: #fbfbfb;
@@ -251,6 +266,7 @@ img.picture {
     }
 
     li {
+        font-size: 12px;
         list-style-type: none;
         border-bottom: 2px solid #fff;
         a {

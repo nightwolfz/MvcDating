@@ -1,4 +1,5 @@
-﻿@model List<MvcDating.Models.MessageView>
+﻿@using MvcDating.Helpers
+@model List<MvcDating.Models.MessageView>
 
 @{
     ViewBag.Title = "Read";
@@ -15,7 +16,7 @@
     {
         <div class="message-wrapper clearfix">
             <div class="message-picture">
-                <img src="~/Uploads/@item.UserPicture" /><br />
+                @Html.Image("~/Uploads/" + item.UserPicture, "picture")
             </div>
             <div class="message-content">
                 

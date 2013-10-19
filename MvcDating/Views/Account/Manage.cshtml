@@ -11,17 +11,17 @@
         text-transform: uppercase;
         text-shadow: 1px 1px 1px #777;
     }
-    #manageForm .button:hover {
-        background: #1e90ff;
-    }
-    #manageForm .button {
-        font-size: 1.4em;
-        margin-bottom: 10px;
-        text-shadow: 1px 1px 1px #777;
-    }
+
 </style>
 
 <div id="manageForm">
-    <div>@Html.ActionLink("Edit profile", "Edit", "Profile", new { username = User.Identity.Name }, new { @class = "button" })</div>
-    <div>@Html.ActionLink("Change password", "ChangePassword", "Account", new { @class = "button" })</div>
+    <div>
+        <p>Change my profile. Ex: edit my age, location, description.</p>
+        @Html.ActionLink("Edit profile", "Edit", "Profile", new { username = User.Identity.Name }, new { @class = "button" })
+    </div>
+    <br/>
+    <div>
+        <p>Change my login password</p>
+        @Html.ActionLink("Change password", "ChangePassword", "Account", new { @class = "button" })
+    </div>
 </div>

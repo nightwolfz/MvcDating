@@ -282,7 +282,6 @@
     <Content Include="Content\Images\pencil.png" />
     <Content Include="Content\Scripts\jquery.reveal.js" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />
     <None Include="Content\Scripts\jquery-2.0.3.intellisense.js" />
@@ -348,9 +347,6 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\_LoginForm.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Shared\_UserMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>

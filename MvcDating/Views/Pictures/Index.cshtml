@@ -17,34 +17,36 @@
 @foreach (var item in Model)
 {
     <div style="float: left;">
+        
         <div class="pictureDropDown">
-        <a class="pictureDropDownButton">@Html.Image("~/Content/Images/pencil.png")</a>
-        <ul class="pictureDropDownMenu">
-            <li>
-                <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Make Profile Picture</a>
-            </li>
-            <li>
-                <a class="deletePicture" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /> Delete</a>
-            </li>
-        </ul>
-    </div>
+            <ul class="pictureDropDownMenu">
+                <li>
+                    <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Make Profile Picture</a>
+                </li>
+                <li>
+                    <a class="deletePicture" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /> Delete</a>
+                </li>
+            </ul>
+        </div>
+        
         <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId">
-            @Html.Image("~/Uploads/" + item.Thumb, "picture")
-            </div>
+            <a class="pictureDropDownButton">@Html.Image("~/Content/Images/pencil.png")</a>
+            @Html.Image("~/Uploads/" + item.Thumb, "pictureImg")
+        </div>
     </div>
 }
 
 <script>
     $(function () {
         $("a.pictureDropDownButton").on("click", function() {
-            var dropDownMenu = $(this).parent().find(".pictureDropDownMenu");
+            var dropDownMenu = $(this).parent().parent().find(".pictureDropDownMenu");
             dropDownMenu.fadeIn();
             //console.log();
         });
         
-        $(".pictureDiv").parent().on("mouseleave", function() {
+        /*$(".pictureDiv").parent().on("mouseleave", function() {
             $(this).find(".pictureDropDownMenu").fadeOut();
-        });
+        });*/
 
         $("a.deletePicture").on("click", function() {
             var itemid = $(this).attr('itemid');

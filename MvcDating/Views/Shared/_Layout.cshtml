@@ -28,16 +28,30 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Menu that shows up when logged in -->
+        <div class="container subMenu">
+            @if (Request.IsAuthenticated)
+            {
+                <small>
+                    <span class="pull-right">
+                        Logged in as @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })
+                    </span>
+
+                    @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
+                </small>
+            }
+            </div>
+        <br/>
 
         <div class="container">
             @RenderSection("featured", required: false)
             @RenderBody()
         </div>
         
-        <hr />
-        <footer class="container">
-            <p>&copy; @DateTime.Now.Year</p>
-        </footer>
+        <hr style="margin: 20px 0 10px 0;" />
+
+        
 
     </body>
 </html>
