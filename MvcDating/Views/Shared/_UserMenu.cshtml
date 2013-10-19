@@ -1,0 +1,13 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav navbar-user">
+        <li>
+            @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })
+        </li>
+        <li>@Html.ActionLink("settings", "Manage", "Account", null, new { title = "Manage" })</li>
+    </ul>
+}
+else
+{
+    @Html.ActionLink("MvcDating", "Index", "Home", null, new { @class = "navbar-brand" })
+}

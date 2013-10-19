@@ -29,7 +29,12 @@ namespace MvcDating
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/main.less", 
-                "~/Content/mobile.less"
+                "~/Content/mobile.less",
+                "~/Content/bootstrap.less"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/extra").Include(
+                "~/Content/Scripts/bootstrap.js"
             ));
 
             /*bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

@@ -276,10 +276,13 @@
     <Content Include="Content\Images\attach.png" />
     <Content Include="Content\Images\chat.png" />
     <Content Include="Content\Images\delete.png" />
+    <Content Include="Content\bootstrap.less" />
     <None Include="Content\main.less" />
+    <Content Include="Content\Images\icon_buttons.png" />
     <Content Include="Content\Images\pencil.png" />
     <Content Include="Content\Scripts\jquery.reveal.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />
     <None Include="Content\Scripts\jquery-2.0.3.intellisense.js" />
@@ -294,6 +297,7 @@
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\Scripts\modernizr-2.6.2.js" />
+    <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -332,7 +336,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\_profileMenu.cshtml" />
     <Content Include="Views\Pictures\Index.cshtml" />
     <Content Include="Views\Pictures\Details.cshtml" />
     <Content Include="Views\Pictures\Create.cshtml" />
@@ -344,6 +347,11 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\_LoginForm.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Views\Shared\_UserMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

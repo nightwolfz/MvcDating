@@ -13,15 +13,17 @@
 
     @foreach (var item in Model)
     {
-        <div class="message-wrapper clear-fix">
+        <div class="message-wrapper clearfix">
             <div class="message-picture">
-                <img src="~/Uploads/@item.UserPicture" height="48" width="48" /><br />
+                <img src="~/Uploads/@item.UserPicture" /><br />
             </div>
             <div class="message-content">
-                @item.Content
-                <hr>
+                
+                
                 <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
                 <span>@item.Timestamp</span>
+                <hr>
+                <div>@item.Content</div>
             </div>
         </div>
     }

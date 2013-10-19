@@ -1,6 +1,6 @@
 ﻿@using MvcDating.Helpers
 @section featured {
-    <section class="content-wrapper main-content clear-fix">
+    <section class="clearfix">
         @foreach (string thumb in ViewBag.userPictures)
         {
             <div class="pictureFeatured">
@@ -13,3 +13,33 @@
 @{
     ViewBag.Title = "Home";
 }
+
+<div class="jumbotron clearfix">
+    <h1>Bounzy Movies</h1>
+
+    <div class="col-md-7">
+
+        <p class="lead">We nigga the wigga.</p>
+    </div>
+
+    <div class="col-md-5">
+        @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+    </div>
+</div>
+
+<div>
+    <div class="col-md-4">
+        <p>
+            Kittens
+        </p>
+        <p><a class="btn" href="http://go.microsoft.com/fwlink/?LinkId=301865">Yeah ok &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <p>Dogs.</p>
+        <p><a class="btn" href="http://go.microsoft.com/fwlink/?LinkId=301866">Yeah ok &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <p>Pies.</p>
+        <p><a class="btn" href="http://go.microsoft.com/fwlink/?LinkId=301867">Yeah ok &raquo;</a></p>
+    </div>
+</div>

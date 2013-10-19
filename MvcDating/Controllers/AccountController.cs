@@ -332,7 +332,8 @@ namespace MvcDating.Controllers
 
         [AllowAnonymous]
         [ChildActionOnly]
-        public ActionResult ExternalLoginsList(string returnUrl) {
+        public ActionResult ExternalLoginsList(string returnUrl, bool showLoginForm = false) {
+            ViewBag.showLoginForm = showLoginForm;
             ViewBag.ReturnUrl = returnUrl;
             return PartialView("_ExternalLoginsListPartial", OAuthWebSecurity.RegisteredClientData);
         }

@@ -77,7 +77,7 @@ namespace MvcDating.Models
         [Required(ErrorMessage = "Your relationship status must be set")]
         public IEnumerable<SelectListItem> SituationItems
         {
-            set { value = value; }
+            set { }
             get
             {
                 return new List<SelectListItem>()

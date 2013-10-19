@@ -1,0 +1,73 @@
+﻿@model MvcDating.Models.LoginModel
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewData["compactLoginForm"].Equals(true))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-inline" })
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                </td>
+                <td>
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "help-inline" })
+                </td>
+            </tr>
+            <tr>
+            <td colspan="2">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </td>
+            <tr>
+                <td colspan="2"><input type="submit" value="Log in" class="btn btn-primary btn-large" /></td>
+            </tr>
+        </table>
+        <p>
+            @Html.ActionLink("Register", "Register") if you don't have a local account.
+        </p>
+    }
+    else
+    {
+        <fieldset class="form-horizontal">
+            <div class="control-group">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-inline" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "help-inline" })
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Log in" class="btn" />
+            </div>
+        </fieldset>
+    }
+}

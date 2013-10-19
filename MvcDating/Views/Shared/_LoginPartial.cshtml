@@ -1,17 +1,27 @@
 ﻿@if (Request.IsAuthenticated) {
-    <text>
-        Hello, @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })!
-
-        [@Html.ActionLink("Manage", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })]
-
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
-            @Html.AntiForgeryToken()
-            <button type="submit">Log off</button>
-        }
-    </text>
+    
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Picture", "Index", "Pictures")</li>
+        <li>@Html.ActionLink("Messages", "Index", "Messages")</li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </li>
+    </ul>
+    
 } else {
-    <ul>
+    
+    <div id="createMessageModal" class="reveal-modal">
+        @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl, showLoginForm = true })
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    
+    <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { data_reveal_id = "createMessageModal" })</li>
     </ul>
 }
