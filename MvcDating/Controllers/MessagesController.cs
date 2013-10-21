@@ -35,10 +35,10 @@ namespace MvcDating.Controllers
                 conversationView.Add(new ConversationView()
                 {
                     ConversationId = conv.ConversationId,
-                    UserPicture = (from picture in db.Pictures where (picture.IsAvatar == true && picture.UserId == convoWithId) select picture.Thumb).SingleOrDefault(),
-                    UserNameWith = (from profile in db.Profiles where profile.UserId == convoWithId select profile.UserName).SingleOrDefault(),
-                    LastMessage = (from m in conv.Messages orderby m.Timestamp descending select m.Content).FirstOrDefault(),
-                    Timestamp = DateTime.Now
+                    UserPicture = db.Pictures.Single(p => p.IsAvatar && p.UserId == convoWithId).Thumb,
+                    UserNameWith = db.Profiles.Single(p => p.UserId == convoWithId).UserName,
+                    LastMessage = conv.GetLastMessage(),
+                    Timestamp = conv.Timestamp
                 });
             }
 

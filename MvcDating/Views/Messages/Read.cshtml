@@ -11,23 +11,33 @@
 
 <fieldset>
     <legend>Conversation</legend>
-
-    @foreach (var item in Model)
-    {
-        <div class="message-wrapper clearfix">
-            <div class="message-picture">
-                @Html.Image("~/Uploads/" + item.UserPicture, "picture")
-            </div>
-            <div class="message-content">
-                
-                
-                <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
-                <span>@item.Timestamp</span>
-                <hr>
-                <div>@item.Content</div>
-            </div>
-        </div>
-    }
+    
+    <ul class="messages-wrapper">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="message-body">
+                    <div class="message-left">
+                        <a href="/Profile/@item.UserName">
+                            @Html.Image("~/Uploads/" + item.UserPicture, "picture")
+                        </a>
+                    </div>
+                    <div class="message-right">
+                        
+                        <div class="message-content">
+                            <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
+                            <small style="float: right">
+                                @Html.DisplayFor(model => item.Timestamp)
+                            </small>
+                        </div>
+                        <div class="message-content">
+                            @item.Content
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
     
     @Html.Action("Create", "Messages", new { userId = ViewBag.UserIdWith } )
     

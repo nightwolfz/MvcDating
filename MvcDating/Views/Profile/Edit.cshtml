@@ -9,81 +9,58 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>ProfileView</legend>
+        <legend>My Profile</legend>
 
         @Html.HiddenFor(model => model.UserId)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserName)
-        </div>
+        
         <div class="editor-field">
-            @Html.EditorFor(model => model.UserName)
-            @Html.ValidationMessageFor(model => model.UserName)
+            I'm
+            @Html.DropDownListFor(model => model.Situation, new SelectList(Model.SituationItems, "Value", "Text"))
+            @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
+            and
+            @Html.DropDownListFor(model => model.Gender, new SelectList(Model.GenderItems, "Value", "Text"))
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Birthday)
-        </div>
+        <legend>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </legend>
         <div class="editor-field">
             @Html.EditorFor(model => model.Birthday)
             @Html.ValidationMessageFor(model => model.Birthday)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LocationCountry)
-        </div>
+        
+        <legend>
+            @Html.DisplayNameFor(model => model.LocationCountry)
+        </legend>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LocationCountry)
+            @Html.LabelFor(model => model.LocationCountry) @Html.EditorFor(model => model.LocationCountry)
+            @Html.LabelFor(model => model.LocationCity) @Html.EditorFor(model => model.LocationCity)
             @Html.ValidationMessageFor(model => model.LocationCountry)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LocationCity)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LocationCity)
             @Html.ValidationMessageFor(model => model.LocationCity)
         </div>
 
-        <div class="editor-label">
-            I'm 
-            @Html.DropDownListFor(model => model.Situation, new SelectList(Model.SituationItems, "Value", "Text"))
-            @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
-            and 
-            @Html.DropDownListFor(model => model.GenderItems, new SelectList(Model.GenderItems, "Value", "Text"))
-        </div>
-       
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Summary)
-        </div>
+        <legend>
+            @Html.DisplayNameFor(model => model.Summary)
+        </legend>
         <div class="editor-field">
             @Html.EditorFor(model => model.Summary)
             @Html.ValidationMessageFor(model => model.Summary)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.GoodAt)
-        </div>
+        <legend>
+            @Html.DisplayNameFor(model => model.GoodAt)
+        </legend>
         <div class="editor-field">
             @Html.EditorFor(model => model.GoodAt)
             @Html.ValidationMessageFor(model => model.GoodAt)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.MessageIf)
-        </div>
+        <legend>
+            @Html.DisplayNameFor(model => model.MessageIf)
+        </legend>
         <div class="editor-field">
             @Html.EditorFor(model => model.MessageIf)
             @Html.ValidationMessageFor(model => model.MessageIf)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UpdatedDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UpdatedDate)
-            @Html.ValidationMessageFor(model => model.UpdatedDate)
         </div>
 
         <p>

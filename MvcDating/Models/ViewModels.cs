@@ -10,27 +10,21 @@ namespace MvcDating.Models
 {
     public static class ProfileItems
     {
-        public static Dictionary<int, string> Gender
+        public static List<string> Gender = new List<string>()
         {
-            get
-            {
-                return new Dictionary<int, string>(){ {0, "Male"}, {1, "Female"} };
-            }
-        }
-        public static Dictionary<int, string> Situation
+            "Male", "Female"
+        };
+
+        public static List<string> Situation = new List<string>()
         {
-            get
-            {
-                return new Dictionary<int, string>() { { 0, "Single" }, { 1, "Seeing someone" }, { 2, "Married" } };
-            }
-        }
-        public static Dictionary<int, string> Orientation
+            "Single", "Seeing someone", "Married"
+        };
+
+        public static List<string> Orientation = new List<string>()
         {
-            get
-            {
-                return new Dictionary<int, string>() { { 0, "Straight" }, { 1, "Gay" }, { 2, "Bisexual" } };
-            }
-        }
+            "Straight", "Gay", "Bisexual"
+        };
+
 
     }
 
@@ -38,23 +32,21 @@ namespace MvcDating.Models
     {
         public int UserId { get; set; }
 
-        [Editable(false)]
+        [HiddenInput]
         [DisplayName("Username")]
         public string UserName { get; set; }
 
+        [DisplayName("Gender")]
         public int Gender { get; set; }
-
         public IEnumerable<SelectListItem> GenderItems
         {
             get
             {
-                var list = new List<SelectListItem>()
+                return new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = ProfileItems.Gender[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Gender[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Gender[1], Value = "1" }
                 };
-                
-                return list;
             }
         }
 
@@ -73,16 +65,14 @@ namespace MvcDating.Models
 
         [DisplayName("Relationship status")]
         public int Situation { get; set; }
-
-        [Required(ErrorMessage = "Your relationship status must be set")]
         public IEnumerable<SelectListItem> SituationItems
         {
-            set { }
+            set { value = value; }
             get
             {
                 return new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = ProfileItems.Situation[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Situation[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Situation[1], Value = "1" },
                     new SelectListItem { Text = ProfileItems.Situation[2], Value = "2" }
                 };
@@ -96,7 +86,7 @@ namespace MvcDating.Models
             {
                 return new List<SelectListItem>()
                 {
-                    new SelectListItem { Text = ProfileItems.Orientation[0], Value = "0", Selected = true },
+                    new SelectListItem { Text = ProfileItems.Orientation[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Orientation[1], Value = "1" },
                     new SelectListItem { Text = ProfileItems.Orientation[2], Value = "2" }
                 };
@@ -115,9 +105,9 @@ namespace MvcDating.Models
         [DisplayName("Message me if")]
         public string MessageIf { get; set; }
 
-        [Timestamp]
         [DisplayName("Updated on")]
-        public DateTime? UpdatedDate { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime UpdatedDate { get; set; }
 
         public virtual IList<Picture> Pictures { get; set; }
     }
@@ -138,9 +128,10 @@ namespace MvcDating.Models
         [AllowHtml]
         public string Content { get; set; }
 
-        [Timestamp]
         [DisplayName("Posted on")]
-        public DateTime? Timestamp { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
+        public DateTime Timestamp { get; set; }
     }
 
 
@@ -154,10 +145,27 @@ namespace MvcDating.Models
 
         public string UserNameWith { get; set; }// one-to-many
 
-        public string LastMessage { get; set; }
+        public Message LastMessage { get; set; }
 
-        [Timestamp]
-        public DateTime? Timestamp { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
+        public DateTime Timestamp { get; set; }
+
+        
+        public string GetTimeAgo()
+        {
+            TimeSpan diff = DateTime.Now.Subtract(Timestamp);
+
+            if (diff.TotalDays > 1 && diff.TotalDays < 4)   return TimeAgoFormat(diff.TotalDays, "day");
+            if (diff.TotalHours > 1)                        return TimeAgoFormat(diff.TotalHours, "hour");
+            if (diff.TotalMinutes > 1)                  return TimeAgoFormat(diff.TotalMinutes, "minute");
+            
+            return Timestamp.ToString("MMM dd, yyyy");
+        }
+        private string TimeAgoFormat(double time, string timeUnit)
+        {
+            return String.Format("{0} {1}{2} ago", (int)time, timeUnit, (time >= 2 ? "s" : ""));
+        }
     }
 
     public class PictureDeleteView

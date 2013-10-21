@@ -30,6 +30,10 @@ a {
     cursor: pointer;
 }
 
+legend {
+    margin: 20px 0;
+}
+
 input[type="text"], input[type="password"] {
     border: 1px solid #ddd;
     margin-bottom: 5px;
@@ -135,33 +139,60 @@ input.input-validation-error {
 
 /* messages
 ----------------------------------------------------------*/
-.message-wrapper {
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
+@messageBg: #EFF5F7;
 
-    .message-content {
-        max-width: 84%;
-        min-width: 84%;
-        padding: 4px 8px;
-        float: left;
+.messages-wrapper {
+    list-style: none;
+    
+    li {
+        margin: 0 0 1.5em 0;
+    }
+    .reply {
+        border-top: 2px solid #52B6DF;
+        background: #52B6DF;
+        padding: 5px;
+        text-align: left;
         position: relative;
-        left: 5px;
-
-        div {
-            /*min-height: 57px;*/
+        a {
+            color: #fff;
         }
     }
-    .message-picture {
-        float: left;
+    .message-body {
+        .reply {
+            text-align: left;
+        }
     }
-
-    small, span {
-        color: #777;
-        font-size: 11px;
-    }
-    span {
-        float: right;
-        line-height: 22px;
+} 
+.message-right:after {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid @messageBg;
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 20px;
+}
+.message-right {
+    position: relative;
+    background-color: @messageBg;
+    display: inline-block;
+    width: 88%;
+    margin-left: 20px;
+}
+.message-content {
+    font-size: 13px;
+    padding: 8px 16px;
+}
+.message-left {
+    width: 82px;
+    display: block;
+    float: left;
+    img.picture {
+        border: 5px solid #787878;
+        width: 72px;
+        height: auto;
     }
 }
 

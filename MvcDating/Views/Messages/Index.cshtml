@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MvcDating.Models.ConversationView>
+﻿@using MvcDating.Helpers
+@model IEnumerable<MvcDating.Models.ConversationView>
 
 @{
     ViewBag.Title = "Conversations";
@@ -60,10 +61,10 @@
             </td>
             <td>
                 @Html.ActionLink(item.UserNameWith, "Index", "Profile", new { username = item.UserNameWith }, new { @class = "userName" })<br/>
-                <span>@Html.DisplayFor(modelItem => item.LastMessage)</span>
+                <span>@Html.DisplayFor(modelItem => item.LastMessage.Content)</span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
+                @item.GetTimeAgo()
             </td>
             <td>
                 @Html.ActionLink("Read", "Read", new { id = item.ConversationId }, new { @class = "button" })

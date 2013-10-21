@@ -61,9 +61,12 @@ namespace MvcDating.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profileview)
         {
+            Mapper.CreateMap<ProfileView, MvcDating.Models.Profile>();
+            var profile = Mapper.Map<ProfileView, MvcDating.Models.Profile>(profileview);
+
             if (ModelState.IsValid)
             {
-                db.Entry(profileview).State = EntityState.Modified;
+                db.Entry(profile).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -37,7 +37,7 @@ namespace MvcDating.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public int Gender { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string LocationCountry { get; set; }
         public string LocationCity { get; set; }
         public int Situation { get; set; }
@@ -45,61 +45,48 @@ namespace MvcDating.Models
         public string Summary { get; set; }
         public string GoodAt { get; set; }
         public string MessageIf { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public virtual IList<Picture> Pictures { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public virtual IList<Picture> Pictures { get; set; } // one-to-many
     }
 
     public class Picture
     {
         [Key]
         public int PictureId { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
         public int UserId { get; set; } // one-to-many
-
-        [Editable(false)]
         public string Src { get; set; }
-
-        [Editable(false)]
         public string Thumb { get; set; }
-
         public bool IsAvatar { get; set; }
-        [Timestamp]
-        public DateTime? UploadedDate { get; set; }
-
-        public virtual IList<Comment> Comments { get; set; }
+        public DateTime UploadedDate { get; set; }
+        public virtual IList<Comment> Comments { get; set; } // one-to-many
     }
 
     public class Comment
     {
         [Key]
         public int CommentId { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
         public int PictureId { get; set; }
         public int UserId { get; set; }
-
-        [AllowHtml]
         public string Content { get; set; }
-       
-        public virtual Picture Picture { get; set; }
+        public virtual Picture Picture { get; set; } // many-to-one
     }
 
     public class Conversation
     {
         [Key]
         public int ConversationId { get; set; } // one-to-many
-
-        [HiddenInput(DisplayValue = false)]
         public int UserIdTo { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
         public int UserIdFrom { get; set; }// one-to-many
+        public DateTime Timestamp { get; set; }
 
-        [Timestamp]
-        public DateTime? Timestamp { get; set; }
+        public virtual IList<Message> Messages { get; set; } // one-to-many
 
-        public virtual IList<Message> Messages { get; set; }
+        public Message GetLastMessage()
+        {
+            var lastDate = Messages.Where(m => m.ConversationId == ConversationId).Max(m => m.Timestamp);
+            var lastMessage = Messages.LastOrDefault(m => m.ConversationId == ConversationId && m.Timestamp == lastDate);
+            return lastMessage;
+        }
     }
 
     public class Message
@@ -109,9 +96,10 @@ namespace MvcDating.Models
         public int ConversationId { get; set; }
         public int UserId { get; set; }
         public string Content { get; set; }
-        public DateTime? Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
-        public virtual Conversation Conversation { get; set; }
+        public virtual Conversation Conversation { get; set; } // many-to-one
+
     }
 
 }
