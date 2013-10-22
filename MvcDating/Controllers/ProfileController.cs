@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using MvcDating.Models;
@@ -23,10 +22,21 @@ namespace MvcDating.Controllers
 
         public ActionResult Index(string username = "")
         {
+            // Get profile information
             var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
-
             if (profile == null) throw new HttpException(404, "Profile not found");
-            
+
+            // Add a visitor
+            /*if (profile.UserId == WebSecurity.CurrentUserId)
+            {
+                db.Visitors.AddOrUpdate(v => v.VisitorId, new Visitor()
+                {
+                    UserId = profile.UserId,
+                    VisitorId = WebSecurity.CurrentUserId,
+                    Timestamp = DateTime.Now
+                });
+            }*/
+
             Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
             var profileView = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
 

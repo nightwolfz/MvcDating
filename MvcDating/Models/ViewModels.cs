@@ -151,7 +151,6 @@ namespace MvcDating.Models
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public DateTime Timestamp { get; set; }
 
-        
         public string GetTimeAgo()
         {
             TimeSpan diff = DateTime.Now.Subtract(Timestamp);
@@ -159,18 +158,37 @@ namespace MvcDating.Models
             if (diff.TotalDays > 1 && diff.TotalDays < 4)   return TimeAgoFormat(diff.TotalDays, "day");
             if (diff.TotalHours > 1)                        return TimeAgoFormat(diff.TotalHours, "hour");
             if (diff.TotalMinutes > 1)                  return TimeAgoFormat(diff.TotalMinutes, "minute");
-            
+    
             return Timestamp.ToString("MMM dd, yyyy");
         }
         private string TimeAgoFormat(double time, string timeUnit)
         {
             return String.Format("{0} {1}{2} ago", (int)time, timeUnit, (time >= 2 ? "s" : ""));
         }
+
     }
 
     public class PictureDeleteView
     {
         [HiddenInput(DisplayValue = false)]
         public int PictureId { get; set; }
+    }
+
+    public class FeaturedView
+    {
+        public string UserName { get; set; }
+        public string Thumb { get; set; }
+    }
+
+    public class VisitorView
+    {
+        public int VisitId { get; set; }
+        public int VisitorId { get; set; }
+        public int UserId { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
+        public DateTime Timestamp { get; set; }
+
     }
 }

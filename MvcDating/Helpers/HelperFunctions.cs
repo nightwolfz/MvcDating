@@ -12,6 +12,29 @@ namespace MvcDating.Helpers
 {
     public class HelperFunctions
     {
+
+        /**
+         * Facebook like "time ago"
+         */
+        /*public static string GetTimeAgo(DateTime timestamp)
+        {
+            TimeSpan diff = DateTime.Now.Subtract(timestamp);
+
+            if (diff.TotalDays > 1 && diff.TotalDays < 4)   return TimeAgoFormat(diff.TotalDays, "day");
+            if (diff.TotalHours > 1)                        return TimeAgoFormat(diff.TotalHours, "hour");
+            if (diff.TotalMinutes > 1)                      return TimeAgoFormat(diff.TotalMinutes, "minute");
+            
+            return timestamp.ToString("MMM dd, yyyy");
+        }
+        private static string TimeAgoFormat(double time, string timeUnit)
+        {
+            return String.Format("{0} {1}{2} ago", (int)time, timeUnit, (time >= 2 ? "s" : ""));
+        }*/
+
+
+        /**
+         * Upload and resize pictures
+         */
         public static readonly string ItemUploadFolderPath = "~/Uploads/";
 
         public string UploadAndRename(HttpPostedFileBase file)
@@ -80,10 +103,10 @@ namespace MvcDating.Helpers
             float sourceHeight = imgPhoto.Height;
             float destHeight = 0;
             float destWidth = 0;
-            int sourceX = 0;
-            int sourceY = 0;
-            int destX = 0;
-            int destY = 0;
+            const int sourceX = 0;
+            const int sourceY = 0;
+            const int destX = 0;
+            const int destY = 0;
 
             // Resize Image to have the height = logoSize/2 or width = logoSize.
             // Height is greater than width, set Height = logoSize and resize width accordingly
@@ -116,6 +139,9 @@ namespace MvcDating.Helpers
             return bmPhoto;
         }
 
+        /**
+         * Get age based on birthday
+         */
         public static string GetAge(DateTime birthday)
         {
             DateTime now = DateTime.Today;

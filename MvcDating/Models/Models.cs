@@ -17,8 +17,10 @@ namespace MvcDating.Models
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
+        
     }
 
     /**
@@ -99,7 +101,15 @@ namespace MvcDating.Models
         public DateTime Timestamp { get; set; }
 
         public virtual Conversation Conversation { get; set; } // many-to-one
+    }
 
+    public class Visitor
+    {
+        [Key]
+        public int VisitId { get; set; }
+        public int VisitorId { get; set; }
+        public int UserId { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 
 }

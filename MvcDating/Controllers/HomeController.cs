@@ -14,8 +14,11 @@ namespace MvcDating.Controllers
 
         public ActionResult Index()
         {
+            var query = from profile in db.Profiles
+                        join picture in db.Pictures on profile.UserId equals picture.UserId where picture.IsAvatar
+                        select new FeaturedView { UserName = profile.UserName, Thumb = picture.Thumb };
 
-            ViewBag.userPictures = (from p in db.Pictures where p.IsAvatar select p.Thumb).Take(5);
+            ViewBag.featuredUsers = query.Take(5);
 
             return View();
         }
