@@ -153,17 +153,7 @@ namespace MvcDating.Models
 
         public string GetTimeAgo()
         {
-            TimeSpan diff = DateTime.Now.Subtract(Timestamp);
-
-            if (diff.TotalDays > 1 && diff.TotalDays < 4)   return TimeAgoFormat(diff.TotalDays, "day");
-            if (diff.TotalHours > 1)                        return TimeAgoFormat(diff.TotalHours, "hour");
-            if (diff.TotalMinutes > 1)                  return TimeAgoFormat(diff.TotalMinutes, "minute");
-    
-            return Timestamp.ToString("MMM dd, yyyy");
-        }
-        private string TimeAgoFormat(double time, string timeUnit)
-        {
-            return String.Format("{0} {1}{2} ago", (int)time, timeUnit, (time >= 2 ? "s" : ""));
+            return Helpers.HelperFunctions.GetTimeAgo(Timestamp);
         }
 
     }
@@ -182,13 +172,19 @@ namespace MvcDating.Models
 
     public class VisitorView
     {
-        public int VisitId { get; set; }
-        public int VisitorId { get; set; }
-        public int UserId { get; set; }
+        [Key]
+        public int UserId { get; set; } // my id
+
+        public Profile Profile { get; set; }
+        public string Thumb { get; set; }
 
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public DateTime Timestamp { get; set; }
 
+        public string GetTimeAgo()
+        {
+            return Helpers.HelperFunctions.GetTimeAgo(Timestamp);
+        }
     }
 }

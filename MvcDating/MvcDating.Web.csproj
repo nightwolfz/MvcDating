@@ -274,6 +274,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\VisitorsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -363,6 +364,9 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\_LoginForm.cshtml" />
     <Content Include="Views\Shared\_UserMenu.cshtml" />
+    <Content Include="Views\Visitors\Index.cshtml" />
+    <Content Include="Views\Visitors\History.cshtml" />
+    <Content Include="Views\Visitors\_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

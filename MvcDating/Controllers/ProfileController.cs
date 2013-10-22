@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MvcDating.Models;
 using MvcDating.Filters;
 using AutoMapper;
+using WebMatrix.WebData;
 
 
 namespace MvcDating.Controllers
@@ -27,15 +28,27 @@ namespace MvcDating.Controllers
             if (profile == null) throw new HttpException(404, "Profile not found");
 
             // Add a visitor
-            /*if (profile.UserId == WebSecurity.CurrentUserId)
+            if (profile.UserId != WebSecurity.CurrentUserId)
             {
-                db.Visitors.AddOrUpdate(v => v.VisitorId, new Visitor()
+                var visitor = db.Visitors.SingleOrDefault(dto => dto.VisitorId == WebSecurity.CurrentUserId);
+
+                if (visitor == null)
                 {
-                    UserId = profile.UserId,
-                    VisitorId = WebSecurity.CurrentUserId,
-                    Timestamp = DateTime.Now
-                });
-            }*/
+                    db.Visitors.Add(new Visitor()
+                    {
+                        UserId = profile.UserId,
+                        VisitorId = WebSecurity.CurrentUserId,
+                        Timestamp = DateTime.Now
+                    });
+                }
+                else
+                {
+                    visitor.Timestamp = DateTime.Now;
+                    db.Entry(visitor).State = EntityState.Modified;
+                    
+                }
+                db.SaveChanges();
+            }
 
             Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
             var profileView = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);

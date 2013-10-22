@@ -1,0 +1,30 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model MvcDating.Models.VisitorView
+
+<div class="visitorWrapper clearfix">
+    <div class="visitorPicture">
+        @Html.ImageLink(Url.RouteUrl(
+            routeValues: new
+            {
+                Action = "Index",
+                Controller = "Profile",
+                username = Model.Profile.UserName
+            }), Html.Image("~/Uploads/" + Model.Thumb))
+    </div>
+    <div class="visitorDetails">
+        <div>
+            <h4>
+                @Html.ActionLink(Model.Profile.UserName, Model.Profile.UserName, "Profile", null, new { @class = "username" })
+            </h4>
+            <div>
+                @HelperFunctions.GetAge(Model.Profile.Birthday) / @ProfileItems.Gender[Model.Profile.Gender]
+                / @ProfileItems.Orientation[Model.Profile.Orientation]
+                / @ProfileItems.Situation[Model.Profile.Situation]
+                <br />
+                @Html.DisplayFor(model => Model.Profile.LocationCountry), @Html.DisplayFor(model => Model.Profile.LocationCity)
+            </div>
+        </div>
+        <small>@Model.GetTimeAgo()</small>
+    </div>
+</div>

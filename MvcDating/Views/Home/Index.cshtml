@@ -1,10 +1,17 @@
 ﻿@using MvcDating.Helpers
+@using MvcDating.Models
 @section featured {
     <section class="clearfix">
-        @foreach (string thumb in ViewBag.userPictures)
+        @foreach (FeaturedView featured in ViewBag.featuredUsers)
         {
             <div class="pictureFeatured">
-                @Html.Image("~/Uploads/" + thumb, "picture")
+                @Html.ImageLink(Url.RouteUrl(
+                routeValues: new
+                {
+                    Action = "Index",
+                    Controller = "Profile",
+                    username = featured.UserName
+                }), Html.Image("~/Uploads/" + featured.Thumb))
             </div>
         }
     </section>

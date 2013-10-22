@@ -6,8 +6,10 @@
     }
     
     <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Profile", "Index", "Profile", new { username = User.Identity.Name }, new { title = "My Profile" })</li>
         <li>@Html.ActionLink("Picture", "Index", "Pictures")</li>
         <li>@Html.ActionLink("Messages", "Index", "Messages")</li>
+        <li>@Html.ActionLink("Visitors", "Index", "Visitors")</li>
         <li>
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
         </li>

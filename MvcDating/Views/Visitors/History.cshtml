@@ -1,0 +1,22 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model IEnumerable<MvcDating.Models.VisitorView>
+
+@{
+    ViewBag.Title = "Visitors";
+}
+
+<h2>
+    @Html.ActionLink("Recent visitors", "Index", "Visitors")
+</h2>
+
+<h2>
+    @Html.ActionLink("Recent visitors", "History", "Visitors")
+</h2>
+
+@foreach (var item in Model)
+{
+    @Html.Partial("_List", item)
+}
+
+
