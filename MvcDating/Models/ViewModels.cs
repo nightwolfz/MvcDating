@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace MvcDating.Models
 {
@@ -174,7 +175,6 @@ namespace MvcDating.Models
     {
         [Key]
         public int UserId { get; set; } // my id
-
         public Profile Profile { get; set; }
         public string Thumb { get; set; }
 
@@ -186,5 +186,58 @@ namespace MvcDating.Models
         {
             return Helpers.HelperFunctions.GetTimeAgo(Timestamp);
         }
+    }
+
+
+
+    public class SearchView
+    {
+        [DisplayName("From")]
+        public int AgeFrom { get; set; }
+
+        [DisplayName("to")]
+        public int AgeTo { get; set; }
+
+        [DisplayName("Living in")]
+        public string LocationCity { get; set; }
+
+        [DisplayName("Who are")]
+        public IList<int> Gender { get; set; }
+        public IEnumerable<string> GenderItems = ProfileItems.Gender;
+
+        [DisplayName("Current situation")]
+        public int Situation { get; set; }
+        public IEnumerable<string> SituationItems = ProfileItems.Situation;
+
+        [DisplayName("Sexual orientation")]
+        public int Orientation { get; set; }
+        public IEnumerable<string> OrientationItems = ProfileItems.Orientation;
+    }
+
+    public class SearchResultView
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public DateTime Birthday { get; set; }
+        public string Age
+        {
+            get
+            {
+                return Helpers.HelperFunctions.GetAge(Birthday);
+            }
+        }
+        public int Gender { get; set; }
+        public int Orientation { get; set; }
+        public int Situation { get; set; }
+        public string LocationCountry { get; set; }
+        public string LocationCity { get; set; }
+        public string Location
+        {
+            get
+            {
+                return LocationCountry + " / " + LocationCity;
+            }
+        }
+        public string Thumb { get; set; }
     }
 }

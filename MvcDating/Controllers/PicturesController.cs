@@ -69,7 +69,7 @@ namespace MvcDating.Controllers
                     picture.Comments = new List<Comment>();
                     picture.Src = renamedFileName;
                     picture.Thumb = renamedFileName.Replace("x_","s_");
-                    picture.IsAvatar = (db.Pictures.Where(p => p.UserId == WebSecurity.CurrentUserId).Count() == 0) ? true : false;
+                    picture.IsAvatar = !db.Pictures.Any(p => p.IsAvatar);
 
                     /*var fileName = Path.GetFileName(imageData.FileName);
                     var path = Path.Combine(Server.MapPath("~/App_Data"), fileName);

@@ -17,38 +17,68 @@
 @foreach (var item in Model)
 {
     <div style="float: left;">
-        
-        <div class="pictureDropDown">
-            <ul class="pictureDropDownMenu">
-                <li>
-                    <a class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");" itemscope itemid="@item.PictureId">Make Profile Picture</a>
-                </li>
-                <li>
-                    <a class="deletePicture" itemscope itemid="@item.PictureId"><img src="~/Content/Images/delete.png" width="16" /> Delete</a>
-                </li>
-            </ul>
-        </div>
-        
         <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId">
-            <a class="pictureDropDownButton">@Html.Image("~/Content/Images/pencil.png")</a>
-            @Html.Image("~/Uploads/" + item.Thumb, "pictureImg")
+            <a class="pictureModalClick">
+                @Html.Image("~/Uploads/" + item.Thumb, "pictureImg")
+            </a>
         </div>
     </div>
+    
+    <!-- Modal -->
+    <div id="pictureModal_@item.PictureId" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @Html.Image("~/Uploads/" + item.Src, "pictureImg")
+                </div>
+                <div class="modal-footer">
+                    <b class="defaultPictureText" style="@(item.IsAvatar ? "" : "display:none");" 
+                       itemscope itemid="@item.PictureId">This is your default picture.</b>
+
+                    <button type="button" class="setDefaultPicture btn btn-primary" style="@(item.IsAvatar ? "display:none" : "");"
+                        itemscope itemid="@item.PictureId">
+                        Make Profile Picture
+                    </button>
+                        
+                    <button type="button" class="deletePicture btn btn-primary"
+                            itemscope itemid="@item.PictureId">
+                        Delete Picture
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End -->
 }
 
+@*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { data_reveal_id = "createMessageModal" })*@
+
 <script>
-    $(function () {
-        $("a.pictureDropDownButton").on("click", function() {
-            var dropDownMenu = $(this).parent().parent().find(".pictureDropDownMenu");
-            dropDownMenu.fadeIn();
-            //console.log();
+    $(function() {
+        
+        // Show modal picture
+        $(".pictureModalClick").on("click", function() {
+            window.itemModalDiv = '#pictureModal_' + $(this).parent().attr('itemid');
+
+            $(window.itemModalDiv).modal({
+                keyboard: false
+            });
+            updateModalWindowWidth(window.itemModalDiv);
         });
         
-        /*$(".pictureDiv").parent().on("mouseleave", function() {
-            $(this).find(".pictureDropDownMenu").fadeOut();
-        });*/
+        $(window).resize(function() {
+            if (window.itemModalDiv) updateModalWindowWidth();
+        });
 
-        $("a.deletePicture").on("click", function() {
+        function updateModalWindowWidth() {
+            setTimeout(function() {
+                var itemWidth = $(window.itemModalDiv + " .modal-body img").first().width() + 22;
+                $(window.itemModalDiv + " .modal-dialog").css('width', itemWidth);
+            }, 200);
+        }
+
+
+        $(".deletePicture").on("click", function() {
             var itemid = $(this).attr('itemid');
             $.ajax({
                 url: "/api/Pictures/" + itemid,
@@ -59,7 +89,7 @@
             });
         });
         
-        $("a.setDefaultPicture").on("click", function() {
+        $(".setDefaultPicture").on("click", function() {
             var itemid = $(this).attr('itemid');
             $.ajax({
                 url: "/api/Pictures/" + itemid,
@@ -67,7 +97,8 @@
                 success: function (data) {
                     $(".pictureDiv").removeClass("pictureDefault");
                     $(".pictureDiv[itemid=" + itemid + "]").addClass("pictureDefault");
-                    $(".setDefaultPicture").fadeIn();
+                    $(".defaultPictureText").fadeOut();
+                    $(".setDefaultPicture, .defaultPictureText[itemid=" + itemid + "]").fadeIn();
                     $(".setDefaultPicture[itemid=" + itemid + "]").fadeOut();
                 }
             });

@@ -34,7 +34,7 @@ namespace MvcDating.ControllersApi
             Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
             return picture;
@@ -66,10 +66,8 @@ namespace MvcDating.ControllersApi
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = picture.PictureId }));
                 return response;
             }
-            else
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+            
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
 
         // DELETE api/Pictures/5

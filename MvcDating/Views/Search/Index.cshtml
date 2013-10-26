@@ -1,0 +1,19 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model IEnumerable<MvcDating.Models.SearchResultView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("_SearchBox", new MvcDating.Models.SearchView())
+
+<h2>Search Results</h2>
+
+<div>
+
+@foreach (var item in Model) {
+    @Html.Partial("_SearchList", item)
+}
+
+</div>

@@ -1,45 +1,48 @@
 ﻿@using MvcDating.Models
 @model MvcDating.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Create a new account";
+
+    string male = MvcDating.Models.ProfileItems.Gender[0];
+    string female = MvcDating.Models.ProfileItems.Gender[1];
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
     <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @foreach (var gender in MvcDating.Models.Genders.GetList())
-                {
-                    @Html.RadioButtonFor(m => m.Gender, gender.Value)
-                    @Html.Label(gender.Name)
-                }
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-            </li>
-        </ol>
+        <legend>@ViewBag.Title</legend>
+
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.UserName)</td>
+                <td>@Html.TextBoxFor(m => m.UserName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Gender)</td>
+                <td>
+                    @Html.RadioButtonFor(m => m.Gender, "0", new { id = male })
+                    @Html.Label(male)
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    @Html.RadioButtonFor(m => m.Gender, "1", new { id = female })
+                    @Html.Label(female)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Password)</td>
+                <td>@Html.TextBoxFor(m => m.Password)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ConfirmPassword)</td>
+                <td>@Html.TextBoxFor(m => m.ConfirmPassword)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>@Html.TextBoxFor(m => m.Email)</td>
+            </tr>
+        </table>
         <input type="submit" value="Register" />
     </fieldset>
 }

@@ -20,17 +20,13 @@ namespace MvcDating.Controllers
 
         public ActionResult Index()
         {
-            var visitorView = from visitor in db.Visitors
-                           join profile in db.Profiles on visitor.VisitorId equals profile.UserId
-                           join picture in db.Pictures on profile.UserId equals picture.UserId
-                           where profile.UserId == WebSecurity.CurrentUserId
-                           select new VisitorView()
-                           {
-                               UserId = visitor.UserId,
-                               Timestamp = visitor.Timestamp,
-                               Profile = profile,
-                               Thumb = picture.Thumb
-                           };
+            var visitors = db.Visitors.Where(v => v.UserId == WebSecurity.CurrentUserId).ToList();
+
+            Mapper.CreateMap<MvcDating.Models.Visitor, VisitorView>()
+                .ForMember(src => src.Thumb, opt => opt.MapFrom(c => db.Pictures.FirstOrDefault(p => p.IsAvatar && p.UserId == c.UserId).Thumb))
+                .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Profiles.FirstOrDefault(p => p.UserId == c.UserId)));
+
+            var visitorView = Mapper.Map<IEnumerable<MvcDating.Models.Visitor>, IEnumerable<VisitorView>>(visitors);
 
             return View(visitorView);
         }

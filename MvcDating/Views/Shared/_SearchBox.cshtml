@@ -1,0 +1,25 @@
+﻿@using System.Web.UI.WebControls
+@using MvcDating.Models
+@model MvcDating.Models.SearchView
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Search</legend>
+
+        <div class="col-md-7">
+            @Html.LabelFor(m => m.AgeFrom)
+            @Html.EditorFor(m => m.AgeFrom, new{ value = "18"})
+            @Html.LabelFor(m => m.AgeTo)
+            @Html.EditorFor(m => m.AgeTo, new { value = "24" })
+            <br/>
+            @Html.LabelFor(m => m.Gender)
+            <input type="checkbox" id="GenderMale" name="Gender" value="0" /> @Html.Label(ProfileItems.Gender[0], new { @for = "GenderMale" })
+            <input type="checkbox" id="GenderFemale" name="Gender" value="1" /> @Html.Label(ProfileItems.Gender[1], new { @for = "GenderFemale" })
+            <br />
+        </div>
+        
+        <br/>
+        <input type="submit" value="Search profiles">
+    </fieldset>
+}
