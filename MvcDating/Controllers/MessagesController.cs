@@ -13,6 +13,7 @@ using WebMatrix.WebData;
 
 namespace MvcDating.Controllers
 {
+    [Authorize]
     [InitializeSimpleMembership]
     public class MessagesController : Controller
     {

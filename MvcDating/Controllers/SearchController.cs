@@ -11,6 +11,7 @@ using MvcDating.Models;
 
 namespace MvcDating.Controllers
 {
+    [Authorize]
     public class SearchController : Controller
     {
         private UsersContext db = new UsersContext();

@@ -13,14 +13,14 @@ using WebMatrix.WebData;
 
 namespace MvcDating.Controllers
 {
+    [Authorize]
     [InitializeSimpleMembership]
     public class ProfileController : Controller
     {
         private UsersContext db = new UsersContext();
 
-        //
         // GET: /Profile/
-
+        [AllowAnonymous]
         public ActionResult Index(string username = "")
         {
             // Get profile information
@@ -56,9 +56,8 @@ namespace MvcDating.Controllers
             return View(profileView);
         }
 
-        //
-        // GET: /Profile/Edit/5
 
+        // GET: /Profile/Edit/5
         public ActionResult Edit(string username = "")
         {
             var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
@@ -77,15 +76,14 @@ namespace MvcDating.Controllers
             return View(profileview);
         }
 
-        //
         // POST: /Profile/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profileview)
         {
             Mapper.CreateMap<ProfileView, MvcDating.Models.Profile>();
             var profile = Mapper.Map<ProfileView, MvcDating.Models.Profile>(profileview);
+            profile.UpdatedDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {

@@ -3,9 +3,10 @@
 @skyblue: #cce4fd;
 @gray: #888;
 @lightblue: #00AAEB;
-@blue: #00A3FF;
+@royalblue: #4e69a2;
+@blue: #0096EB;
 @darkblue: #0071B9;
-@red: #E4072B;
+@red: #E01212;
 
 .blueshadow(){ text-shadow: 0 1px 1px #0067c1; }
 .anti-alias(){-webkit-text-stroke: 0.2px;}
@@ -225,17 +226,17 @@ input.input-validation-error {
 button, a.button, input[type="submit"], input[type="button"] {
     color: #fff;
     background: @blue;
+    border: 0;
     font-size: 12px;
     font-weight: normal;
     padding: 4px 10px;
-    border: 0;
     text-decoration: none;
     vertical-align: middle;
     display: inline-block;
     cursor: pointer;
+    border-radius: 2px;
 
     &:hover {
-        background: #2776BE;
         background: darken(@blue, 20%);
     }
 }

@@ -93,6 +93,9 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.3.4.0\lib\ImageResizer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
@@ -309,7 +312,6 @@
     <Content Include="Content\main.min.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>
-    <Content Include="Content\Scripts\jquery.reveal.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />

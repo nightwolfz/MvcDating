@@ -19,7 +19,7 @@
     <div style="float: left;">
         <div class="pictureDiv @(item.IsAvatar ? "pictureDefault" : "")" itemscope itemid="@item.PictureId">
             <a class="pictureModalClick">
-                @Html.Image("~/Uploads/" + item.Thumb, "pictureImg")
+                <img src="~/Uploads/@item.Thumb" class="pictureImg" title="Uploaded on @item.UploadedDate.ToShortDateString()" />
             </a>
         </div>
     </div>
@@ -29,18 +29,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
                     @Html.Image("~/Uploads/" + item.Src, "pictureImg")
                 </div>
                 <div class="modal-footer">
                     <b class="defaultPictureText" style="@(item.IsAvatar ? "" : "display:none");" 
                        itemscope itemid="@item.PictureId">This is your default picture.</b>
 
-                    <button type="button" class="setDefaultPicture btn btn-primary" style="@(item.IsAvatar ? "display:none" : "");"
+                    <button type="button" class="setDefaultPicture" style="@(item.IsAvatar ? "display:none" : "");"
                         itemscope itemid="@item.PictureId">
                         Make Profile Picture
                     </button>
                         
-                    <button type="button" class="deletePicture btn btn-primary"
+                    <button type="button" class="deletePicture bgred"
                             itemscope itemid="@item.PictureId">
                         Delete Picture
                     </button>
@@ -80,13 +81,15 @@
 
         $(".deletePicture").on("click", function() {
             var itemid = $(this).attr('itemid');
-            $.ajax({
-                url: "/api/Pictures/" + itemid,
-                type: "DELETE",
-                success: function (data) {
-                    $(".pictureDiv[itemid=" + itemid + "]").fadeOut();
-                }
-            });
+            if (confirm('Are you sure you want to DELETE this picture?')) {
+                $.ajax({
+                    url: "/api/Pictures/" + itemid,
+                    type: "DELETE",
+                    success: function(data) {
+                        $(".pictureDiv[itemid=" + itemid + "]").fadeOut();
+                    }
+                });
+            }
         });
         
         $(".setDefaultPicture").on("click", function() {

@@ -1,16 +1,16 @@
 ﻿@using MvcDating.Helpers
 @using MvcDating.Models
 @model MvcDating.Models.VisitorView
-
+           
 <div class="visitorWrapper clearfix">
     <div class="visitorPicture">
         @Html.ImageLink(Url.RouteUrl(
-            routeValues: new
-            {
-                Action = "Index",
-                Controller = "Profile",
-                username = Model.Profile.UserName
-            }), Html.Image("~/Uploads/" + Model.Thumb))
+        routeValues: new
+        {
+            Action = "Index",
+            Controller = "Profile",
+            username = Model.Profile.UserName
+        }), Html.Image("~/Uploads/" + Model.Thumb))
     </div>
     <div class="visitorDetails">
         <div>

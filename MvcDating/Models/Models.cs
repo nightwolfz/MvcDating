@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,14 @@ namespace MvcDating.Models
         public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
-        
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Profile>().Property(f => f.Birthday).HasColumnType("datetime"); // Before 2000
+        }
     }
+
 
     /**
      * Good to know: 

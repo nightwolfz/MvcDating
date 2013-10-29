@@ -19,7 +19,7 @@
                 <div class="message-body">
                     <div class="message-left">
                         <a href="/Profile/@item.UserName">
-                            @Html.Image("~/Uploads/" + item.UserPicture, "picture")
+                            @Html.Image("~/Uploads/" + (item.UserPicture.IsEmpty() ? "default.png" : item.UserPicture), "picture")
                         </a>
                     </div>
                     <div class="message-right">

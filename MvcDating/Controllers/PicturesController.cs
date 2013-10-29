@@ -14,6 +14,7 @@ using MvcDating.Helpers;
 
 namespace MvcDating.Controllers
 {
+    [Authorize]
     [InitializeSimpleMembership]
     public class PicturesController : Controller
     {
@@ -67,13 +68,9 @@ namespace MvcDating.Controllers
                     picture.UserId = WebSecurity.CurrentUserId;
                     picture.UploadedDate = DateTime.Now;
                     picture.Comments = new List<Comment>();
-                    picture.Src = renamedFileName;
-                    picture.Thumb = renamedFileName.Replace("x_","s_");
+                    picture.Thumb = renamedFileName[0];
+                    picture.Src = renamedFileName[1];
                     picture.IsAvatar = !db.Pictures.Any(p => p.IsAvatar);
-
-                    /*var fileName = Path.GetFileName(imageData.FileName);
-                    var path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
-                    imageData.SaveAs(path);*/
 
                     db.Pictures.Add(picture);
                     db.SaveChanges();

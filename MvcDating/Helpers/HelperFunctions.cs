@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
+using ImageResizer;
 
 namespace MvcDating.Helpers
 {
@@ -36,108 +37,33 @@ namespace MvcDating.Helpers
         /**
          * Upload and resize pictures
          */
-        public static readonly string ItemUploadFolderPath = "~/Uploads/";
-
-        public string UploadAndRename(HttpPostedFileBase file)
+        public List<string> UploadAndRename(HttpPostedFileBase file)
         {
-            string finalFileName = "x_" + DateTime.Now.ToFileTime() + Path.GetExtension(file.FileName);
-            return UploadAndResize(file, finalFileName);
-        }
+            const string uploadFolder = "~/Uploads/";
 
-        public string UploadAndResize(HttpPostedFileBase file, string fileName)
-        {
-            var path = Path.Combine(HttpContext.Current.Request.MapPath(ItemUploadFolderPath), fileName);
-            string extension = Path.GetExtension(file.FileName);
+            if (file == null || file.ContentLength <= 0) throw new Exception("Image error: File is null or has no content.");
 
-            // Make sure the file is valid
-            if (!ValidateExtension(extension)) throw new Exception("Invalid image file extension");
-
-            try
+            var generatedFiles = new List<string>();
+            var versions = new Dictionary<string, string>
             {
-                file.SaveAs(path);
+                {"_s", "width=160&height=160&crop=auto&format=jpg"},
+                {"_x", "maxwidth=1280&maxheight=1280&format=jpg"}
+            };
 
-                Image imgOriginal = Image.FromFile(path);
+            // Generate a filename (GUIDs are best).
+            var fileName = Path.Combine(uploadFolder, System.Guid.NewGuid().ToString());
 
-                // Small image
-                Image imgActualSmall = ScaleBySize(imgOriginal, 150);
-                imgActualSmall.Save(path.Replace("x_", "s_"));
-                imgActualSmall.Dispose();
-
-                // Bigger image
-                //Image imgActualBig = ScaleBySize(imgOriginal, 720);
-                //imgActualBig.Save(path);
-                //imgActualBig.Dispose();
-
-                imgOriginal.Dispose();
-                return fileName;
-            }
-            catch (Exception ex)
+            // Generate each version
+            foreach (string suffix in versions.Keys)
             {
-                throw new Exception("Could not resize or save resized file: " + ex.Message);
+                // Let the image builder add the correct extension based on the output file type
+                var imageJob = new ImageResizer.ImageJob(file, fileName + suffix + ".<ext>", 
+                    new ImageResizer.Instructions(versions[suffix]));
+                imageJob.Build();
+                generatedFiles.Add(fileName.Replace(uploadFolder, "") + suffix + ".jpg");
             }
-        }
 
-        private static bool ValidateExtension(string extension)
-        {
-            extension = extension.ToLower();
-            switch (extension)
-            {
-                case ".jpg":
-                    return true;
-                case ".png":
-                    return true;
-                case ".gif":
-                    return true;
-                case ".jpeg":
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-
-        public static Image ScaleBySize(Image imgPhoto, int size)
-        {
-            int logoSize = size;
-
-            float sourceWidth = imgPhoto.Width;
-            float sourceHeight = imgPhoto.Height;
-            float destHeight = 0;
-            float destWidth = 0;
-            const int sourceX = 0;
-            const int sourceY = 0;
-            const int destX = 0;
-            const int destY = 0;
-
-            // Resize Image to have the height = logoSize/2 or width = logoSize.
-            // Height is greater than width, set Height = logoSize and resize width accordingly
-            if (sourceWidth > (2 * sourceHeight))
-            {
-                destWidth = logoSize;
-                destHeight = (float)(sourceHeight * logoSize / sourceWidth);
-            }
-            else
-            {
-                int h = logoSize / 2;
-                destHeight = h;
-                destWidth = (float)(sourceWidth * h / sourceHeight);
-            }
-            // Width is greater than height, set Width = logoSize and resize height accordingly
-
-            var bmPhoto = new Bitmap((int)destWidth, (int)destHeight, PixelFormat.Format32bppPArgb);
-            bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
-
-            Graphics grPhoto = Graphics.FromImage(bmPhoto);
-            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            grPhoto.DrawImage(imgPhoto,
-                new Rectangle(destX, destY, (int)destWidth, (int)destHeight),
-                new Rectangle(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight),
-                GraphicsUnit.Pixel);
-
-            grPhoto.Dispose();
-
-            return bmPhoto;
+            return generatedFiles;
         }
 
         /**
@@ -145,7 +71,7 @@ namespace MvcDating.Helpers
          */
         public static string GetAge(DateTime birthday)
         {
-            DateTime now = DateTime.Today;
+            var now = DateTime.Today;
             int age = now.Year - birthday.Year;
             if (now < birthday.AddYears(age)) age--;
 
