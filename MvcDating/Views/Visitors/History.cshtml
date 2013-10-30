@@ -7,16 +7,12 @@
 }
 
 <h2>
-    @Html.ActionLink("Recent visitors", "Index", "Visitors")
-</h2>
-
-<h2>
     @Html.ActionLink("Recent visitors", "History", "Visitors")
 </h2>
 
 @foreach (var item in Model)
 {
-    @Html.Partial("_List", item)
+    @Html.Partial("_VisitorList", item)
 }
 
 

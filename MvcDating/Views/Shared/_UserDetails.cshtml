@@ -1,0 +1,16 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model dynamic
+    
+<div>
+    <h4>
+        @Html.ActionLink((string)Model.UserName, (string)Model.UserName, "Profile", null, new { @class = "username" })
+    </h4>
+    <div>
+        @Time.GetAge(Model.Birthday) / @ProfileItems.Gender[Model.Gender]
+        / @ProfileItems.Orientation[Model.Orientation]
+        / @ProfileItems.Situation[Model.Situation]
+        <br />
+        <small>@Model.LocationCountry, @Model.LocationCity</small>
+    </div>
+</div>

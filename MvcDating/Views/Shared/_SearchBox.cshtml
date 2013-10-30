@@ -1,6 +1,6 @@
 ﻿@using System.Web.UI.WebControls
 @using MvcDating.Models
-@model MvcDating.Models.SearchView
+@model MvcDating.Models.SearchBoxView
 
 @using (Html.BeginForm())
 {
@@ -14,8 +14,11 @@
             @Html.EditorFor(m => m.AgeTo, new { value = "24" })
             <br/>
             @Html.LabelFor(m => m.Gender)
-            <input type="checkbox" id="GenderMale" name="Gender" value="0" /> @Html.Label(ProfileItems.Gender[0], new { @for = "GenderMale" })
-            <input type="checkbox" id="GenderFemale" name="Gender" value="1" /> @Html.Label(ProfileItems.Gender[1], new { @for = "GenderFemale" })
+            <input type="checkbox" id="GenderMale" name="Gender" value="0" @(Model.Gender.Contains(0) ? "checked" : "") /> 
+            @Html.Label(ProfileItems.Gender[0], new { @for = "GenderMale" })
+
+            <input type="checkbox" id="GenderFemale" name="Gender" value="1" @(Model.Gender.Contains(1) ? "checked" : "") /> 
+            @Html.Label(ProfileItems.Gender[1], new { @for = "GenderFemale" })
             <br />
         </div>
         

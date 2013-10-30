@@ -24,24 +24,19 @@ namespace MvcDating.Controllers
 
         public ActionResult Index()
         {
-            var conversationView = new List<ConversationView> { };
-            var conversations = (from convo in db.Conversations
-                                                where (convo.UserIdFrom == WebSecurity.CurrentUserId || convo.UserIdTo == WebSecurity.CurrentUserId)
-                                                select convo).ToList();
 
-            foreach (Conversation conv in conversations)
+            var conversations = from c in db.Conversations
+                                where (c.UserIdFrom == WebSecurity.CurrentUserId || c.UserIdTo == WebSecurity.CurrentUserId)
+                                select c;
+
+            var conversationView = conversations.ToList().Select(c => new ConversationView()
             {
-                int convoWithId = conv.UserIdFrom == WebSecurity.CurrentUserId ? conv.UserIdTo : conv.UserIdFrom;
-
-                conversationView.Add(new ConversationView()
-                {
-                    ConversationId = conv.ConversationId,
-                    UserPicture = db.Pictures.Single(p => p.IsAvatar && p.UserId == convoWithId).Thumb,
-                    UserNameWith = db.Profiles.Single(p => p.UserId == convoWithId).UserName,
-                    LastMessage = conv.GetLastMessage(),
-                    Timestamp = conv.Timestamp
-                });
-            }
+                ConversationId = c.ConversationId,
+                UserPicture = c.GetUserPicture(c.UserIdFrom == WebSecurity.CurrentUserId ? c.UserIdTo : c.UserIdFrom),
+                UserNameWith = c.GetUserName(c.UserIdFrom == WebSecurity.CurrentUserId ? c.UserIdTo : c.UserIdFrom),
+                LastMessage = c.GetLastMessage(),
+                Timestamp = c.Timestamp
+            });
 
             return View(conversationView.ToList());
         }
@@ -53,23 +48,18 @@ namespace MvcDating.Controllers
         {
             Conversation conversation = db.Conversations.Find(id);
 
-            if (conversation == null)
-            {
-                return HttpNotFound();
-            }
+            if (conversation == null) return HttpNotFound();
 
-            var messageView = new List<MessageView> { };
+            var messages = from msg in conversation.Messages select msg;
 
-            foreach (Message msg in conversation.Messages)
+            var messageView = messages.ToList().Select(msg => new MessageView
             {
-                messageView.Add(new MessageView{
-                    UserId = msg.UserId,
-                    UserName = (from profile in db.Profiles where profile.UserId == msg.UserId select profile.UserName).SingleOrDefault(),
-                    UserPicture = (from picture in db.Pictures where (picture.IsAvatar == true && picture.UserId == msg.UserId) select picture.Thumb).SingleOrDefault(),
-                    Content = msg.Content,
-                    Timestamp = msg.Timestamp
-                });
-            }
+                UserId = msg.UserId,
+                UserName = msg.GetUserName(msg.UserId),
+                UserPicture = msg.GetUserPicture(msg.UserId),
+                Content = msg.Content,
+                Timestamp = msg.Timestamp
+            });
 
             ViewBag.ConversationId = id;
             ViewBag.UserIdWith = conversation.UserIdFrom != WebSecurity.CurrentUserId
@@ -87,7 +77,7 @@ namespace MvcDating.Controllers
             var profile = db.Profiles.Find(userId);
 
             ViewBag.userName = profile.UserName;
-            ViewBag.userPicture = (from p in db.Pictures where (p.UserId==userId && p.IsAvatar == true) select p.Thumb).FirstOrDefault();
+            ViewBag.userPicture = profile.GetUserPicture(userId);
             return PartialView(new Message()
             {
                 UserId = userId

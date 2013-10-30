@@ -284,10 +284,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Helpers\HelperFunctions.cs" />
+    <Compile Include="Helpers\Time.cs" />
     <Compile Include="Helpers\SessionData.cs" />
+    <Compile Include="Helpers\Upload.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Conversations.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -312,6 +314,8 @@
     <Content Include="Content\main.min.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>
+    <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\Scripts\respond.src.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />
@@ -368,7 +372,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Pictures\Index.cshtml" />
     <Content Include="Views\Pictures\Details.cshtml" />
-    <Content Include="Views\Pictures\Create.cshtml" />
+    <Content Include="Views\Pictures\Upload.cshtml" />
     <Content Include="Views\Messages\Index.cshtml" />
     <Content Include="Views\Messages\Read.cshtml" />
     <Content Include="Views\Messages\Create.cshtml" />
@@ -384,6 +388,8 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Shared\_SearchList.cshtml" />
+    <Content Include="Views\Shared\_UserDetails.cshtml" />
+    <Content Include="Views\Shared\_UploadPicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

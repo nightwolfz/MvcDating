@@ -4,26 +4,9 @@
 
 <div class="visitorWrapper clearfix">
     <div class="visitorPicture">
-        @Html.ImageLink(Url.RouteUrl(
-        routeValues: new
-        {
-            Action = "Index",
-            Controller = "Profile",
-            username = Model.UserName
-        }), Html.Image("~/Uploads/" + Model.Thumb))
+        @Html.DisplayAvatar(Model.UserName, "~/Uploads/" + Model.Thumb)
     </div>
     <div class="visitorDetails">
-        <div>
-            <h4>
-                @Html.ActionLink(Model.UserName, Model.UserName, "Profile", null, new { @class = "username" })
-            </h4>
-            <div>
-                @HelperFunctions.GetAge(Model.Birthday) / @ProfileItems.Gender[Model.Gender]
-                / @ProfileItems.Orientation[Model.Orientation]
-                / @ProfileItems.Situation[Model.Situation]
-                <br />
-                <small>@Html.DisplayFor(model => Model.Location)</small>
-            </div>
-        </div>
+        @Html.Partial("_UserDetails", Model)
     </div>
 </div>

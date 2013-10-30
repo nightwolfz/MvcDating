@@ -22,24 +22,6 @@ namespace MvcDating.ControllersApi
     {
         private UsersContext db = new UsersContext();
 
-        // GET api/Pictures
-        public IEnumerable<Picture> GetPictures()
-        {
-            return db.Pictures.AsEnumerable();
-        }
-
-        // GET api/Pictures/5
-        public Picture GetPicture(int id)
-        {
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            return picture;
-        }
-
         // PUT api/Pictures/5
         public HttpResponseMessage PutPicture(int id)
         {
@@ -54,26 +36,10 @@ namespace MvcDating.ControllersApi
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        // POST api/Pictures
-        public HttpResponseMessage PostPicture(Picture picture)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Pictures.Add(picture);
-                db.SaveChanges();
-
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, picture);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = picture.PictureId }));
-                return response;
-            }
-            
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-        }
-
         // DELETE api/Pictures/5
         public HttpResponseMessage DeletePicture(int id)
         {
-            Picture picture = db.Pictures.Where(p => p.PictureId == id).Where(p => p.UserId == WebSecurity.CurrentUserId).Single();
+            Picture picture = db.Pictures.Single(p => p.PictureId == id && p.UserId == WebSecurity.CurrentUserId);
             if (picture == null) return Request.CreateResponse(HttpStatusCode.NotFound);
             db.Pictures.Remove(picture);
             db.SaveChanges();

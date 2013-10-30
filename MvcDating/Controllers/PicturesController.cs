@@ -44,26 +44,25 @@ namespace MvcDating.Controllers
         }
 
         //
-        // GET: /Pictures/Create
+        // GET: /Pictures/Upload
 
-        public ActionResult Create()
+        public ActionResult Upload()
         {
             ViewData["UserId"] = WebSecurity.CurrentUserId;
             return View();
         }
 
         //
-        // POST: /Pictures/Create
+        // POST: /Pictures/Upload
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Picture picture, HttpPostedFileBase imageData)
+        public ActionResult Upload(Picture picture, HttpPostedFileBase imageData)
         {
             if (ModelState.IsValid)
             {
                 if (imageData.ContentLength > 0)
                 {
-                    var helper = new HelperFunctions();
-                    var renamedFileName = helper.UploadAndRename(imageData);
+                    var renamedFileName = Helpers.Upload.UploadAndRename(imageData);
 
                     picture.UserId = WebSecurity.CurrentUserId;
                     picture.UploadedDate = DateTime.Now;

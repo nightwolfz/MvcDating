@@ -8,6 +8,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using AutoMapper;
 using MvcDating.Models;
+using Profile = MvcDating.Models.Profile;
 
 namespace MvcDating.Controllers
 {
@@ -16,41 +17,41 @@ namespace MvcDating.Controllers
     {
         private UsersContext db = new UsersContext();
 
-        //
         // GET: /Search/
-
         public ActionResult Index()
         {
             var profiles = db.Profiles.ToList();
 
-            Mapper.CreateMap<MvcDating.Models.Profile, SearchResultView>()
-                .ForMember(
-                src => src.Thumb, 
-                opt => opt.MapFrom(c => c.Pictures.Single(p => p.IsAvatar).Thumb)
-            );
-
-            var resultsView = Mapper.Map<IEnumerable<MvcDating.Models.Profile>, IEnumerable<SearchResultView>>(profiles);
+            var resultsView = new SearchView
+            {
+                SearchBox = new SearchBoxView(),
+                SearchResults = CreateSearchResultMapping(profiles)
+            };
 
             return View(resultsView);
         }
 
         [HttpPost]
-        public ActionResult Index(SearchView searchView)
+        public ActionResult Index(SearchBoxView searchBoxView)
         {
-            if (searchView.Gender == null)
-                searchView.Gender = new List<int>(0);
+            var profiles = (from p in db.Profiles where searchBoxView.Gender.Contains(p.Gender) select p).ToList();
 
-            var profiles = (from p in db.Profiles where searchView.Gender.Contains(p.Gender) select p).ToList();
-
-            Mapper.CreateMap<MvcDating.Models.Profile, SearchResultView>()
-                .ForMember(
-                src => src.Thumb,
-                opt => opt.MapFrom(c => c.Pictures.Single(p => p.IsAvatar).Thumb)
-            );
-
-            var resultsView = Mapper.Map<IEnumerable<MvcDating.Models.Profile>, IEnumerable<SearchResultView>>(profiles);
+            var resultsView = new SearchView
+            {
+                SearchBox = searchBoxView,
+                SearchResults = CreateSearchResultMapping(profiles)
+            };
 
             return View(resultsView);
+        }
+
+        private IEnumerable<SearchResultView> CreateSearchResultMapping(IEnumerable<Profile> profiles)
+        {
+            Mapper.CreateMap<MvcDating.Models.Profile, SearchResultView>()
+                .ForMember(src => src.Thumb, opt => opt.MapFrom(c => c.Pictures.SingleOrDefault(p => p.IsAvatar).Thumb))
+                .ForMember(src => src.Thumb, opt => opt.NullSubstitute("default.png"));
+
+            return Mapper.Map<IEnumerable<Profile>, IEnumerable<SearchResultView>>(profiles);
         }
 
         protected override void Dispose(bool disposing)

@@ -154,7 +154,7 @@ namespace MvcDating.Models
 
         public string GetTimeAgo()
         {
-            return Helpers.HelperFunctions.GetTimeAgo(Timestamp);
+            return Helpers.Time.GetTimeAgo(Timestamp);
         }
 
     }
@@ -184,14 +184,23 @@ namespace MvcDating.Models
 
         public string GetTimeAgo()
         {
-            return Helpers.HelperFunctions.GetTimeAgo(Timestamp);
+            return Helpers.Time.GetTimeAgo(Timestamp);
         }
     }
 
-
-
     public class SearchView
     {
+        public SearchBoxView SearchBox { get; set; }
+        public IEnumerable<SearchResultView> SearchResults { get; set; }
+    }
+
+    public class SearchBoxView
+    {
+        public SearchBoxView()
+        {
+            Gender = new List<int>{0,1};
+        }
+
         [DisplayName("From")]
         public int AgeFrom { get; set; }
 
@@ -223,7 +232,7 @@ namespace MvcDating.Models
         {
             get
             {
-                return Helpers.HelperFunctions.GetAge(Birthday);
+                return Helpers.Time.GetAge(Birthday);
             }
         }
         public int Gender { get; set; }
@@ -231,13 +240,6 @@ namespace MvcDating.Models
         public int Situation { get; set; }
         public string LocationCountry { get; set; }
         public string LocationCity { get; set; }
-        public string Location
-        {
-            get
-            {
-                return LocationCountry + " / " + LocationCity;
-            }
-        }
         public string Thumb { get; set; }
     }
 }

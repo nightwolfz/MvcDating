@@ -5,13 +5,13 @@
     ViewBag.Title = "Pictures";
 }
 
-<p>
-    @Html.ActionLink("Upload new", "Create", null, new { @class = "button" })
-</p>
+@Html.Partial("_Upload")
+
+<h2>My Pictures</h2>
 
 @if (!Model.Any())
 {
-    <h4>No pictures found. Why not @Html.ActionLink("upload", "Create", null, new { @class = "button" }) some? :)</h4>
+    <h4>No pictures found. Why not @Html.ActionLink("upload", "Upload", null, new { @class = "button" }) some? :)</h4>
 }
 
 @foreach (var item in Model)
@@ -41,7 +41,7 @@
                         Make Profile Picture
                     </button>
                         
-                    <button type="button" class="deletePicture bgred"
+                    <button type="button" class="deletePicture bgred" data-dismiss="modal"
                             itemscope itemid="@item.PictureId">
                         Delete Picture
                     </button>
@@ -51,8 +51,6 @@
     </div>
     <!-- End -->
 }
-
-@*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { data_reveal_id = "createMessageModal" })*@
 
 <script>
     $(function() {

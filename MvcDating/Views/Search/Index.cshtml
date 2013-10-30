@@ -1,19 +1,24 @@
 ﻿@using MvcDating.Helpers
 @using MvcDating.Models
-@model IEnumerable<MvcDating.Models.SearchResultView>
+@model MvcDating.Models.SearchView
 
 @{
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("_SearchBox", new MvcDating.Models.SearchView())
+@Html.Partial("_SearchBox", Model.SearchBox)
 
 <h2>Search Results</h2>
 
 <div>
+    @if (!Model.SearchResults.Any())
+    {
+        <h2>No profiles found for this search. Maybe you could try different settings.</h2>
+    }
 
-@foreach (var item in Model) {
-    @Html.Partial("_SearchList", item)
-}
+    @foreach (var item in Model.SearchResults)
+    {
+        @Html.Partial("_SearchList", item)
+    }
 
 </div>

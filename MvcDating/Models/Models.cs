@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace MvcDating.Models
 {
@@ -56,6 +58,12 @@ namespace MvcDating.Models
         public string MessageIf { get; set; }
         public DateTime UpdatedDate { get; set; }
         public virtual IList<Picture> Pictures { get; set; } // one-to-many
+
+        public string GetUserPicture(int userId)
+        {
+            var pictureQuery = Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
+            return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
+        }
     }
 
     public class Picture
@@ -68,6 +76,14 @@ namespace MvcDating.Models
         public bool IsAvatar { get; set; }
         public DateTime UploadedDate { get; set; }
         public virtual IList<Comment> Comments { get; set; } // one-to-many
+
+        private UsersContext db = new UsersContext();
+
+        public string GetUserPicture(int userId)
+        {
+            var pictureQuery = db.Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
+            return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
+        }
     }
 
     public class Comment
@@ -78,36 +94,6 @@ namespace MvcDating.Models
         public int UserId { get; set; }
         public string Content { get; set; }
         public virtual Picture Picture { get; set; } // many-to-one
-    }
-
-    public class Conversation
-    {
-        [Key]
-        public int ConversationId { get; set; } // one-to-many
-        public int UserIdTo { get; set; }
-        public int UserIdFrom { get; set; }// one-to-many
-        public DateTime Timestamp { get; set; }
-
-        public virtual IList<Message> Messages { get; set; } // one-to-many
-
-        public Message GetLastMessage()
-        {
-            var lastDate = Messages.Where(m => m.ConversationId == ConversationId).Max(m => m.Timestamp);
-            var lastMessage = Messages.LastOrDefault(m => m.ConversationId == ConversationId && m.Timestamp == lastDate);
-            return lastMessage;
-        }
-    }
-
-    public class Message
-    {
-        [Key]
-        public int MessageId { get; set; }
-        public int ConversationId { get; set; }
-        public int UserId { get; set; }
-        public string Content { get; set; }
-        public DateTime Timestamp { get; set; }
-
-        public virtual Conversation Conversation { get; set; } // many-to-one
     }
 
     public class Visitor

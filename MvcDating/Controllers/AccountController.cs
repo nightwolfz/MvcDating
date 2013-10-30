@@ -356,7 +356,7 @@ namespace MvcDating.Controllers
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
-        #region Helpers
+        #region Time
         private ActionResult RedirectToLocal(string returnUrl) {
             if (Url.IsLocalUrl(returnUrl)) {
                 return Redirect(returnUrl);
