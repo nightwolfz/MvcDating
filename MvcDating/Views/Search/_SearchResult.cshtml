@@ -1,0 +1,14 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model MvcDating.Models.SearchResultView
+
+<div class="visitorWrapper">
+    <div class="visitorPicture">
+        @Html.DisplayAvatar(Model.UserName, "~/Uploads/" + Model.Thumb)
+        <i class="photo-counter bl">@Model.PictureCount</i>
+        
+    </div>
+    <div class="visitorDetails">
+        @Html.Partial("_UserDetails", Model)
+    </div>
+</div>
