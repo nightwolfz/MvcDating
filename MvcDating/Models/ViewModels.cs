@@ -241,5 +241,6 @@ namespace MvcDating.Models
         public string LocationCountry { get; set; }
         public string LocationCity { get; set; }
         public string Thumb { get; set; }
+        public int PictureCount { get; set; }
     }
 }

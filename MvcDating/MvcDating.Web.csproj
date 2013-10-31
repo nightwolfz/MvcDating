@@ -307,6 +307,7 @@
     <Content Include="Content\bootstrap.less" />
     <None Include="Content\main.less" />
     <Content Include="Content\Images\icon_buttons.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\pencil.png" />
     <Content Include="Content\main.css">
       <DependentUpon>main.less</DependentUpon>
@@ -342,19 +343,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Content\Scripts\_references.js" />
-    <Content Include="Content\Images\accent.png" />
     <Content Include="Content\Images\bullet.png" />
-    <Content Include="Content\Images\heroAccent.png" />
-    <Content Include="Content\Images\orderedList0.png" />
-    <Content Include="Content\Images\orderedList1.png" />
-    <Content Include="Content\Images\orderedList2.png" />
-    <Content Include="Content\Images\orderedList3.png" />
-    <Content Include="Content\Images\orderedList4.png" />
-    <Content Include="Content\Images\orderedList5.png" />
-    <Content Include="Content\Images\orderedList6.png" />
-    <Content Include="Content\Images\orderedList7.png" />
-    <Content Include="Content\Images\orderedList8.png" />
-    <Content Include="Content\Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -372,7 +361,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Pictures\Index.cshtml" />
     <Content Include="Views\Pictures\Details.cshtml" />
-    <Content Include="Views\Pictures\Upload.cshtml" />
     <Content Include="Views\Messages\Index.cshtml" />
     <Content Include="Views\Messages\Read.cshtml" />
     <Content Include="Views\Messages\Create.cshtml" />
@@ -386,10 +374,11 @@
     <Content Include="Views\Visitors\History.cshtml" />
     <Content Include="Views\Shared\_VisitorList.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Shared\_SearchBox.cshtml" />
+    <Content Include="Views\Search\_SearchBox.cshtml" />
     <Content Include="Views\Shared\_SearchList.cshtml" />
     <Content Include="Views\Shared\_UserDetails.cshtml" />
-    <Content Include="Views\Shared\_UploadPicture.cshtml" />
+    <Content Include="Views\Pictures\_Upload.cshtml" />
+    <Content Include="Views\Home\FeaturedProfiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

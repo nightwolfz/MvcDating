@@ -163,12 +163,29 @@ input.input-validation-error {
     }
 }
 .visitorPicture {
-    padding: 12px 10px 12px 0;
+    padding: 4px 10px 2px 0;
     float: left;
+    a {
+        display: inline-block;
+    }
 }
 .visitorWrapper {
-    border: solid #eee;
-    border-width: 1px 0;
+    width: 180px;
+    border: 2px solid #eee;
+    padding: 4px 8px;
+    margin-right: 5px;
+    float: left;
+
+    .visitorDetails {
+        font-size: 11px;
+        h4 {
+            font-size: 14px;
+            margin-top: 0;
+        }
+        small {
+            font-size: 11px;
+        }
+    }
 }
 
 
@@ -298,7 +315,35 @@ img.picture {
     }
 }
 .pictureFeatured {
-    float: left;
+    position: relative;
+    height: 96px;
+
+    a {
+        margin-top: 15px;
+        float: left;
+
+        &:first-child > img:hover {
+            left: 0px;
+            margin-right: 0;
+        }
+        img {
+            width: 64px;
+            height: 64px;
+            margin-right: 5px;
+            position: relative;
+        
+            &:hover {
+                width: 80px;
+                height: 80px;
+                top: -12px;
+                left: -12px;
+                transition: all .1s ease-in-out;
+                -moz-transition: all .1s ease-in-out;
+                -o-transition: all .1s ease-in-out;
+                -webkit-transition: all .1s ease-in-out;
+            }
+        }
+    }
 }
 
 a.pictureDropDownButton {

@@ -29,12 +29,14 @@
     </div>
 </div>
 
-<div>
-    @foreach (var picture in Model.Pictures)
-    {
-        @Html.Image("~/Uploads/" + picture.Thumb, "pictureImg")
-    }
-</div>
+
+@foreach (var picture in Model.Pictures)
+{
+    <div class="thumbnail">
+        @Html.Image("~/Uploads/" + picture.Thumb, "")
+    </div>
+}
+
 
 <div>
     <h4>@Html.DisplayNameFor(model => model.Summary)</h4>

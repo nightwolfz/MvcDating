@@ -43,11 +43,10 @@
                     @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
                 </small>
             }
-            </div>
-        <br/>
+        </div>
 
         <div class="container">
-            @RenderSection("featured", required: false)
+            @Html.Action("FeaturedProfiles", "Home")
             @RenderBody()
         </div>
         

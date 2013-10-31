@@ -54,7 +54,14 @@ namespace MvcDating.Helpers
                 Controller = "Profile",
                 username = userName
             });
-            return ImageLink(helper, urlRoute, Image(helper, thumbSrc, htmlAttributes: new { @onerror = "this.src='Uploads/default.png';" }));
+
+            var attributes = new
+            {
+                onerror = "this.src='Uploads/default.png';",
+                title = userName
+            };
+
+            return ImageLink(helper, urlRoute, Image(helper, thumbSrc, htmlAttributes: attributes));
         }
     }
 }

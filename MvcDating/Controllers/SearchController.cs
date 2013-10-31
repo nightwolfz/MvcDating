@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using AutoMapper;
 using MvcDating.Models;
@@ -49,7 +44,8 @@ namespace MvcDating.Controllers
         {
             Mapper.CreateMap<MvcDating.Models.Profile, SearchResultView>()
                 .ForMember(src => src.Thumb, opt => opt.MapFrom(c => c.Pictures.SingleOrDefault(p => p.IsAvatar).Thumb))
-                .ForMember(src => src.Thumb, opt => opt.NullSubstitute("default.png"));
+                .ForMember(src => src.Thumb, opt => opt.NullSubstitute("default.png"))
+                .ForMember(src => src.PictureCount, opt => opt.MapFrom(c => c.Pictures.Count()));
 
             return Mapper.Map<IEnumerable<Profile>, IEnumerable<SearchResultView>>(profiles);
         }

@@ -1,0 +1,18 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model IEnumerable<MvcDating.Models.FeaturedView>
+
+
+
+<div class="pictureFeatured">
+    @foreach (FeaturedView featured in Model)
+    {
+        @Html.DisplayAvatar(featured.UserName, "~/Uploads/" + featured.Thumb)
+    }
+</div>
+
+<script>
+    $(function() {
+        $(".pictureFeatured [title]").tooltip({ placement: "top" });
+    });
+</script>

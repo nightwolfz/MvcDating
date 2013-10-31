@@ -1,9 +1,5 @@
-﻿using System.Web.Security;
-using MvcDating.Models;
-using System;
-using System.Collections.Generic;
+﻿using MvcDating.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MvcDating.Controllers
@@ -12,15 +8,23 @@ namespace MvcDating.Controllers
     {
         private UsersContext db = new UsersContext();
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult FeaturedProfiles()
+        {
             var query = from profile in db.Profiles
-                        join picture in db.Pictures on profile.UserId equals picture.UserId where picture.IsAvatar
+                        join picture in db.Pictures on profile.UserId equals picture.UserId into ps
+                        from picture in ps.DefaultIfEmpty()
+                        where picture.IsAvatar
                         select new FeaturedView { UserName = profile.UserName, Thumb = picture.Thumb };
 
-            ViewBag.featuredUsers = query.Take(5);
-
-            return View();
+            var featuredUsers = query.Take(5);
+            return PartialView(featuredUsers);
         }
     }
 }

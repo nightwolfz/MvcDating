@@ -1,8 +1,9 @@
 ﻿<div class="form">
-    @using (Html.BeginForm("Upload", "Pictures", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Upload", "Pictures", FormMethod.Post, new { enctype = "multipart/form-data", id="fileUploadForm" }))
     {
         @Html.AntiForgeryToken()
         <h2>Choose a picture to upload</h2>
+        <img id="fileUploadingImg" src="~/Content/Images/loading.gif" class="hidden" />
         <label for="fileUploader" class="button" style="margin:0">Choose a picture</label>
         <input id="fileUploader" name="imageData" type="file" style="-ms-opacity: 0 !important; opacity: 0 !important; position: absolute" multiple />
         
@@ -15,8 +16,11 @@
 <script>
     $(function() {
         $("#fileUploader").on("change", function() {
-            $("label[for='fileUploader']").text("Picture chosen");
-            $('#fileUploadbtn').click();
+            $("#fileUploadingImg").removeClass("hidden");
+            $("label[for='fileUploader']").html("Uploading ...");
+            setTimeout(function() {
+                $('#fileUploadForm').submit();
+            }, 1000);
         });
     });
 </script>

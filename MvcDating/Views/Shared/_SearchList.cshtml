@@ -2,9 +2,30 @@
 @using MvcDating.Models
 @model MvcDating.Models.SearchResultView
 
-<div class="visitorWrapper clearfix">
+<style>
+    .photo-counter {
+        position: absolute;
+        margin-top: -24px;
+        margin-left: 6px;
+        z-index: 100000;
+        padding: 3px 4px 2px 24px;
+        color: #fff;
+        text-decoration: none;
+        font: 700 .82em/1.3em Arial,sans-serif;
+        -ms-border-radius: 2px;
+        border-radius: 2px;
+        -ms-text-shadow: 0 -1px rgba(0,0,0,.5);
+        text-shadow: 0 -1px rgba(0,0,0,.5);
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAATCAQAAADMzGCmAAAA4klEQVR42u3WIQ7CMBiG4fcoTHOnnQBH8JAlI2mAzlEECakCBJBMkMxihkFgQHEAJAIxAgVI7fD/svcT1Y9pC91qrLKQHjFDkt80A2J6MiExhgVrNp+tmTMmlgaJUGgmrfxWON+taOUYNIpIDkQxY0XqGb67I2XFDCUHog9XV9LhipYDSZzv8ZzmTdu00/zxdD4SgRCzx4S7cIcxe9GQwLaz79nOAisa0lh2tt+zs20sRUNGJ2yYhil2dJII0c5XvPrnIAuy/rl4OZ+kW0u5P0l6R6LjpYxxvBDVv98aUkNk7w2h1HBzwKmD2QAAAABJRU5ErkJggg==) no-repeat 0 0;
+    }
+</style>
+
+
+<div class="visitorWrapper">
     <div class="visitorPicture">
         @Html.DisplayAvatar(Model.UserName, "~/Uploads/" + Model.Thumb)
+        <i class="photo-counter bl">@Model.PictureCount</i>
+        
     </div>
     <div class="visitorDetails">
         @Html.Partial("_UserDetails", Model)

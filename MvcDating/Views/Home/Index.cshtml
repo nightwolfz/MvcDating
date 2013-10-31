@@ -1,21 +1,5 @@
 ﻿@using MvcDating.Helpers
 @using MvcDating.Models
-@section featured {
-    <section class="clearfix">
-        @foreach (FeaturedView featured in ViewBag.featuredUsers)
-        {
-            <div class="pictureFeatured">
-                @Html.ImageLink(Url.RouteUrl(
-                routeValues: new
-                {
-                    Action = "Index",
-                    Controller = "Profile",
-                    username = featured.UserName
-                }), Html.Image("~/Uploads/" + featured.Thumb, "img-thumbnail"))
-            </div>
-        }
-    </section>
-}
 
 @{
     ViewBag.Title = "Home";

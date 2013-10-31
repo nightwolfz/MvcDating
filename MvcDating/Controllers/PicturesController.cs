@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcDating.Models;
 using WebMatrix.WebData;
 using MvcDating.Filters;
-using System.IO;
-using System.Diagnostics;
-using MvcDating.Helpers;
 
 namespace MvcDating.Controllers
 {
@@ -20,9 +15,8 @@ namespace MvcDating.Controllers
     {
         private UsersContext db = new UsersContext();
 
-        //
-        // GET: /Pictures/
 
+        // GET: /Pictures/
         public ActionResult Index()
         {
             var pictures = (from p in db.Pictures where p.UserId == WebSecurity.CurrentUserId orderby p.IsAvatar descending select p).ToList();
@@ -30,29 +24,13 @@ namespace MvcDating.Controllers
             return View(pictures);
         }
 
-        //
-        // GET: /Pictures/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-            return View(picture);
-        }
-
-        //
         // GET: /Pictures/Upload
-
         public ActionResult Upload()
         {
             ViewData["UserId"] = WebSecurity.CurrentUserId;
-            return View();
+            return View("/Views/Pictures/Index.cshtml");
         }
 
-        //
         // POST: /Pictures/Upload
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,7 +56,7 @@ namespace MvcDating.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(picture);
+            return View("/Views/Pictures/Index.cshtml");
         }
 
         protected override void Dispose(bool disposing)
