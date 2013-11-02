@@ -1,19 +1,15 @@
-using System.Security.Principal;
-using System.Web.UI.WebControls;
-
 namespace MvcDating.Migrations
 {
-    using MvcDating.Models;
+    using Models;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Globalization;
     using System.Linq;
     using System.Web.Security;
     using WebMatrix.WebData;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MvcDating.Models.UsersContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<UsersContext>
     {
         public Configuration()
         {
@@ -21,7 +17,7 @@ namespace MvcDating.Migrations
         }
 
 
-        protected override void Seed(MvcDating.Models.UsersContext context)
+        protected override void Seed(UsersContext context)
         {
             // Lets create two users
             const string username = "nightwolfz";
@@ -74,8 +70,8 @@ namespace MvcDating.Migrations
                         UploadedDate = DateTime.Now,
                         Comments = new List<Comment>
                         {
-                            new Comment() { UserId = userIdToAdd, Content = "First!" },
-                            new Comment() { UserId = userIdToAdd, Content = "Second!" },
+                            new Comment { UserId = userIdToAdd, Content = "First!" },
+                            new Comment { UserId = userIdToAdd, Content = "Second!" },
                         }
                     },
                     new Picture
@@ -85,8 +81,8 @@ namespace MvcDating.Migrations
                         Thumb = "s_test.jpg",
                         IsAvatar = true,
                         UploadedDate = DateTime.Now,
-                        Comments = new List<Comment>{}
-                    },
+                        Comments = new List<Comment>()
+                    }
             });
 
             context.Conversations.AddOrUpdate(p => p.ConversationId, new Conversation
@@ -96,8 +92,8 @@ namespace MvcDating.Migrations
                 Timestamp = DateTime.Now,
                 Messages = new List<Message>
                 {
-                    new Message(){ Content = "Test content1!",  UserId = userIdToAdd, Timestamp = DateTime.Now },
-                    new Message(){ Content = "Test content2!",  UserId = betaIdToAdd, Timestamp = DateTime.Now },
+                    new Message { Content = "Test content1!",  UserId = userIdToAdd, Timestamp = DateTime.Now },
+                    new Message { Content = "Test content2!",  UserId = betaIdToAdd, Timestamp = DateTime.Now },
                 }
             });
 

@@ -45,7 +45,7 @@ namespace MvcDating.Controllers
 
         private IEnumerable<SearchResultView> CreateSearchResultMapping(IEnumerable<Profile> profiles)
         {
-            Mapper.CreateMap<MvcDating.Models.Profile, SearchResultView>()
+            Mapper.CreateMap<Profile, SearchResultView>()
                 .ForMember(src => src.Thumb, opt => opt.MapFrom(c => c.Pictures.SingleOrDefault(p => p.IsAvatar).Thumb))
                 .ForMember(src => src.Thumb, opt => opt.NullSubstitute("default.png"))
                 .ForMember(src => src.PictureCount, opt => opt.MapFrom(c => c.Pictures.Count()));

@@ -3,7 +3,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using MvcDating.Models;
 using MvcDating.Filters;
 using AutoMapper;
@@ -32,7 +31,7 @@ namespace MvcDating.Controllers
 
                 if (visitor == null)
                 {
-                    db.Visitors.Add(new Visitor()
+                    db.Visitors.Add(new Visitor
                     {
                         UserId = profile.UserId,
                         VisitorId = WebSecurity.CurrentUserId,
@@ -48,8 +47,8 @@ namespace MvcDating.Controllers
                 db.SaveChanges();
             }
 
-            Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
-            var profileView = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
+            Mapper.CreateMap<Models.Profile, ProfileView>();
+            var profileView = Mapper.Map<Models.Profile, ProfileView>(profile);
 
             return View(profileView);
         }
@@ -60,8 +59,8 @@ namespace MvcDating.Controllers
         {
             var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
 
-            Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
-            var profileview = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
+            Mapper.CreateMap<Models.Profile, ProfileView>();
+            var profileview = Mapper.Map<Models.Profile, ProfileView>(profile);
 
             return View(profileview);
         }
@@ -71,10 +70,10 @@ namespace MvcDating.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profileview)
         {
-            Mapper.CreateMap<ProfileView, MvcDating.Models.Profile>()
+            Mapper.CreateMap<ProfileView, Models.Profile>()
                 .ForMember(src => src.Email, opt => opt.Ignore());
 
-            var profile = Mapper.Map<ProfileView, MvcDating.Models.Profile>(profileview);
+            var profile = Mapper.Map<ProfileView, Models.Profile>(profileview);
             profile.UpdatedDate = DateTime.Now;
 
             // Set this user as online

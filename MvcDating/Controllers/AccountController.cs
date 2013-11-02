@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
@@ -206,9 +204,9 @@ namespace MvcDating.Controllers
 
                     if (changePasswordSucceeded) {
                         return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
-                    } else {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                     }
+                    
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                 }
             } else {
                 // User does not have a local password so remove any validation errors caused by a missing
@@ -285,8 +283,8 @@ namespace MvcDating.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl) {
-            string provider = null;
-            string providerUserId = null;
+            string provider;
+            string providerUserId;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId)) {
                 return RedirectToAction("ChangePassword");
@@ -366,9 +364,9 @@ namespace MvcDating.Controllers
         private ActionResult RedirectToLocal(string returnUrl) {
             if (Url.IsLocalUrl(returnUrl)) {
                 return Redirect(returnUrl);
-            } else {
-                return RedirectToAction("Index", "Home");
             }
+            
+            return RedirectToAction("Index", "Home");
         }
 
         public enum ManageMessageId

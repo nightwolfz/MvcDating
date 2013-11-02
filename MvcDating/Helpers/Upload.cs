@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 
 namespace MvcDating.Helpers
@@ -25,7 +24,7 @@ namespace MvcDating.Helpers
             };
 
             // Generate a filename (GUIDs are best).
-            var fileName = Path.Combine(uploadFolder, System.Guid.NewGuid().ToString());
+            var fileName = Path.Combine(uploadFolder, Guid.NewGuid().ToString());
 
             // Generate each version
             foreach (string suffix in versions.Keys)

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using MvcDating.Models;
 using MvcDating.Filters;
 using WebMatrix.WebData;
 using System.IO;
 using System.Web.Hosting;
-using System.Text;
 
 namespace MvcDating.ControllersApi
 {
@@ -29,7 +23,7 @@ namespace MvcDating.ControllersApi
             List<Picture> pictures = (from p in db.Pictures where (p.UserId == WebSecurity.CurrentUserId) select p).ToList();
             foreach (Picture pic in pictures)
             {
-                pic.IsAvatar = (pic.PictureId == id) ? true : false;
+                pic.IsAvatar = (pic.PictureId == id);
             }
             db.SaveChanges();
 
@@ -44,8 +38,8 @@ namespace MvcDating.ControllersApi
             db.Pictures.Remove(picture);
             db.SaveChanges();
 
-            System.IO.File.Delete(Path.Combine(HostingEnvironment.MapPath("~/Uploads"), picture.Src));
-            System.IO.File.Delete(Path.Combine(HostingEnvironment.MapPath("~/Uploads"), picture.Thumb));
+            File.Delete(Path.Combine(HostingEnvironment.MapPath("~/Uploads"), picture.Src));
+            File.Delete(Path.Combine(HostingEnvironment.MapPath("~/Uploads"), picture.Thumb));
 
             return Request.CreateResponse(HttpStatusCode.OK, picture);
         }

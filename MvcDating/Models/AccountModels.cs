@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Globalization;
-using System.Linq;
-using System.Web.Security;
-using System.Web.UI.WebControls;
 
 namespace MvcDating.Models
 {
@@ -68,8 +61,8 @@ namespace MvcDating.Models
         {
             return new List<Gender>
             {
-                new Gender() {Name = "Male", Value = 0},
-                new Gender() {Name = "Male", Value = 1},
+                new Gender {Name = "Male", Value = 0},
+                new Gender {Name = "Male", Value = 1},
             };
         }
     }

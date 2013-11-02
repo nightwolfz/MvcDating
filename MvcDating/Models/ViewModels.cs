@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace MvcDating.Models
 {
     public static class ProfileItems
     {
-        public static List<string> Gender = new List<string>()
+        public static List<string> Gender = new List<string>
         {
             "Male", "Female"
         };
 
-        public static List<string> Situation = new List<string>()
+        public static List<string> Situation = new List<string>
         {
             "Single", "Seeing someone", "Married"
         };
 
-        public static List<string> Orientation = new List<string>()
+        public static List<string> Orientation = new List<string>
         {
             "Straight", "Gay", "Bisexual"
         };
@@ -43,7 +40,7 @@ namespace MvcDating.Models
         {
             get
             {
-                return new List<SelectListItem>()
+                return new List<SelectListItem>
                 {
                     new SelectListItem { Text = ProfileItems.Gender[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Gender[1], Value = "1" }
@@ -70,7 +67,7 @@ namespace MvcDating.Models
         {
             get
             {
-                return new List<SelectListItem>()
+                return new List<SelectListItem>
                 {
                     new SelectListItem { Text = ProfileItems.Situation[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Situation[1], Value = "1" },
@@ -84,7 +81,7 @@ namespace MvcDating.Models
         {
             get
             {
-                return new List<SelectListItem>()
+                return new List<SelectListItem>
                 {
                     new SelectListItem { Text = ProfileItems.Orientation[0], Value = "0" },
                     new SelectListItem { Text = ProfileItems.Orientation[1], Value = "1" },

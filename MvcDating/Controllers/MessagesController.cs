@@ -25,7 +25,7 @@ namespace MvcDating.Controllers
                                 where (c.UserIdFrom == WebSecurity.CurrentUserId || c.UserIdTo == WebSecurity.CurrentUserId)
                                 select c;
 
-            var conversationView = conversations.ToList().Select(c => new ConversationView()
+            var conversationView = conversations.ToList().Select(c => new ConversationView
             {
                 ConversationId = c.ConversationId,
                 UserPicture = c.GetUserPicture(c.UserIdFrom == WebSecurity.CurrentUserId ? c.UserIdTo : c.UserIdFrom),
@@ -74,7 +74,7 @@ namespace MvcDating.Controllers
 
             ViewBag.userName = profile.UserName;
             ViewBag.userPicture = profile.GetUserPicture(userId);
-            return PartialView(new Message()
+            return PartialView(new Message
             {
                 UserId = userId
             });
@@ -106,7 +106,7 @@ namespace MvcDating.Controllers
                 if (conversation == null)
                 {
                     // Create new
-                    var newConversation = new Conversation()
+                    var newConversation = new Conversation
                     {
                         UserIdFrom = WebSecurity.CurrentUserId,
                         UserIdTo = message.UserId,

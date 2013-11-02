@@ -21,11 +21,11 @@ namespace MvcDating.Controllers
         {
             var visitors = db.Visitors.Where(v => v.UserId == WebSecurity.CurrentUserId).ToList();
 
-            Mapper.CreateMap<MvcDating.Models.Visitor, VisitorView>()
+            Mapper.CreateMap<Visitor, VisitorView>()
                 .ForMember(src => src.Thumb, opt => opt.MapFrom(c => db.Pictures.FirstOrDefault(p => p.IsAvatar && p.UserId == c.UserId).Thumb))
                 .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Profiles.FirstOrDefault(p => p.UserId == c.UserId)));
 
-            var visitorView = Mapper.Map<IEnumerable<MvcDating.Models.Visitor>, IEnumerable<VisitorView>>(visitors);
+            var visitorView = Mapper.Map<IEnumerable<Visitor>, IEnumerable<VisitorView>>(visitors);
 
             return View(visitorView);
         }
@@ -37,7 +37,7 @@ namespace MvcDating.Controllers
                               join profile in db.Profiles on visitor.VisitorId equals profile.UserId
                               join picture in db.Pictures on profile.UserId equals picture.UserId
                               where visitor.VisitorId == WebSecurity.CurrentUserId
-                              select new VisitorView()
+                              select new VisitorView
                               {
                                   UserId = visitor.UserId,
                                   Timestamp = visitor.Timestamp,
