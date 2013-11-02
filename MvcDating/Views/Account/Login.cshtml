@@ -5,8 +5,11 @@
 }
 
 <div class="col-md-12">
-    <div class="col-md-7">
-        @Html.Partial("_LoginForm", Model, new ViewDataDictionary { { "compactLoginForm", false } })
+    <div class="col-md-4">
+        @Html.Partial("_LoginForm", Model)
+    </div>
+    <div class="col-md-3">
+        &nbsp;
     </div>
     <div class="col-md-5">
         @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl, showLoginForm = false })

@@ -10,9 +10,9 @@ using System.Web.Routing;
 
 namespace MvcDating.Helpers
 {
-    /**
-     * Extends @Html class with new methods
-     */
+    /// <summary>
+    /// Extends @Html class with new methods
+    /// </summary>
     public static class Extensions
     {
         private static string GetContentPath(string src)
@@ -20,9 +20,10 @@ namespace MvcDating.Helpers
             return src.Contains(@"//") ? src : VirtualPathUtility.ToAbsolute(src);
         }
 
-        /**
-         * Generate an image tag
-         */
+
+        /// <summary>
+        /// Generate an image tag
+        /// </summary>
         public static MvcHtmlString Image(this HtmlHelper helper, string src, string @class = "", object htmlAttributes = null)
         {
             var tag = new TagBuilder("img");
@@ -32,9 +33,10 @@ namespace MvcDating.Helpers
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
-        /**
-         * Generate a <a><img/></a> tag
-         */
+
+        /// <summary>
+        /// Generate a image tag inside a link tag
+        /// </summary>
         public static MvcHtmlString ImageLink(this HtmlHelper helper, string href, MvcHtmlString htmlImage, object htmlAttributes = null)
         {
             var tag = new TagBuilder("a");
@@ -44,7 +46,9 @@ namespace MvcDating.Helpers
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
-        // Not working somehow
+        /// <summary>
+        /// Display the users avatar
+        /// </summary>
         public static MvcHtmlString DisplayAvatar(this HtmlHelper helper, string userName, string thumbSrc)
         {
             var url = new UrlHelper(helper.ViewContext.RequestContext);

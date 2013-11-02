@@ -8,9 +8,16 @@
     <a class="close-reveal-modal">&#215;</a>
 </div>
 
+@{
+    bool onlineStatus = MvcDating.Helpers.User.GetOnlineStatus(Model.UserId);
+}
+
 <div class="profileDetails">
     <h1>
+        <span class="onlineBullet @(onlineStatus?"":"offline")" title="@(onlineStatus?"User is online!":"Offline")">&nbsp;</span>
+         
         @Html.DisplayFor(model => model.UserName)
+
         @if (WebSecurity.IsCurrentUser(Model.UserName))
         {
             @Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"})
@@ -32,10 +39,48 @@
 
 @foreach (var picture in Model.Pictures)
 {
-    <div class="thumbnail">
+    <a class="thumbnail pictureModalClick" itemscope itemid="@picture.PictureId">
         @Html.Image("~/Uploads/" + picture.Thumb, "")
+    </a>
+    
+    <!-- Modal -->
+    <div id="pictureModal_@picture.PictureId" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    @Html.Image("~/Uploads/" + picture.Src, "pictureImg")
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- End -->
 }
+
+<script>
+    $(function() {
+
+        // Show modal picture
+        $(".pictureModalClick").on("click", function() {
+            window.itemModalDiv = '#pictureModal_' + $(this).attr('itemid');
+            $(window.itemModalDiv).modal();
+            updateModalWindowWidth(window.itemModalDiv);
+        });
+
+        $(window).resize(function() {
+            if (window.itemModalDiv) updateModalWindowWidth();
+        });
+
+        function updateModalWindowWidth() {
+            setTimeout(function() {
+                var itemWidth = $(window.itemModalDiv + " .modal-body img").first().width() + 22;
+                $(window.itemModalDiv + " .modal-dialog").css('width', itemWidth);
+            }, 200);
+        }
+    });
+</script>
+
+
 
 
 <div>
@@ -48,8 +93,8 @@
     {
         <h4>
             @Html.DisplayNameFor(model => model.GoodAt)
-        @Html.Raw(Model.UserId == WebSecurity.CurrentUserId ? "<a class='button'>Edit</a>" : "")
-    </h4>
+            @Html.Raw(Model.UserId == WebSecurity.CurrentUserId ? "<a class='button'>Edit</a>" : "")
+        </h4>
         <div>
             @Html.DisplayFor(model => model.GoodAt)
         </div>
@@ -62,6 +107,6 @@
 
     <h4>@Html.DisplayNameFor(model => model.UpdatedDate)</h4>
     <div>
-        @Html.DisplayFor(model => model.UpdatedDate)
+        @Model.GetTimeAgo()
     </div>
 </div>

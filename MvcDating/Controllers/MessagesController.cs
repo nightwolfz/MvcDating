@@ -123,6 +123,8 @@ namespace MvcDating.Controllers
                     conversation.Timestamp = DateTime.Now;
                 }
 
+                // Set this user as online
+                Helpers.User.SetOnline();
 
                 db.Messages.Add(message);
                 db.SaveChanges();

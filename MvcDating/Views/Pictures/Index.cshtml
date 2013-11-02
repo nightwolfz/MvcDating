@@ -59,9 +59,7 @@
         $(".pictureModalClick").on("click", function() {
             window.itemModalDiv = '#pictureModal_' + $(this).parent().attr('itemid');
 
-            $(window.itemModalDiv).modal({
-                keyboard: false
-            });
+            $(window.itemModalDiv).modal();
             updateModalWindowWidth(window.itemModalDiv);
         });
         

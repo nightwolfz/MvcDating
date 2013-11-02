@@ -68,7 +68,6 @@ namespace MvcDating.Models
         public int Situation { get; set; }
         public IEnumerable<SelectListItem> SituationItems
         {
-            set { value = value; }
             get
             {
                 return new List<SelectListItem>()
@@ -109,6 +108,16 @@ namespace MvcDating.Models
         [DisplayName("Updated on")]
         [DataType(DataType.DateTime)]
         public DateTime UpdatedDate { get; set; }
+
+        public string GetTimeAgo()
+        {
+            return Helpers.Time.GetTimeAgo(UpdatedDate);
+        }
+
+        public bool GetOnlineStatus()
+        {
+            return DateTime.Now.Subtract(UpdatedDate).TotalMinutes < 15;
+        }
 
         public virtual IList<Picture> Pictures { get; set; }
     }

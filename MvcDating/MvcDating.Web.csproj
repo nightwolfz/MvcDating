@@ -287,6 +287,7 @@
     <Compile Include="Helpers\Time.cs" />
     <Compile Include="Helpers\SessionData.cs" />
     <Compile Include="Helpers\Upload.cs" />
+    <Compile Include="Helpers\User.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Conversations.cs" />
@@ -372,10 +373,10 @@
     <Content Include="Views\Account\_LoginForm.cshtml" />
     <Content Include="Views\Visitors\Index.cshtml" />
     <Content Include="Views\Visitors\History.cshtml" />
-    <Content Include="Views\Shared\_VisitorList.cshtml" />
+    <Content Include="Views\Visitors\_Visitors.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\_SearchBox.cshtml" />
-    <Content Include="Views\Shared\_SearchList.cshtml" />
+    <Content Include="Views\Search\_SearchResult.cshtml" />
     <Content Include="Views\Shared\_UserDetails.cshtml" />
     <Content Include="Views\Pictures\_Upload.cshtml" />
     <Content Include="Views\Home\FeaturedProfiles.cshtml" />

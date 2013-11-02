@@ -17,20 +17,21 @@
         border-collapse: separate;
         width: 100%;
     }
-    .messagesIndex td:first-child{
-        width: 60px;
+    ul.messagesIndex:hover {
+        background: #eee;
     }
-    .messagesIndex td:last-child {
-        width: 9%;
+    .messagesIndex li {
+        list-style: none;
+        width: 71%;
+        float: left;
+    } 
+    .messagesIndex li:first-child {
+        width: 80px;
     }
-
-    .messagesIndex td:nth-child(3) {
-        width: 18%;
-    }
-
-    .messagesIndex .picture {
-        width: 50px;
-        height: 37px;
+    .messagesIndex li:last-child {
+        width: 14%;
+        padding-top: 22px;
+        float: right;
     }
 
     .messagesIndex span {
@@ -46,31 +47,44 @@
         color: #1f93e0;
         font-size: 13px;
         font-weight: bold;
-        font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
         text-decoration: none;
+    }
+    .messagesIndex a, .messagesIndex a:hover {
+        padding-top: 10px;
+        display: block;
+        text-decoration: none;
+    }
+    .messagesIndex small {
+        color: #777;
+    }
+    .messagesIndex img {
+        height: 64px;
+        width: 64px;
     }
 </style>
 
 
 @foreach (var item in Model)
 {
-    <table class="messagesIndex">
-        <tr>
-            <td>
-                <img alt="@item.UserNameWith" src="~/Uploads/@item.UserPicture" class="picture" />
-            </td>
-            <td>
-                @Html.ActionLink(item.UserNameWith, "Index", "Profile", new { username = item.UserNameWith }, new { @class = "userName" })<br/>
-                <span>@Html.DisplayFor(modelItem => item.LastMessage.Content)</span>
-            </td>
-            <td>
-                @item.GetTimeAgo()
-            </td>
-            <td>
-                @Html.ActionLink("Read", "Read", new { id = item.ConversationId }, new { @class = "button" })
-            </td>
-        </tr>
-    </table>
+    <ul class="messagesIndex clearfix">
+        <li>
+            <img alt="@item.UserNameWith" src="~/Uploads/@item.UserPicture"/>
+        </li>
+        <li>
+            <a href="@Url.RouteUrl(routeValues: new
+                        {
+                            Action = "Read",
+                            Controller = "Messages",
+                            id = item.ConversationId
+                        })">
+                <b>@item.UserNameWith</b><br />
+                <small>@Html.DisplayFor(modelItem => item.LastMessage.Content)</small>
+            </a>
+        </li>
+        <li>
+            <small>@item.GetTimeAgo()</small>
+        </li>
+    </ul>
 }
 
 

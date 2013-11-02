@@ -13,9 +13,9 @@ namespace MvcDating.Helpers
 {
     public class Time
     {
-        /**
-         * Facebook like "time ago"
-         */
+        /// <summary>
+        /// Facebook like "time ago"
+        /// </summary>
         public static string GetTimeAgo(DateTime timestamp)
         {
             TimeSpan diff = DateTime.Now.Subtract(timestamp);
@@ -33,9 +33,10 @@ namespace MvcDating.Helpers
             return String.Format("{0} {1}{2} ago", (int)time, timeUnit, (time >= 2 ? "s" : ""));
         }
 
-        /**
-         * Get age based on birthday
-         */
+
+        /// <summary>
+        /// Get age based on birthday
+        /// </summary>
         public static string GetAge(DateTime birthday)
         {
             var now = DateTime.Today;

@@ -16,9 +16,7 @@
         <div class="editor-field">
             I'm
             @Html.DropDownListFor(model => model.Situation, new SelectList(Model.SituationItems, "Value", "Text"))
-            @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
-            and
-            @Html.DropDownListFor(model => model.Gender, new SelectList(Model.GenderItems, "Value", "Text"))
+            and @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
         </div>
 
         <legend>

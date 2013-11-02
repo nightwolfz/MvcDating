@@ -11,7 +11,7 @@ else
 {
     if (ViewBag.showLoginForm)
     {
-        @Html.Partial("_LoginForm", new MvcDating.Models.LoginModel(), new ViewDataDictionary { { "compactLoginForm", true } });
+        @Html.Partial("_LoginForm", new MvcDating.Models.LoginModel());
     }
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
     {

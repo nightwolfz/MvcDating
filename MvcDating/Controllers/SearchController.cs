@@ -37,6 +37,9 @@ namespace MvcDating.Controllers
                 SearchResults = CreateSearchResultMapping(profiles)
             };
 
+            // Set current user as online
+            Helpers.User.SetOnline();
+
             return View(resultsView);
         }
 

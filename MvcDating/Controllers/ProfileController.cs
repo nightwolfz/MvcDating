@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using MvcDating.Models;
 using MvcDating.Filters;
 using AutoMapper;
@@ -18,7 +19,6 @@ namespace MvcDating.Controllers
         private UsersContext db = new UsersContext();
 
         // GET: /Profile/
-        [AllowAnonymous]
         public ActionResult Index(string username = "")
         {
             // Get profile information
@@ -63,14 +63,6 @@ namespace MvcDating.Controllers
             Mapper.CreateMap<MvcDating.Models.Profile, ProfileView>();
             var profileview = Mapper.Map<MvcDating.Models.Profile, ProfileView>(profile);
 
-            profileview.SituationItems = from p in profileview.SituationItems
-                                         select new SelectListItem
-                                         {
-                                             Selected = (profile.Situation.ToString() == p.Value) ? true : false,
-                                             Text = p.Text,
-                                             Value = p.Value
-                                         };
-
             return View(profileview);
         }
 
@@ -79,13 +71,19 @@ namespace MvcDating.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profileview)
         {
-            Mapper.CreateMap<ProfileView, MvcDating.Models.Profile>();
+            Mapper.CreateMap<ProfileView, MvcDating.Models.Profile>()
+                .ForMember(src => src.Email, opt => opt.Ignore());
+
             var profile = Mapper.Map<ProfileView, MvcDating.Models.Profile>(profileview);
             profile.UpdatedDate = DateTime.Now;
+
+            // Set this user as online
+            Helpers.User.SetOnline();
 
             if (ModelState.IsValid)
             {
                 db.Entry(profile).State = EntityState.Modified;
+                db.Entry(profile).Property(x => x.Email).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

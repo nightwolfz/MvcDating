@@ -64,6 +64,11 @@ namespace MvcDating.Models
             var pictureQuery = Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
             return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
         }
+
+        public void UpdateOnlineStatus()
+        {
+            UpdatedDate = DateTime.Now;
+        }
     }
 
     public class Picture

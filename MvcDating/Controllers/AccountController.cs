@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using MvcDating.Filters;
 using MvcDating.Models;
+using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace MvcDating.Controllers
 {
@@ -63,6 +65,9 @@ namespace MvcDating.Controllers
                 }
                 if (ModelState.IsValid && WebSecurity.Login(userName, model.Password, persistCookie: model.RememberMe))
                 {
+                    // Set current user as online
+                    Helpers.User.SetOnline();
+                    db.SaveChanges();
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -306,7 +311,8 @@ namespace MvcDating.Controllers
 
                         return RedirectToLocal(returnUrl);
                     }
-                    else if (user != null)
+                    
+                    if (user != null)
                     {
                         ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                     }
