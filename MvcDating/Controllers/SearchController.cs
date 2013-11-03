@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using MvcDating.Models;
+using MvcDating.Services;
 using Profile = MvcDating.Models.Profile;
 
 namespace MvcDating.Controllers
@@ -10,12 +11,12 @@ namespace MvcDating.Controllers
     [Authorize]
     public class SearchController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
         // GET: /Search/
         public ActionResult Index()
         {
-            var profiles = db.Profiles.ToList();
+            var profiles = db.Profiles.Get();
 
             var resultsView = new SearchView
             {
@@ -29,7 +30,7 @@ namespace MvcDating.Controllers
         [HttpPost]
         public ActionResult Index(SearchBoxView searchBoxView)
         {
-            var profiles = (from p in db.Profiles where searchBoxView.Gender.Contains(p.Gender) select p).ToList();
+            var profiles = db.Profiles.Get(p => searchBoxView.Gender.Contains(p.Gender));
 
             var resultsView = new SearchView
             {

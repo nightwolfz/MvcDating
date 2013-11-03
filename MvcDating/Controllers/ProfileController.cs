@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MvcDating.Models;
 using MvcDating.Filters;
 using AutoMapper;
+using MvcDating.Services;
 using WebMatrix.WebData;
 
 
@@ -15,19 +16,19 @@ namespace MvcDating.Controllers
     [InitializeSimpleMembership]
     public class ProfileController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
         // GET: /Profile/
         public ActionResult Index(string username = "")
         {
             // Get profile information
-            var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
+            var profile = db.Profiles.Single(p => p.UserName == username);
             if (profile == null) throw new HttpException(404, "Profile not found");
 
             // Add a visitor
             if (profile.UserId != WebSecurity.CurrentUserId)
             {
-                var visitor = db.Visitors.SingleOrDefault(dto => dto.VisitorId == WebSecurity.CurrentUserId);
+                var visitor = db.Visitors.Single(dto => dto.VisitorId == WebSecurity.CurrentUserId);
 
                 if (visitor == null)
                 {
@@ -41,7 +42,7 @@ namespace MvcDating.Controllers
                 else
                 {
                     visitor.Timestamp = DateTime.Now;
-                    db.Entry(visitor).State = EntityState.Modified;
+                    db.Visitors.Update(visitor);
                     
                 }
                 db.SaveChanges();
@@ -57,7 +58,7 @@ namespace MvcDating.Controllers
         // GET: /Profile/Edit/5
         public ActionResult Edit(string username = "")
         {
-            var profile = (from p in db.Profiles where p.UserName == username select p).SingleOrDefault();
+            var profile = db.Profiles.Single(p => p.UserName == username);
 
             Mapper.CreateMap<Models.Profile, ProfileView>();
             var profileview = Mapper.Map<Models.Profile, ProfileView>(profile);
@@ -81,8 +82,8 @@ namespace MvcDating.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(profile).State = EntityState.Modified;
-                db.Entry(profile).Property(x => x.Email).IsModified = false;
+                db.Profiles.Update(profile);
+                db.Profiles.Context.Entry(profile).Property(x => x.Email).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

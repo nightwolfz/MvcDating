@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcDating.Models;
+using MvcDating.Services;
 using WebMatrix.WebData;
 using MvcDating.Filters;
 
@@ -13,14 +14,13 @@ namespace MvcDating.Controllers
     [InitializeSimpleMembership]
     public class PicturesController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
 
         // GET: /Pictures/
         public ActionResult Index()
         {
-            var pictures = (from p in db.Pictures where p.UserId == WebSecurity.CurrentUserId orderby p.IsAvatar descending select p).ToList();
-
+            var pictures = db.Pictures.Get(p => p.UserId == WebSecurity.CurrentUserId, q => q.OrderBy(d => d.IsAvatar));
             return View(pictures);
         }
 
@@ -28,7 +28,7 @@ namespace MvcDating.Controllers
         public ActionResult Upload()
         {
             ViewData["UserId"] = WebSecurity.CurrentUserId;
-            return View("/Views/Pictures/Index.cshtml");
+            return View("Index");
         }
 
         // POST: /Pictures/Upload
@@ -47,7 +47,7 @@ namespace MvcDating.Controllers
                     picture.Comments = new List<Comment>();
                     picture.Thumb = renamedFileName[0];
                     picture.Src = renamedFileName[1];
-                    picture.IsAvatar = !db.Pictures.Any(p => p.IsAvatar);
+                    picture.IsAvatar = !db.Pictures.Get(p => p.IsAvatar).Any();
 
                     db.Pictures.Add(picture);
                     db.SaveChanges();
@@ -56,7 +56,7 @@ namespace MvcDating.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("/Views/Pictures/Index.cshtml");
+            return View("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -53,12 +53,6 @@ namespace MvcDating.Models
         public DateTime UpdatedDate { get; set; }
         public virtual IList<Picture> Pictures { get; set; } // one-to-many
 
-        public string GetUserPicture(int userId)
-        {
-            var pictureQuery = Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
-            return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
-        }
-
         public void UpdateOnlineStatus()
         {
             UpdatedDate = DateTime.Now;
@@ -77,12 +71,6 @@ namespace MvcDating.Models
         public virtual IList<Comment> Comments { get; set; } // one-to-many
 
         private UsersContext db = new UsersContext();
-
-        public string GetUserPicture(int userId)
-        {
-            var pictureQuery = db.Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
-            return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
-        }
     }
 
     public class Comment

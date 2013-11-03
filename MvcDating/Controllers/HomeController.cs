@@ -1,12 +1,13 @@
 ﻿using MvcDating.Models;
 using System.Linq;
 using System.Web.Mvc;
+using MvcDating.Services;
 
 namespace MvcDating.Controllers
 {
     public class HomeController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
         [AllowAnonymous]
         public ActionResult Index()
@@ -17,14 +18,15 @@ namespace MvcDating.Controllers
         [AllowAnonymous]
         public ActionResult FeaturedProfiles()
         {
-            var query = from profile in db.Profiles
-                        join picture in db.Pictures on profile.UserId equals picture.UserId into ps
-                        from picture in ps.DefaultIfEmpty()
-                        where picture.IsAvatar
-                        select new FeaturedView { UserName = profile.UserName, Thumb = picture.Thumb };
+            var featuredUsers = db.Profiles.GetFeatured(5);
 
-            var featuredUsers = query.Take(5);
             return PartialView(featuredUsers);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

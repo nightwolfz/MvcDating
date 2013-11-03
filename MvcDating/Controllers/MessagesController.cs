@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using MvcDating.Models;
 using MvcDating.Filters;
+using MvcDating.Services;
 using WebMatrix.WebData;
 
 namespace MvcDating.Controllers
@@ -13,26 +14,14 @@ namespace MvcDating.Controllers
     [InitializeSimpleMembership]
     public class MessagesController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
         //
         // GET: /Messages/
 
         public ActionResult Index()
         {
-
-            var conversations = from c in db.Conversations
-                                where (c.UserIdFrom == WebSecurity.CurrentUserId || c.UserIdTo == WebSecurity.CurrentUserId)
-                                select c;
-
-            var conversationView = conversations.ToList().Select(c => new ConversationView
-            {
-                ConversationId = c.ConversationId,
-                UserPicture = c.GetUserPicture(c.UserIdFrom == WebSecurity.CurrentUserId ? c.UserIdTo : c.UserIdFrom),
-                UserNameWith = c.GetUserName(c.UserIdFrom == WebSecurity.CurrentUserId ? c.UserIdTo : c.UserIdFrom),
-                LastMessage = c.GetLastMessage(),
-                Timestamp = c.Timestamp
-            });
+            var conversationView = db.Conversations.GetConversationsView(WebSecurity.CurrentUserId);
 
             return View(conversationView.ToList());
         }
@@ -73,20 +62,11 @@ namespace MvcDating.Controllers
             var profile = db.Profiles.Find(userId);
 
             ViewBag.userName = profile.UserName;
-            ViewBag.userPicture = profile.GetUserPicture(userId);
+            ViewBag.userPicture = db.Profiles.GetUserPicture(userId);
             return PartialView(new Message
             {
                 UserId = userId
             });
-        }
-
-        public Conversation GetConversation(int userId)
-        {
-            // See if a conversion already exists
-            return (from conv in db.Conversations
-                    where ((conv.UserIdTo == userId && conv.UserIdFrom == WebSecurity.CurrentUserId)
-                        || (conv.UserIdTo == WebSecurity.CurrentUserId && conv.UserIdFrom == userId))
-                    select conv).SingleOrDefault();
         }
 
         //
@@ -101,7 +81,7 @@ namespace MvcDating.Controllers
             if (ModelState.IsValid)
             {
                 // See if a conversion already exists
-                var conversation = GetConversation(message.UserId);
+                var conversation = db.Conversations.GetConversation(message.UserId);
 
                 if (conversation == null)
                 {
@@ -156,7 +136,7 @@ namespace MvcDating.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(conversation).State = EntityState.Modified;
+                db.Conversations.Update(conversation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -184,7 +164,7 @@ namespace MvcDating.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Conversation conversation = db.Conversations.Find(id);
-            db.Conversations.Remove(conversation);
+            db.Conversations.Delete(conversation);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

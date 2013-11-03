@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using MvcDating.Filters;
 using MvcDating.Models;
+using MvcDating.Services;
 using WebMatrix.WebData;
 
 namespace MvcDating.Controllers
@@ -12,18 +13,18 @@ namespace MvcDating.Controllers
     [InitializeSimpleMembership]
     public class VisitorsController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private UnitOfWork db = new UnitOfWork();
 
         //
         // GET: /Visitors/
 
         public ActionResult Index()
         {
-            var visitors = db.Visitors.Where(v => v.UserId == WebSecurity.CurrentUserId).ToList();
+            var visitors = db.Visitors.Get(v => v.UserId == WebSecurity.CurrentUserId).ToList();
 
             Mapper.CreateMap<Visitor, VisitorView>()
-                .ForMember(src => src.Thumb, opt => opt.MapFrom(c => db.Pictures.FirstOrDefault(p => p.IsAvatar && p.UserId == c.UserId).Thumb))
-                .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Profiles.FirstOrDefault(p => p.UserId == c.UserId)));
+                .ForMember(src => src.Thumb, opt => opt.MapFrom(c => db.Pictures.Single(p => p.IsAvatar && p.UserId == c.UserId).Thumb))
+                .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Pictures.Single(p => p.UserId == c.UserId)));
 
             var visitorView = Mapper.Map<IEnumerable<Visitor>, IEnumerable<VisitorView>>(visitors);
 
@@ -33,17 +34,7 @@ namespace MvcDating.Controllers
 
         public ActionResult History()
         {
-            var visitorView = from visitor in db.Visitors
-                              join profile in db.Profiles on visitor.VisitorId equals profile.UserId
-                              join picture in db.Pictures on profile.UserId equals picture.UserId
-                              where visitor.VisitorId == WebSecurity.CurrentUserId
-                              select new VisitorView
-                              {
-                                  UserId = visitor.UserId,
-                                  Timestamp = visitor.Timestamp,
-                                  Profile = profile,
-                                  Thumb = picture.Thumb
-                              };
+            var visitorView = db.Visitors.GetMyVisits();
 
             return View(visitorView);
         }
