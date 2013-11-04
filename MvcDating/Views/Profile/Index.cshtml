@@ -2,11 +2,19 @@
 @using MvcDating.Models
 @model MvcDating.Models.ProfileView
 
-<div id="createMessageModal" class="reveal-modal">
-    @*Html.Partial("~/Views/Messages/_CreatePartial.cshtml")*@
-    @Html.Action("Create", "Messages", new { userId = Model.UserId } )
-    <a class="close-reveal-modal">&#215;</a>
+<!-- Modal -->
+<div id="createMessageModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 480px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <br/>
+                @Html.Action("Create", "Messages", new { userId = Model.UserId })
+            </div>
+        </div>
+    </div>
 </div>
+<!-- End -->
 
 @{
     bool onlineStatus = MvcDating.Helpers.User.GetOnlineStatus(Model.UserId);
@@ -16,16 +24,12 @@
     <h1>
         <span class="onlineBullet @(onlineStatus?"":"offline")" title="@(onlineStatus?"User is online!":"Offline")">&nbsp;</span>
          
-        @Html.DisplayFor(model => model.UserName)
+        <span style="color: @(Model.Gender == 1 ? "#E62A75" : "#3D76CA")">@Html.DisplayFor(model => model.UserName)</span>
 
-        @if (WebSecurity.IsCurrentUser(Model.UserName))
-        {
-            @Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"})
-        }
-        else
-        {
-            @Html.ActionLink("Send meesage", "Create", "Messages", new { userId = Model.UserId }, new { @class = "button", data_reveal_id = "createMessageModal"  })
-        }
+        @(WebSecurity.IsCurrentUser(Model.UserName) 
+        ? Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"}) 
+        : Html.ActionLink("Send meesage", null, null, new {@class = "button", href = "#", id = "createMessageBtn", data_reveal_id = "createMessageModal"}))
+
     </h1>
     <div>
         @Time.GetAge(Model.Birthday) / @ProfileItems.Gender[Model.Gender]
@@ -65,6 +69,11 @@
             window.itemModalDiv = '#pictureModal_' + $(this).attr('itemid');
             $(window.itemModalDiv).modal();
             updateModalWindowWidth(window.itemModalDiv);
+        });
+        
+        // Show modal create message
+        $("#createMessageBtn").on("click", function() {
+            $("#createMessageModal").modal();
         });
 
         $(window).resize(function() {

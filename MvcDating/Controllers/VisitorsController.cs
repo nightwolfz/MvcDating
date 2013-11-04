@@ -34,7 +34,7 @@ namespace MvcDating.Controllers
 
         public ActionResult History()
         {
-            var visitorView = db.Visitors.GetMyVisits();
+            var visitorView = db.Visitors.GetMyVisits().ToList();
 
             return View(visitorView);
         }

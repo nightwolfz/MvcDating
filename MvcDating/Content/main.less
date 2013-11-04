@@ -26,15 +26,24 @@
 
 /* Other
 ----------------------------------------------------------*/
+body {
+    background-color: whiteSmoke;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+}
 a {
     outline: none;
     cursor: pointer;
 }
-
 legend {
     margin: 20px 0;
 }
-
 input[type="text"], input[type="password"] {
     border: 1px solid #ddd;
     margin-bottom: 5px;
@@ -44,31 +53,16 @@ input[type="text"], input[type="password"] {
 input[type="checkbox"].input-validation-error {
     border: 0 none;
 }
-
-h2 {
-    display: block;
-    padding: 0;
-    margin-bottom: 16px;
-    font-size: 21px;
-    font-weight: normal;
-    color: #333333;
-    border: 0;
-    border-bottom: 1px solid #e5e5e5;
-} 
-
-.field-validation-error {
-    color: #b94a48;
-}
-.field-validation-valid {
-    display: none;
-}
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-}
 .navbar-inverse {
-    background: #eee;
-
+    background: #fff;
+    border-color: #5f99cf;
+    a {
+        color: #2154a3 !important;
+        font: 14px verdana,arial,helvetica,sans-serif;
+        &:hover {
+            color: #000 !important;
+        }
+    }
     .navbar-nav {
         & > .active {
             & > a {
@@ -79,7 +73,37 @@ body {
             font-weight: bold;
         }
     }
+    .navbar-brand {
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: bold;
+    }
 }
+h2 {
+    display: block;
+    padding: 0;
+    margin-bottom: 16px;
+    font-size: 21px;
+    font-weight: normal;
+    color: #333333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+textarea {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    width: 424px;
+    min-height: 100px;
+}
+
+.field-validation-error {
+    color: #b94a48;
+}
+.field-validation-valid {
+    display: none;
+}
+
 ul {
     -webkit-padding-start: 0;
 }
@@ -284,6 +308,10 @@ button, .button, input[type="submit"], input[type="button"] {
     }
 }
 
+.bgwhite {
+    background: white !important;
+}
+
 .bgred {
     background: @red !important;
     &:hover {
@@ -301,6 +329,7 @@ img.picture {
     background: #E7E7FA;
     padding: 8px 15px;
     color: #000;
+    font-size: 12px;
     display: block;
 }
 
@@ -324,9 +353,13 @@ img.picture {
     background: #FF8B8B;
 }
 .profileDetails {
-    padding: 10px 0;
+    padding-bottom: 10px;
     div {
         margin-bottom: 10px;
+    }
+    h1 {
+        margin: 0;
+        font-size: 3.5em;
     }
 }
 .pictureFeatured {

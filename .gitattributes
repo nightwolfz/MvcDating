@@ -9,6 +9,9 @@
 *.fsproj merge=union
 *.dbproj merge=union
 
+# Ignore LF / CRLF line endings
+* text=auto
+
 # Standard to msysgit
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain

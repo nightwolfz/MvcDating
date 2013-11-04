@@ -30,24 +30,28 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="container">
+            @Html.Action("FeaturedProfiles", "Home")
+        </div>
+
         <!-- Menu that shows up when logged in -->
         <div class="container subMenu">
             @if (Request.IsAuthenticated)
             {
-                <small>
-                    <span class="pull-right">
-                        Logged in as @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })
-                    </span>
-
-                    @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
-                </small>
+                <span class="pull-right">
+                    Logged in as @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })
+                </span>
+                @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
             }
         </div>
 
-        <div class="container">
-            @Html.Action("FeaturedProfiles", "Home")
-            @RenderBody()
+        <div class="container bgwhite">
+
+            <div style="padding: 8px 15px; margin-bottom: 8px;" class="clearfix">
+                @RenderBody()
+            </div>
+
         </div>
         
         <hr style="margin: 20px 0 10px 0;" />

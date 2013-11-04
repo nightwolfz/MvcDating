@@ -35,23 +35,22 @@ namespace MvcDating.Controllers
 
             if (conversation == null) return HttpNotFound();
 
-            var messages = from msg in conversation.Messages select msg;
-
-            var messageView = messages.ToList().Select(msg => new MessageView
+            var messageView = (from msg in conversation.Messages
+                               select new MessageView
             {
                 UserId = msg.UserId,
                 UserName = msg.GetUserName(msg.UserId),
                 UserPicture = msg.GetUserPicture(msg.UserId),
                 Content = msg.Content,
                 Timestamp = msg.Timestamp
-            });
+            }).ToList();
 
             ViewBag.ConversationId = id;
             ViewBag.UserIdWith = conversation.UserIdFrom != WebSecurity.CurrentUserId
                                ? conversation.UserIdFrom
                                : conversation.UserIdTo;
 
-            return View(messageView.ToList());
+            return View(messageView);
         }
 
         //

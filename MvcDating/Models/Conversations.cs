@@ -41,6 +41,7 @@ namespace MvcDating.Models
         public int MessageId { get; set; }
         public int ConversationId { get; set; }
         public int UserId { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public DateTime Timestamp { get; set; }
         public virtual Conversation Conversation { get; set; } // many-to-one
