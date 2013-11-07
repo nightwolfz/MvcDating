@@ -19,18 +19,6 @@
 }
 else
 {
-    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl, showLoginForm = true })
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "", "", null, null, "loginModal", routeValues: null, htmlAttributes: new { data_toggle = "modal" })</li>

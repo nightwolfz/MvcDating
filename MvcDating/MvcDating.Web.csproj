@@ -328,10 +328,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\mobile.less" />
-    <None Include="Content\Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="Content\Scripts\jquery-2.0.3.js" />
-    <Content Include="Content\Scripts\jquery-2.0.3.min.js" />
-    <Content Include="Content\Scripts\jquery-2.0.3.min.map" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
@@ -350,7 +346,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Scripts\_references.js" />
     <Content Include="Content\Images\bullet.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />

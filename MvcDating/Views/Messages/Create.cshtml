@@ -11,17 +11,13 @@
     <span>Sending a message to <b>@ViewBag.userName</b></span>
     <fieldset>
         @Html.HiddenFor(model => model.UserId)
-        <div class="editor-field">
+        <div>
             @Html.EditorFor(model => model.Content)
+            <br/>
             @Html.ValidationMessageFor(model => model.Content)
         </div>
         <br/>
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+        <input type="submit" value="Create" />
+    </fieldset>
 }

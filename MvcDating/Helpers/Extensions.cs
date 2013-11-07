@@ -59,7 +59,7 @@ namespace MvcDating.Helpers
                 title = userName
             };
 
-            return ImageLink(helper, urlRoute, Image(helper, thumbSrc, htmlAttributes: attributes));
+            return ImageLink(helper, urlRoute, Image(helper, thumbSrc, "thumbnail", htmlAttributes: attributes));
         }
     }
 }

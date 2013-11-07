@@ -58,7 +58,7 @@ namespace MvcDating.Controllers
         // On: /Profile/{userName}
         public ActionResult Create(int userId = 0)
         {
-            var profile = db.Profiles.Find(userId);
+            var profile = db.Profiles.Single(p => p.UserId == userId);
 
             ViewBag.userName = profile.UserName;
             ViewBag.userPicture = db.Profiles.GetUserPicture(userId);
@@ -90,7 +90,7 @@ namespace MvcDating.Controllers
                         UserIdFrom = WebSecurity.CurrentUserId,
                         UserIdTo = message.UserId,
                         Timestamp = DateTime.Now,
-                        Messages = new List<Message> { message }
+                        Messages = new List<Message> {message}
                     };
                     message.ConversationId = newConversation.ConversationId;
                     db.Conversations.Add(newConversation);
@@ -106,11 +106,9 @@ namespace MvcDating.Controllers
                 Helpers.User.SetOnline();
 
                 db.Messages.Add(message);
-                db.SaveChanges();
-                return RedirectToAction("Read", routeValues: new { id = message.ConversationId });
+                db.SaveChanges(); 
             }
-
-            return View();
+            return RedirectToAction("Read", routeValues: new {id = message.ConversationId});
         }
 
         //

@@ -24,7 +24,7 @@ namespace MvcDating.Controllers
 
             Mapper.CreateMap<Visitor, VisitorView>()
                 .ForMember(src => src.Thumb, opt => opt.MapFrom(c => db.Pictures.Single(p => p.IsAvatar && p.UserId == c.UserId).Thumb))
-                .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Pictures.Single(p => p.UserId == c.UserId)));
+                .ForMember(src => src.Profile, opt => opt.MapFrom(c => db.Profiles.Single(p => p.UserId == c.UserId)));
 
             var visitorView = Mapper.Map<IEnumerable<Visitor>, IEnumerable<VisitorView>>(visitors);
 

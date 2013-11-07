@@ -54,23 +54,24 @@
 
 <script>
     $(function() {
+        var itemModalDiv;
         
         // Show modal picture
         $(".pictureModalClick").on("click", function() {
-            window.itemModalDiv = '#pictureModal_' + $(this).parent().attr('itemid');
+            itemModalDiv = '#pictureModal_' + $(this).parent().attr('itemid');
 
-            $(window.itemModalDiv).modal();
-            updateModalWindowWidth(window.itemModalDiv);
+            $(itemModalDiv).modal();
+            updateModalWindowWidth(itemModalDiv);
         });
         
         $(window).resize(function() {
-            if (window.itemModalDiv) updateModalWindowWidth();
+            if (itemModalDiv) updateModalWindowWidth();
         });
 
         function updateModalWindowWidth() {
             setTimeout(function() {
-                var itemWidth = $(window.itemModalDiv + " .modal-body img").first().width() + 22;
-                $(window.itemModalDiv + " .modal-dialog").css('width', itemWidth);
+                var itemWidth = $(itemModalDiv + " .modal-body img").first().width() + 22;
+                $(itemModalDiv + " .modal-dialog").css('width', itemWidth);
             }, 200);
         }
 

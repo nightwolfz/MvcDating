@@ -1,6 +1,6 @@
 ﻿@purple: #573D7D;
 @royal: #97292a;
-@skyblue: #cce4fd;
+@skyblue: #5CA3EE;
 @gray: #888;
 @lightblue: #00AAEB;
 @royalblue: #4e69a2;
@@ -24,6 +24,21 @@
     border-radius: @px;
 }
 
+.gradient(@from, @to){
+    background: @from; /* Old browsers */
+    background: -moz-linear-gradient(top, @from 0%, @to 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(top, @from 0%,@to 100%); /* Chrome10+,Safari5.1+ */
+    background: -ms-linear-gradient(top, @from 0%,@to 100%); /* IE10+ */
+    background: linear-gradient(to bottom, @from 0%,@to 100%); /* W3C */
+}
+
+.transition(@options: all .1s ease-in-out){
+    transition: @options;
+    -moz-transition: @options;
+    -ms-transition: @options;
+    -webkit-transition: @options;
+}
+
 /* Other
 ----------------------------------------------------------*/
 body {
@@ -32,6 +47,7 @@ body {
     padding-bottom: 40px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
+    -webkit-font-smoothing: antialiased;
 }
 .container {
     margin-right: auto;
@@ -56,14 +72,20 @@ input[type="checkbox"].input-validation-error {
 .navbar-inverse {
     background: #fff;
     border-color: #5f99cf;
-    a {
+    ul a {
         color: #2154a3 !important;
-        font: 14px verdana,arial,helvetica,sans-serif;
+        .transition();
+
         &:hover {
             color: #000 !important;
+            font-size: 130%;
         }
     }
     .navbar-nav {
+        li {
+            text-align: center;
+            width: 89px;
+        }
         & > .active {
             & > a {
                 background-color: #222222;
@@ -192,12 +214,15 @@ input.input-validation-error {
     a {
         display: inline-block;
     }
+    img {
+        .transition();
+        &:hover {
+            border-color: @skyblue;
+        }
+    }
 }
 .visitorWrapper {
-    width: 180px;
-    border: 2px solid #eee;
-    padding: 4px 8px;
-    margin-right: 5px;
+    margin-right: 20px;
     float: left;
 
     .visitorDetails {
@@ -293,15 +318,17 @@ input.input-validation-error {
 button, .button, input[type="submit"], input[type="button"] {
     color: #fff;
     background: @blue;
+    /*.gradient(@blue, darken(@blue, 10%));*/
     border: 0;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: normal;
-    padding: 4px 10px;
+    padding: 6px 10px;
     text-decoration: none;
     vertical-align: middle;
     display: inline-block;
     cursor: pointer;
     border-radius: 2px;
+    .transition();
 
     &:hover {
         background: darken(@blue, 20%);
@@ -313,7 +340,7 @@ button, .button, input[type="submit"], input[type="button"] {
 }
 
 .bgred {
-    background: @red !important;
+    background: @red;
     &:hover {
         background: darken(@red, 20%) !important;
     }
@@ -385,10 +412,7 @@ img.picture {
                 height: 80px;
                 top: -12px;
                 left: -12px;
-                transition: all .1s ease-in-out;
-                -moz-transition: all .1s ease-in-out;
-                -o-transition: all .1s ease-in-out;
-                -webkit-transition: all .1s ease-in-out;
+                .transition(all .1s ease-in-out);
             }
         }
     }
@@ -508,6 +532,7 @@ a.pictureDropDownButton {
 /* Function to generate social buttons */
 .btn-social(@name, @color){
   .btn-@{name} {
+        color: #fff;
         background-color: @color;
         border: 1px solid darken(@color, 30%);
         text-shadow: 1px -1px 2px darken(@color, 20%);

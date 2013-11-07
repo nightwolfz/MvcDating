@@ -28,13 +28,14 @@
                 </td>
             </tr>
             <tr>
-            <td colspan="2">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
-            </td>
-            <tr>
-                <td colspan="2"><input type="submit" value="Log in" class="btn btn-large" /></td>
+                <td></td>
+                <td>
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </td>
             </tr>
         </table>
+        <br/>
+        <input type="submit" value="Log in" class="btn btn-large" />
     </fieldset>
 }
