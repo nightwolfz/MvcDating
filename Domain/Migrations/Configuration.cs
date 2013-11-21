@@ -1,14 +1,14 @@
-namespace MvcDating.Migrations
-{
-    using Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity.Migrations;
-    using System.Globalization;
-    using System.Linq;
-    using System.Web.Security;
-    using WebMatrix.WebData;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Globalization;
+using System.Linq;
+using System.Web.Security;
+using Domain.Models;
+using WebMatrix.WebData;
 
+namespace Domain.Migrations
+{
     internal sealed class Configuration : DbMigrationsConfiguration<UsersContext>
     {
         public Configuration()
@@ -54,7 +54,7 @@ namespace MvcDating.Migrations
                 Orientation = 0,
             });
 
-            if (!Roles.GetRolesForUser(username).Contains("Administrator")) Roles.AddUsersToRoles(new[]{ username, betaname }, new[] { "Administrator" });
+            if (!Enumerable.Contains(Roles.GetRolesForUser(username), "Administrator")) Roles.AddUsersToRoles(new[]{ username, betaname }, new[] { "Administrator" });
 
             int userIdToAdd = WebSecurity.GetUserId(username);
             int betaIdToAdd = WebSecurity.GetUserId(betaname);

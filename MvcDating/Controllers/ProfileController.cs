@@ -3,11 +3,12 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MvcDating.Models;
-using MvcDating.Filters;
 using AutoMapper;
+using Domain.Filters;
+using MvcDating.Models;
 using MvcDating.Services;
-using WebMatrix.WebData;
+using Domain.Models;
+using Profile = Domain.Models.Profile;
 
 
 namespace MvcDating.Controllers
@@ -28,8 +29,8 @@ namespace MvcDating.Controllers
             // Add a visitor
             db.Visitors.AddOrUpdateVisitor(profile.UserId);
 
-            Mapper.CreateMap<Models.Profile, ProfileView>();
-            var profileView = Mapper.Map<Models.Profile, ProfileView>(profile);
+            Mapper.CreateMap<Profile, ProfileView>();
+            var profileView = Mapper.Map<Profile, ProfileView>(profile);
 
             return View(profileView);
         }
@@ -40,8 +41,8 @@ namespace MvcDating.Controllers
         {
             var profile = db.Profiles.Single(p => p.UserName == username);
 
-            Mapper.CreateMap<Models.Profile, ProfileView>();
-            var profileview = Mapper.Map<Models.Profile, ProfileView>(profile);
+            Mapper.CreateMap<Profile, ProfileView>();
+            var profileview = Mapper.Map<Profile, ProfileView>(profile);
 
             return View(profileview);
         }
@@ -51,10 +52,10 @@ namespace MvcDating.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profileview)
         {
-            Mapper.CreateMap<ProfileView, Models.Profile>()
+            Mapper.CreateMap<ProfileView, Profile>()
                 .ForMember(src => src.Email, opt => opt.Ignore());
 
-            var profile = Mapper.Map<ProfileView, Models.Profile>(profileview);
+            var profile = Mapper.Map<ProfileView, Profile>(profileview);
             profile.UpdatedDate = DateTime.Now;
 
             // Set this user as online

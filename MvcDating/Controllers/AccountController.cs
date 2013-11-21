@@ -6,10 +6,11 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
+using Domain.Filters;
+using Domain.Models;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using MvcDating.Filters;
 using MvcDating.Models;
 using IsolationLevel = System.Transactions.IsolationLevel;
 

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using MvcDating.Models;
 using MvcDating.Services;
-using Profile = MvcDating.Models.Profile;
+using Profile = Domain.Models.Profile;
 
 namespace MvcDating.Controllers
 {

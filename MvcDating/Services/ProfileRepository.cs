@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Domain.Models;
 using MvcDating.Models;
 
 namespace MvcDating.Services

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Domain.Filters;
+using Domain.Models;
 using MvcDating.Models;
 using MvcDating.Services;
 using WebMatrix.WebData;
-using MvcDating.Filters;
 
 namespace MvcDating.Controllers
 {

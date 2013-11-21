@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcDating.Web", "MvcDating\MvcDating.Web.csproj", "{16D0D8A9-36F0-4A93-BD85-6233F69ED385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7C0D941F-752F-4E48-9F33-411F9FAF6897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{16D0D8A9-36F0-4A93-BD85-6233F69ED385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16D0D8A9-36F0-4A93-BD85-6233F69ED385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16D0D8A9-36F0-4A93-BD85-6233F69ED385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0D941F-752F-4E48-9F33-411F9FAF6897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0D941F-752F-4E48-9F33-411F9FAF6897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0D941F-752F-4E48-9F33-411F9FAF6897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0D941F-752F-4E48-9F33-411F9FAF6897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

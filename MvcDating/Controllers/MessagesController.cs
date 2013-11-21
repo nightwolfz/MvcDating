@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using Domain.Filters;
+using Domain.Models;
 using MvcDating.Models;
-using MvcDating.Filters;
 using MvcDating.Services;
 using WebMatrix.WebData;
 
@@ -35,15 +36,7 @@ namespace MvcDating.Controllers
 
             if (conversation == null) return HttpNotFound();
 
-            var messageView = (from msg in conversation.Messages
-                               select new MessageView
-            {
-                UserId = msg.UserId,
-                UserName = msg.GetUserName(msg.UserId),
-                UserPicture = msg.GetUserPicture(msg.UserId),
-                Content = msg.Content,
-                Timestamp = msg.Timestamp
-            }).ToList();
+            var messageView = db.Messages.GetMessagesView(conversation);
 
             ViewBag.ConversationId = id;
             ViewBag.UserIdWith = conversation.UserIdFrom != WebSecurity.CurrentUserId

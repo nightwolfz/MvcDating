@@ -4,8 +4,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
-using MvcDating.Models;
+using Domain.Models;
+using EntityState = System.Data.Entity.EntityState;
 
 namespace MvcDating.Services
 {

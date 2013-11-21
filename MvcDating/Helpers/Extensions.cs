@@ -55,7 +55,7 @@ namespace MvcDating.Helpers
 
             var attributes = new
             {
-                onerror = "this.src='Uploads/default.png';",
+                onerror = "this.src='/Uploads/default.png';",
                 title = userName
             };
 

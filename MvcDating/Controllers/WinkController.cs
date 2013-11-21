@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using MvcDating.Models;
+using Domain.Models;
 using MvcDating.Services;
 using WebMatrix.WebData;
 

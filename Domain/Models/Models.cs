@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
-namespace MvcDating.Models
+namespace Domain.Models
 {
     public class UsersContext : DbContext
     {
@@ -26,19 +25,15 @@ namespace MvcDating.Models
         }
     }
 
-
-    /**
-     * Good to know: 
-     * IEnumerable only for iterating.
-     * ICollection for iterating & modifying.
-     * IList for iterating, modifying, sorting etc. Very optimized.
-     * ICollection is not that fast or useful.
-     */
-
     public class Profile
     {
+        public Profile()
+        {
+            UpdatedDate = DateTime.Now;
+        }
+
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -62,6 +57,11 @@ namespace MvcDating.Models
 
     public class Picture
     {
+        public Picture()
+        {
+            UploadedDate = DateTime.Now;
+        }
+
         [Key]
         public int PictureId { get; set; }
         public int UserId { get; set; } // one-to-many

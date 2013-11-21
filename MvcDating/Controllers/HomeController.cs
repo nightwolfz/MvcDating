@@ -1,10 +1,10 @@
-﻿using MvcDating.Models;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Domain.Filters;
 using MvcDating.Services;
 
 namespace MvcDating.Controllers
 {
+    [InitializeSimpleMembership]
     public class HomeController : Controller
     {
         private UnitOfWork db = new UnitOfWork();
