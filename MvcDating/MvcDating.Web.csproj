@@ -279,6 +279,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\VisitorsController.cs" />
+    <Compile Include="Controllers\WinkController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -301,6 +302,7 @@
     <Compile Include="Services\PictureRepository.cs" />
     <Compile Include="Services\ProfileRepository.cs" />
     <Compile Include="Services\UnitOfWork.cs" />
+    <Compile Include="Services\WinkRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css">
@@ -382,6 +384,8 @@
     <Content Include="Views\Shared\_UserDetails.cshtml" />
     <Content Include="Views\Pictures\_Upload.cshtml" />
     <Content Include="Views\Home\FeaturedProfiles.cshtml" />
+    <Content Include="Views\Wink\Index.cshtml" />
+    <Content Include="Views\Wink\_Winkers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
