@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MvcDating.Models.VisitorView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Who has winked me</h2>
+
+<table>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.Partial("_Winkers", item)
+            </td>
+            <td>
+                @Html.ActionLink("Wink back", "Add", new { id = item.UserId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
+            </td>
+        </tr>
+    }
+</table>

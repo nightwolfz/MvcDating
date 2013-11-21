@@ -1,0 +1,13 @@
+﻿@using MvcDating.Helpers
+@using MvcDating.Models
+@model MvcDating.Models.VisitorView
+           
+<div class="visitorWrapper clearfix">
+    <div class="visitorPicture">
+        @Html.DisplayAvatar(Model.Profile.UserName, "~/Uploads/" + Model.Thumb)
+    </div>
+    <div class="visitorDetails">
+        @Html.Partial("_UserDetails", Model.Profile)
+        <small>@Model.GetTimeAgo()</small>
+    </div>
+</div>

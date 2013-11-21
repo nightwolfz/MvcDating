@@ -17,6 +17,7 @@ namespace MvcDating.Models
         public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Wink> Winks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -69,8 +70,6 @@ namespace MvcDating.Models
         public bool IsAvatar { get; set; }
         public DateTime UploadedDate { get; set; }
         public virtual IList<Comment> Comments { get; set; } // one-to-many
-
-        private UsersContext db = new UsersContext();
     }
 
     public class Comment
@@ -88,6 +87,15 @@ namespace MvcDating.Models
         [Key]
         public int VisitId { get; set; }
         public int VisitorId { get; set; }
+        public int UserId { get; set; }
+        public DateTime Timestamp { get; set; }
+    }
+
+    public class Wink
+    {
+        [Key]
+        public int WinkId { get; set; }
+        public int WinkerId { get; set; }
         public int UserId { get; set; }
         public DateTime Timestamp { get; set; }
     }

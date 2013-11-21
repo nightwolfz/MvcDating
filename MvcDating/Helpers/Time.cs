@@ -29,13 +29,13 @@ namespace MvcDating.Helpers
         /// <summary>
         /// Get age based on birthday
         /// </summary>
-        public static string GetAge(DateTime birthday)
+        public static int GetAge(DateTime birthday)
         {
             var now = DateTime.Today;
             int age = now.Year - birthday.Year;
             if (now < birthday.AddYears(age)) age--;
 
-            return age.ToString(CultureInfo.InvariantCulture);
+            return age;
         }
     }
 }

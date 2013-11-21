@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -37,6 +38,32 @@ namespace MvcDating.Controllers
             var visitorView = db.Visitors.GetMyVisits().ToList();
 
             return View(visitorView);
+        }
+
+
+        static public void AddVisitor(int userId, UnitOfWork db)
+        {
+            if (userId != WebSecurity.CurrentUserId)
+            {
+                var visitor = db.Visitors.Single(dto => dto.VisitorId == WebSecurity.CurrentUserId);
+
+                if (visitor == null)
+                {
+                    db.Visitors.Add(new Visitor
+                    {
+                        UserId = userId,
+                        VisitorId = WebSecurity.CurrentUserId,
+                        Timestamp = DateTime.Now
+                    });
+                }
+                else
+                {
+                    visitor.Timestamp = DateTime.Now;
+                    db.Visitors.Update(visitor);
+
+                }
+                db.SaveChanges();
+            }
         }
     }
 }

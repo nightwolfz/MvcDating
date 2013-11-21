@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -30,7 +31,14 @@ namespace MvcDating.Controllers
         [HttpPost]
         public ActionResult Index(SearchBoxView searchBoxView)
         {
-            var profiles = db.Profiles.Get(p => searchBoxView.Gender.Contains(p.Gender));
+            var min = DateTime.Today.AddYears(-(searchBoxView.AgeTo + 1));
+            var max = DateTime.Today.AddYears(-searchBoxView.AgeFrom);
+
+            var profiles = db.Profiles.Get(
+                p => searchBoxView.Gender.Contains(p.Gender)
+                     && p.Birthday >= min
+                     && p.Birthday <= max
+            );
 
             var resultsView = new SearchView
             {

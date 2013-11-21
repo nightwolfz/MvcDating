@@ -40,6 +40,12 @@ namespace MvcDating.Services
             get { return _visitor ?? (_visitor = new VisitorRepository(_context)); }
         }
 
+        WinkRepository _wink;
+        public WinkRepository Winks
+        {
+            get { return _wink ?? (_wink = new WinkRepository(_context)); }
+        }
+
 
 
         public void SaveChanges()

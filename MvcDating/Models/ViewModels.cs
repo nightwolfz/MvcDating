@@ -205,12 +205,16 @@ namespace MvcDating.Models
         public SearchBoxView()
         {
             Gender = new List<int>{0,1};
+            AgeFrom = 18;
+            AgeTo = 24;
         }
 
         [DisplayName("From")]
+        [Range(18, 80, ErrorMessage = "The 'from' age must be between {1} and {2}")]
         public int AgeFrom { get; set; }
 
         [DisplayName("to")]
+        [Range(18, 80, ErrorMessage = "The 'to' age must be between {1} and {2}")]
         public int AgeTo { get; set; }
 
         [DisplayName("Living in")]
@@ -234,7 +238,7 @@ namespace MvcDating.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public DateTime Birthday { get; set; }
-        public string Age
+        public int Age
         {
             get
             {
@@ -249,4 +253,16 @@ namespace MvcDating.Models
         public string Thumb { get; set; }
         public int PictureCount { get; set; }
     }
+
+    public class ContactsView
+    {
+        public string Email { get; set; }
+        public string Name { get; set; }
+    }
+    public class InviterLoginView
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
 }

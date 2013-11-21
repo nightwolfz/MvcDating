@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using MvcDating.Models;
 using WebMatrix.WebData;
@@ -28,6 +31,30 @@ namespace MvcDating.Services
                               };
 
             return visitorView;
+        }
+
+        public void AddOrUpdateVisitor(int userId)
+        {
+            if (userId != WebSecurity.CurrentUserId)
+            {
+                var visitor = Context.Visitors.SingleOrDefault(dto => dto.VisitorId == WebSecurity.CurrentUserId);
+
+                if (visitor == null)
+                {
+                    Context.Visitors.Add(new Visitor
+                    {
+                        UserId = userId,
+                        VisitorId = WebSecurity.CurrentUserId,
+                        Timestamp = DateTime.Now
+                    });
+                }
+                else
+                {
+                    visitor.Timestamp = DateTime.Now;
+                    Update(visitor);
+                }
+                Context.SaveChanges();
+            }
         }
     }
 }

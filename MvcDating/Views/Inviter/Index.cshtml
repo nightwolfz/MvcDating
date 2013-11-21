@@ -1,0 +1,41 @@
+﻿@model MvcDating.Models.InviterLoginView
+
+@{
+    ViewBag.Title = "Contacts Inviter";
+}
+
+<h2>Contacts Inviter</h2>
+
+@if (ViewBag.InvalidService != null)
+{
+    <b>@ViewBag.InvalidService</b>
+}
+
+@if (ViewBag.ServiceName != null)
+{
+    <b>Extracting from @ViewBag.ServiceName</b>
+}
+
+@if (ViewBag.Contacts != null)
+{
+    <ul>
+        @foreach (var contact in ViewBag.Contacts)
+        {
+            <li>
+                EMail: @contact.Email
+                Name: @contact.Name <br />
+            </li>
+        }
+    </ul>
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email)
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password)
+        <button type="submit">Check for connections</button>
+    }
+}

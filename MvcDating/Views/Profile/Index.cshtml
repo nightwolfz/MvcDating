@@ -21,14 +21,16 @@
 }
 
 <div class="profileDetails">
+    
+
     <h1>
         <span class="onlineBullet @(onlineStatus?"":"offline")" title="@(onlineStatus?"User is online!":"Offline")">&nbsp;</span>
          
         <span style="color: @(Model.Gender == 1 ? "#E62A75" : "#3D76CA")">@Html.DisplayFor(model => model.UserName)</span>
 
         @(WebSecurity.IsCurrentUser(Model.UserName) 
-        ? Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"}) 
-        : Html.ActionLink("Send meesage", null, null, new {@class = "button", href = "#", id = "createMessageBtn", data_reveal_id = "createMessageModal"}))
+              ? Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"}) 
+              : Html.ActionLink("Send meesage", null, null, new {@class = "button", href = "#", id = "createMessageBtn", data_reveal_id = "createMessageModal"}))
 
     </h1>
     <div>

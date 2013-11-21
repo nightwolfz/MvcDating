@@ -26,27 +26,7 @@ namespace MvcDating.Controllers
             if (profile == null) throw new HttpException(404, "Profile not found");
 
             // Add a visitor
-            if (profile.UserId != WebSecurity.CurrentUserId)
-            {
-                var visitor = db.Visitors.Single(dto => dto.VisitorId == WebSecurity.CurrentUserId);
-
-                if (visitor == null)
-                {
-                    db.Visitors.Add(new Visitor
-                    {
-                        UserId = profile.UserId,
-                        VisitorId = WebSecurity.CurrentUserId,
-                        Timestamp = DateTime.Now
-                    });
-                }
-                else
-                {
-                    visitor.Timestamp = DateTime.Now;
-                    db.Visitors.Update(visitor);
-                    
-                }
-                db.SaveChanges();
-            }
+            db.Visitors.AddOrUpdateVisitor(profile.UserId);
 
             Mapper.CreateMap<Models.Profile, ProfileView>();
             var profileView = Mapper.Map<Models.Profile, ProfileView>(profile);

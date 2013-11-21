@@ -1,17 +1,25 @@
 ﻿@using System.Web.UI.WebControls
 @using MvcDating.Models
 @model MvcDating.Models.SearchBoxView
+           
+<style>
+    input[type="number"] {
+        width: 60px;
+    }
+</style>
 
 @using (Html.BeginForm())
 {
+    @Html.ValidationSummary()
+    
     <fieldset>
         <legend>Search</legend>
 
         <div class="col-md-7">
             @Html.LabelFor(m => m.AgeFrom)
-            @Html.EditorFor(m => m.AgeFrom, new{ value = "18"})
+            @Html.EditorFor(m => m.AgeFrom, new { Value = "18" })
             @Html.LabelFor(m => m.AgeTo)
-            @Html.EditorFor(m => m.AgeTo, new { value = "24" })
+            @Html.EditorFor(m => m.AgeTo, new { Value = "24" })
             <br/>
             @Html.LabelFor(m => m.Gender)
             <input type="checkbox" id="GenderMale" name="Gender" value="0" @(Model.Gender.Contains(0) ? "checked" : "") /> 
@@ -25,5 +33,5 @@
         
     </fieldset>
     <br/>
-        <input type="submit" value="Search profiles">
+    <input type="submit" value="Search profiles"/>
 }
