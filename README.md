@@ -1,11 +1,10 @@
 MvcDating
 =========
 
-ASP.NET MVC4: Sample website using entity, webapi and more.
+ASP.NET MVC4: Sample website using Entity Framework, webapi, unit of work & repository patterns.
 
-I'm using this project to learn ASP.NET
 
-Do not use this anywhere, I'm a noob.
+Coming from a PHP background, I fell in love with ASP.NET & C# at first sight.
 
 
 ![alt tag](https://raw.githubusercontent.com/nightwolfz/MvcDating/master/mvcdating.png)
