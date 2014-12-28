@@ -7,13 +7,13 @@
     }
 </style>
 
+<h2>Search</h2>
+
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary()
     
     <fieldset>
-        <legend>Search</legend>
-
         <div class="col-md-7">
             @Html.LabelFor(m => m.AgeFrom)
             @Html.EditorFor(m => m.AgeFrom, new { Value = "18" })
@@ -28,9 +28,8 @@
             @Html.Label(ProfileItems.Gender[1], new { @for = "GenderFemale" })
             <br />
         </div>
-        
-        
     </fieldset>
+    
     <br/>
     <input type="submit" value="Search profiles"/>
 }

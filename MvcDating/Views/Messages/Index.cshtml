@@ -5,6 +5,8 @@
     ViewBag.Title = "Conversations";
 }
 
+<h2>Messages</h2>
+
 @if (!Model.Any())
 {
     <h3>No conversations found. You can start messaging someone by going to their profile and clicking "message".</h3>
@@ -12,18 +14,20 @@
 
 <style>
     .messagesIndex {
-        border: 1px solid #ddd;
         border-width: 1px 0;
         border-collapse: separate;
+        background: #f6f6f6;
+        margin: 6px 0px;
         width: 100%;
     }
     ul.messagesIndex:hover {
-        background: #eee;
+        background: #E2EEF6;
     }
     .messagesIndex li {
         list-style: none;
         width: 71%;
         float: left;
+        padding: 8px;
     } 
     .messagesIndex li:first-child {
         width: 80px;
@@ -50,7 +54,7 @@
         text-decoration: none;
     }
     .messagesIndex a, .messagesIndex a:hover {
-        padding-top: 10px;
+        padding-top: 4px;
         display: block;
         text-decoration: none;
     }
@@ -58,8 +62,10 @@
         color: #777;
     }
     .messagesIndex img {
-        height: 64px;
-        width: 64px;
+        width: 48px;
+        height: auto;
+        -ms-border-radius: 30px;
+        border-radius: 30px; /* make rounded pics */
     }
 </style>
 
@@ -86,5 +92,3 @@
         </li>
     </ul>
 }
-
-

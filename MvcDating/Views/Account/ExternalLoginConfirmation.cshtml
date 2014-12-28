@@ -1,6 +1,9 @@
 ﻿@model MvcDating.Models.RegisterExternalLoginModel
 @{
     ViewBag.Title = "Register";
+
+    string male = MvcDating.Models.ProfileItems.Gender[0];
+    string female = MvcDating.Models.ProfileItems.Gender[1];
 }
 
 <hgroup class="title">
@@ -18,18 +21,32 @@
             Please enter a user name for this site below and click the Confirm button to finish
             logging in.
         </p>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-                @Html.ValidationMessageFor(m => m.Email)
-            </li>
-        </ol>
+        
+        <table width="400">
+            <tr>
+                <td>@Html.LabelFor(m => m.UserName)</td>
+                <td>@Html.EditorFor(m => m.UserName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Gender)</td>
+                <td>
+                    @Html.RadioButtonFor(m => m.Gender, "0", new { id = male })
+                    @Html.Label(male)
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    @Html.RadioButtonFor(m => m.Gender, "1", new { id = female })
+                    @Html.Label(female)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>@Html.EditorFor(m => m.Email)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Birthday)</td>
+                <td>@Html.TextBoxFor(m => m.Birthday, DateTime.Now.ToString("dd/mm/yyyy"), new { type = "date" })</td>
+            </tr>
+        </table>
+
         @Html.HiddenFor(m => m.ExternalLoginData)
         <input type="submit" value="Register" />
     </fieldset>

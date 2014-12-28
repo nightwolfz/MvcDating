@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcDating.Models
@@ -11,6 +12,14 @@ namespace MvcDating.Models
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        public int Gender { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Birthday must be set")]
+        public DateTime Birthday { get; set; }
 
         public string ExternalLoginData { get; set; }
     }

@@ -313,6 +313,10 @@
     <Content Include="Content\Images\chat.png" />
     <Content Include="Content\Images\delete.png" />
     <Content Include="Content\bootstrap.less" />
+    <Content Include="Content\Fonts\HelveticaNeueLTCom-BdCn.ttf" />
+    <Content Include="Content\Fonts\HelveticaNeueLTCom-LtCn.ttf" />
+    <Content Include="Content\Fonts\HelveticaNeueLTCom-MdCn.ttf" />
+    <Content Include="Content\Fonts\HelveticaNeueLTCom-MdCn.woff" />
     <None Include="Content\main.less" />
     <Content Include="Content\Images\icon_buttons.png" />
     <Content Include="Content\Images\loading.gif" />
@@ -361,7 +365,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Pictures\Index.cshtml" />
     <Content Include="Views\Pictures\Details.cshtml" />
     <Content Include="Views\Messages\Index.cshtml" />

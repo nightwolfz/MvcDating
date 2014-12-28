@@ -15,8 +15,8 @@
         
         <div class="editor-field">
             I'm
-            @Html.DropDownListFor(model => model.Situation, new SelectList(Model.SituationItems, "Value", "Text"))
-            and @Html.DropDownListFor(model => model.Orientation, new SelectList(Model.OrientationItems, "Value", "Text"))
+            @Html.DropDownListFor(model => model.Situation, Model.SituationItems)
+            and @Html.DropDownListFor(model => model.Orientation, Model.OrientationItems)
         </div>
 
         <legend>
@@ -31,7 +31,7 @@
             @Html.DisplayNameFor(model => model.LocationCountry)
         </legend>
         <div class="editor-field">
-            @Html.LabelFor(model => model.LocationCountry) @Html.EditorFor(model => model.LocationCountry)
+            @Html.LabelFor(model => model.LocationCountry) @Html.DropDownListFor(model => model.LocationCountry, (IEnumerable<SelectListItem>)ViewBag.Countries)
             @Html.LabelFor(model => model.LocationCity) @Html.EditorFor(model => model.LocationCity)
             @Html.ValidationMessageFor(model => model.LocationCountry)
             @Html.ValidationMessageFor(model => model.LocationCity)

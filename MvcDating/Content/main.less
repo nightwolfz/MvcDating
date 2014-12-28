@@ -43,7 +43,7 @@
 ----------------------------------------------------------*/
 body {
     background-color: whiteSmoke;
-    padding-top: 60px;
+    padding-top: 50px;
     padding-bottom: 40px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -53,10 +53,41 @@ body {
     margin-right: auto;
     margin-left: auto;
 }
-a {
+
+a, input, button {
+    -ms-touch-action: none;
+    touch-action: none;
     outline: none;
+}
+
+a, button {
     cursor: pointer;
 }
+
+h1, h2, h3 {
+  font-family: "HelveticaNeueMdCn", Helvetica, sans-serif;
+  font-weight: normal;
+  line-height: 1.4em;
+}
+
+h1 {
+    color: #363636;
+}
+h2 {
+    color: #799654;
+    margin-bottom: 16px;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+h3 {
+    color: #363636;
+}
+
+@font-face {
+  font-family: "HelveticaNeueMdCn";
+  src: url('/Content/Fonts/HelveticaNeueLTCom-MdCn.ttf') format('truetype'), url('/Content/Fonts/HelveticaNeueLTCom-MdCn.woff') format('woff');
+}
+
 legend {
     margin: 20px 0;
 }
@@ -84,6 +115,7 @@ input[type="checkbox"].input-validation-error {
     .navbar-nav {
         li {
             text-align: center;
+            float: left;
             width: 89px;
         }
         & > .active {
@@ -100,16 +132,6 @@ input[type="checkbox"].input-validation-error {
         font-size: 18px;
         font-weight: bold;
     }
-}
-h2 {
-    display: block;
-    padding: 0;
-    margin-bottom: 16px;
-    font-size: 21px;
-    font-weight: normal;
-    color: #333333;
-    border: 0;
-    border-bottom: 1px solid #e5e5e5;
 }
 
 textarea {
@@ -259,13 +281,14 @@ input.input-validation-error {
 
 /* messages
 ----------------------------------------------------------*/
-@messageBg: #EFF5F7;
+@messageBgOther: #F2F8E5;
+@messageBgMine: #EEE;
 
 .messages-wrapper {
     list-style: none;
     
     li {
-        margin: 0 0 1.5em 0;
+        margin: 0 0 0.5em 0;
     }
     .reply {
         border-top: 2px solid #52B6DF;
@@ -283,39 +306,70 @@ input.input-validation-error {
         }
     }
 } 
+
 .message-right:after {
     width: 0;
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid @messageBg;
+    border-right: 10px solid @messageBgOther;
     content: "";
     position: absolute;
     left: -10px;
-    top: 20px;
+    top: 14px;
 }
+.message-right.message-mine:after {
+    border-right-color: @messageBgMine;
+}
+
 .message-right {
     position: relative;
-    background-color: @messageBg;
     display: inline-block;
     width: 88%;
     margin-left: 20px;
-}
-.message-content {
-    font-size: 13px;
-    padding: 8px 16px;
-}
-.message-left {
-    width: 82px;
-    display: block;
-    float: left;
-    img.picture {
-        border: 5px solid #787878;
-        width: 72px;
-        height: auto;
+    background-color: @messageBgOther;
+    &.message-mine {
+        background-color: @messageBgMine;
+    }
+    &.message-write:after {
+        border: 0;
+    }
+    textarea {
+        padding: 8px;
+        width: 100%;
     }
 }
 
+
+
+.message-content {
+    font-size: 13px;
+    padding: 15px 18px;
+}
+.message-left {
+    width: 54px;
+    display: block;
+    float: left;
+
+    img.picture {
+        width: 54px;
+        height: auto;
+        border-radius: 30px; /* make rounded pics */
+    }
+}
+
+
+/* icons
+----------------------------------------------------------*/
+.metro {
+    font-family: 'Segoe UI Symbol'; 
+    font-size: 28px; 
+    line-height: 48px;
+    &.small {
+        font-size: 13px;
+        line-height: normal;
+    }
+}
 
 /* buttons
 ----------------------------------------------------------*/
@@ -391,6 +445,10 @@ img.picture {
     h1 {
         margin: 0;
         font-size: 3.5em;
+    }
+    a, button {
+        height: 30px;
+        line-height: 18px;
     }
 }
 .pictureFeatured {

@@ -302,7 +302,13 @@ namespace MvcDating.Controllers
                     if (user == null && email == null)
                     {
                         // Insert name into the profile table
-                        db.Profiles.Add(new Profile { UserName = model.UserName, Email = model.Email });
+                        db.Profiles.Add(new Profile
+                        {
+                            UserName = model.UserName, 
+                            Email = model.Email, 
+                            Gender = model.Gender,
+                            Birthday = model.Birthday
+                        });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

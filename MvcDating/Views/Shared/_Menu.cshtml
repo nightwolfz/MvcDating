@@ -5,7 +5,7 @@
         @Html.AntiForgeryToken()
     }
     
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-left">
         <li>@Html.ActionLink("Search", "Index", "Search")</li>
         <li>@Html.ActionLink("Profile", "Index", "Profile", new { username = User.Identity.Name }, new { title = "My Profile" })</li>
         <li>@Html.ActionLink("Picture", "Index", "Pictures")</li>
@@ -16,10 +16,17 @@
         </li>
     </ul>
 
+    <ul class="nav navbar-nav navbar-right">
+        <!-- Menu that shows up when logged in -->
+        <li>
+            @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
+        </li>
+    </ul>
+
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-left">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "", "", null, null, "loginModal", routeValues: null, htmlAttributes: new { data_toggle = "modal" })</li>
     </ul>

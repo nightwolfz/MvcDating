@@ -2,7 +2,7 @@
 ----------------------------------------------------------*/
 body {
   background-color: whiteSmoke;
-  padding-top: 60px;
+  padding-top: 50px;
   padding-bottom: 40px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -12,9 +12,39 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
-a {
+a,
+input,
+button {
+  -ms-touch-action: none;
+  touch-action: none;
   outline: none;
+}
+a,
+button {
   cursor: pointer;
+}
+h1,
+h2,
+h3 {
+  font-family: "HelveticaNeueMdCn", Helvetica, sans-serif;
+  font-weight: normal;
+  line-height: 1.4em;
+}
+h1 {
+  color: #363636;
+}
+h2 {
+  color: #799654;
+  margin-bottom: 16px;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+h3 {
+  color: #363636;
+}
+@font-face {
+  font-family: "HelveticaNeueMdCn";
+  src: url('/Content/Fonts/HelveticaNeueLTCom-MdCn.ttf') format('truetype'), url('/Content/Fonts/HelveticaNeueLTCom-MdCn.woff') format('woff');
 }
 legend {
   margin: 20px 0;
@@ -46,6 +76,7 @@ input[type="checkbox"].input-validation-error {
 }
 .navbar-inverse .navbar-nav li {
   text-align: center;
+  float: left;
   width: 89px;
 }
 .navbar-inverse .navbar-nav > .active > a {
@@ -59,16 +90,6 @@ input[type="checkbox"].input-validation-error {
   font-size: 18px;
   font-weight: bold;
 }
-h2 {
-  display: block;
-  padding: 0;
-  margin-bottom: 16px;
-  font-size: 21px;
-  font-weight: normal;
-  color: #333333;
-  border: 0;
-  border-bottom: 1px solid #e5e5e5;
-}
 textarea {
   border: 1px solid #aaa;
   border-radius: 3px;
@@ -81,6 +102,12 @@ textarea {
 .field-validation-valid {
   display: none;
 }
+.left {
+  float: left !important;
+}
+.right {
+  float: right !important;
+}
 ul {
   -webkit-padding-start: 0;
 }
@@ -91,6 +118,7 @@ ul {
 }
 .validation-summary-errors {
   color: #b94a48;
+  margin-left: 16px;
 }
 .validation-summary-valid {
   display: none;
@@ -202,7 +230,7 @@ input.input-validation-error {
   list-style: none;
 }
 .messages-wrapper li {
-  margin: 0 0 1.5em 0;
+  margin: 0 0 0.5em 0;
 }
 .messages-wrapper .reply {
   border-top: 2px solid #52B6DF;
@@ -222,32 +250,57 @@ input.input-validation-error {
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid #eff5f7;
+  border-right: 10px solid #f2f8e5;
   content: "";
   position: absolute;
   left: -10px;
-  top: 20px;
+  top: 14px;
+}
+.message-right.message-mine:after {
+  border-right-color: #eeeeee;
 }
 .message-right {
   position: relative;
-  background-color: #eff5f7;
   display: inline-block;
   width: 88%;
   margin-left: 20px;
+  background-color: #f2f8e5;
+}
+.message-right.message-mine {
+  background-color: #eeeeee;
+}
+.message-right.message-write:after {
+  border: 0;
+}
+.message-right textarea {
+  padding: 8px;
+  width: 100%;
 }
 .message-content {
   font-size: 13px;
-  padding: 8px 16px;
+  padding: 15px 18px;
 }
 .message-left {
-  width: 82px;
+  width: 54px;
   display: block;
   float: left;
 }
 .message-left img.picture {
-  border: 5px solid #787878;
-  width: 72px;
+  width: 54px;
   height: auto;
+  border-radius: 30px;
+  /* make rounded pics */
+}
+/* icons
+----------------------------------------------------------*/
+.metro {
+  font-family: 'Segoe UI Symbol';
+  font-size: 28px;
+  line-height: 48px;
+}
+.metro.small {
+  font-size: 13px;
+  line-height: normal;
 }
 /* buttons
 ----------------------------------------------------------*/
@@ -258,7 +311,6 @@ input[type="button"] {
   color: #fff;
   background: #0096eb;
   /*.gradient(@blue, darken(@blue, 10%));*/
-
   border: 0;
   font-size: 13px;
   font-weight: normal;
@@ -327,6 +379,11 @@ img.picture {
 .profileDetails h1 {
   margin: 0;
   font-size: 3.5em;
+}
+.profileDetails a,
+.profileDetails button {
+  height: 30px;
+  line-height: 18px;
 }
 .pictureFeatured {
   position: relative;
@@ -405,7 +462,6 @@ a.pictureDropDownButton:active {
   background: #FFFFFC;
   /*border: solid @royal;
     border-width: 7px 1px 1px 1px;*/
-
 }
 #login {
   padding: 10px 16px;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -25,6 +26,7 @@ namespace MvcDating.Controllers
             // Get profile information
             var profile = db.Profiles.Single(p => p.UserName == username);
             if (profile == null) throw new HttpException(404, "Profile not found");
+            
 
             // Add a visitor
             db.Visitors.AddOrUpdateVisitor(profile.UserId);
@@ -43,6 +45,8 @@ namespace MvcDating.Controllers
 
             Mapper.CreateMap<Profile, ProfileView>();
             var profileview = Mapper.Map<Profile, ProfileView>(profile);
+
+            ViewBag.Countries = db.Profiles.GetCountries();
 
             return View(profileview);
         }

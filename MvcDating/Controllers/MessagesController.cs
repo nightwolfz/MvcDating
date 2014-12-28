@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using Domain.Filters;
 using Domain.Models;
 using MvcDating.Models;
@@ -24,7 +25,7 @@ namespace MvcDating.Controllers
         {
             var conversationView = db.Conversations.GetConversationsView(WebSecurity.CurrentUserId);
 
-            return View(conversationView.ToList());
+            return View(conversationView);
         }
 
         //
@@ -99,7 +100,7 @@ namespace MvcDating.Controllers
                 Helpers.User.SetOnline();
 
                 db.Messages.Add(message);
-                db.SaveChanges(); 
+                db.SaveChanges();
             }
             return RedirectToAction("Read", routeValues: new {id = message.ConversationId});
         }

@@ -54,7 +54,7 @@ namespace Domain.Migrations
                 Orientation = 0,
             });
 
-            if (!Enumerable.Contains(Roles.GetRolesForUser(username), "Administrator")) Roles.AddUsersToRoles(new[]{ username, betaname }, new[] { "Administrator" });
+            if (!Roles.GetRolesForUser(username).Contains("Administrator")) Roles.AddUsersToRoles(new[]{ username, betaname }, new[] { "Administrator" });
 
             int userIdToAdd = WebSecurity.GetUserId(username);
             int betaIdToAdd = WebSecurity.GetUserId(betaname);
@@ -64,8 +64,8 @@ namespace Domain.Migrations
                     new Picture
                     {
                         UserId = userIdToAdd,
-                        Src = "x_test.jpg",
-                        Thumb = "s_test.jpg",
+                        Src = "default.png",
+                        Thumb = "default.png",
                         IsAvatar = true,
                         UploadedDate = DateTime.Now,
                         Comments = new List<Comment>
@@ -77,8 +77,8 @@ namespace Domain.Migrations
                     new Picture
                     {
                         UserId = betaIdToAdd,
-                        Src = "x_test.jpg",
-                        Thumb = "s_test.jpg",
+                        Src = "default.png",
+                        Thumb = "default.png",
                         IsAvatar = true,
                         UploadedDate = DateTime.Now,
                         Comments = new List<Comment>()

@@ -18,27 +18,33 @@
 
 @{
     bool onlineStatus = MvcDating.Helpers.User.GetOnlineStatus(Model.UserId);
+    ViewBag.Gender = Model.Gender == 1 ? "her" : "him";
 }
 
 <div class="profileDetails">
     
-
+    <span class="right">
+        @(WebSecurity.IsCurrentUser(Model.UserName)
+                  ? Html.ActionLink("Edit profile", "Edit", null, new { @class = "button" })
+                  : Html.ActionLink("Send meesage", null, null, new { @class = "button", href = "#", id = "createMessageBtn", data_reveal_id = "createMessageModal" }))
+    </span>
     <h1>
         <span class="onlineBullet @(onlineStatus?"":"offline")" title="@(onlineStatus?"User is online!":"Offline")">&nbsp;</span>
-         
+
         <span style="color: @(Model.Gender == 1 ? "#E62A75" : "#3D76CA")">@Html.DisplayFor(model => model.UserName)</span>
 
-        @(WebSecurity.IsCurrentUser(Model.UserName) 
-              ? Html.ActionLink("Edit profile", "Edit", null, new {@class = "button"}) 
-              : Html.ActionLink("Send meesage", null, null, new {@class = "button", href = "#", id = "createMessageBtn", data_reveal_id = "createMessageModal"}))
-
     </h1>
+
+
     <div>
         @Time.GetAge(Model.Birthday) / @ProfileItems.Gender[Model.Gender]
         / @ProfileItems.Orientation[Model.Orientation]
         / @ProfileItems.Situation[Model.Situation]
         <br />
-        @Html.DisplayFor(model => model.LocationCountry), @Html.DisplayFor(model => model.LocationCity)
+        @if (Model.LocationCountry != null)
+        {
+            <span>@Html.DisplayFor(model => model.LocationCountry), @Html.DisplayFor(model => model.LocationCity)</span>
+        }
     </div>
 </div>
 

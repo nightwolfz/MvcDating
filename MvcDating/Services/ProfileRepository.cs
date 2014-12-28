@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Web.Mvc;
 using Domain.Models;
 using MvcDating.Models;
 
@@ -26,6 +29,27 @@ namespace MvcDating.Services
         {
             var pictureQuery = Context.Pictures.SingleOrDefault(p => p.IsAvatar && p.UserId == userId);
             return pictureQuery == null ? "default.png" : pictureQuery.Thumb;
+        }
+
+
+        public IEnumerable<SelectListItem> GetCountries(string currentCountryTwoLetterISO = "")
+        {
+            var countryNames = new List<SelectListItem>();
+
+            //To get the Country Names from the CultureInfo installed in windows
+            foreach (CultureInfo cul in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            {
+                var country = new RegionInfo(new CultureInfo(cul.Name, false).LCID);
+                countryNames.Add(new SelectListItem()
+                {
+                    Text = country.DisplayName, 
+                    Value = country.TwoLetterISORegionName,
+                    Selected = (currentCountryTwoLetterISO == country.TwoLetterISORegionName)
+                });
+            }
+
+            //Assigning all Country names to IEnumerable
+            return countryNames.GroupBy(x => x.Text).Select(x => x.FirstOrDefault()).ToList().OrderBy(x => x.Text);
         }
     }
 }

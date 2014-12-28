@@ -8,16 +8,20 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <span>Sending a message to <b>@ViewBag.userName</b></span>
     <fieldset>
+        <h3>Send @(ViewBag.Gender == 1 ? "him" : "her") a message...</h3>
+
         @Html.HiddenFor(model => model.UserId)
-        <div>
-            @Html.EditorFor(model => model.Content)
+        <div style="padding-bottom: 10px;">
+            @Html.TextAreaFor(model => model.Content, new
+            {
+                @placeholder = "Write something here...",
+                @required = ""
+            })
             <br/>
             @Html.ValidationMessageFor(model => model.Content)
         </div>
-        <br/>
 
-        <input type="submit" value="Create" />
+        <input type="submit" value="Send message" />
     </fieldset>
 }

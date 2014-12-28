@@ -14,64 +14,66 @@
         <![endif]-->
         @RenderSection("scripts", required: false)
 </head>
-    <body>
+<body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+    <div class="navbar-fixed-top" style="background: #38324b; color: white; ">
+        <!-- Menu that shows up when logged in -->
+        <div class="container">
+            &nbsp;
+            <!-- nothing here yet -->
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                @if (Request.IsAuthenticated)
+                {
+                    <a class="metro" href="@Url.Action("Index", "Profile", new { username = User.Identity.Name })" title="My Profile">
+                        &#xe10f;
+                    </a>
+                }
+                else
+                {
                     @Html.ActionLink("MvcDating", "Index", "Home", null, new { @class = "navbar-brand", title = "Go to homepage" })
-                </div>
-                <div class="collapse navbar-collapse">
-                    @Html.Partial("_Menu")
-                </div>
+                }
+            </div>
+            <div class="navbar-collapse">
+                @Html.Partial("_Menu")
             </div>
         </div>
-        
-        @if (!Request.IsAuthenticated)
-        {
-            <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl, showLoginForm = true })
-                        </div>
+    </div>
+
+    @if (!Request.IsAuthenticated)
+    {
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl, showLoginForm = true })
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-        <div class="container">
-            @Html.Action("FeaturedProfiles", "Home")
+    <div class="container">
+        @Html.Action("FeaturedProfiles", "Home")
+    </div>
+
+    <div class="container bgwhite">
+
+        <div style="padding: 8px 15px; margin-bottom: 8px;" class="clearfix">
+            @RenderBody()
         </div>
 
-        <!-- Menu that shows up when logged in -->
-        <div class="container subMenu">
-            @if (Request.IsAuthenticated)
-            {
-                <span class="pull-right">
-                    Logged in as @Html.ActionLink(User.Identity.Name, "Index", "Profile", new { username = User.Identity.Name }, new { @class = "username", title = "My Profile" })
-                </span>
-                @Html.ActionLink("Settings", "Manage", "Account", null, new { title = "Manage" })
-            }
-        </div>
+    </div>
 
-        <div class="container bgwhite">
+    <hr style="margin: 20px 0 10px 0;" />
 
-            <div style="padding: 8px 15px; margin-bottom: 8px;" class="clearfix">
-                @RenderBody()
-            </div>
 
-        </div>
-        
-        <hr style="margin: 20px 0 10px 0;" />
 
-        
+</body>
 
-    </body>
 </html>

@@ -7,10 +7,14 @@
 
 <p>
     @Html.ActionLink("Show all conversations", "Index", null, new { @class = "button" })
+    
+    @*<a class="button" href="@Url.Action("Index", "Messages")" title="Go back">
+        <span class="metro small">&#xe10e;</span> Show all conversations
+    </a>*@
 </p>
 
 <fieldset>
-    <legend>Conversation</legend>
+    <h2>Conversation</h2>
     
     <ul class="messages-wrapper">
         @foreach (var item in Model)
@@ -22,24 +26,35 @@
                             @Html.Image("~/Uploads/" + (item.UserPicture.IsEmpty() ? "default.png" : item.UserPicture), "picture")
                         </a>
                     </div>
-                    <div class="message-right">
-                        
+                    <div class="message-right @(item.UserName==User.Identity.Name ? "message-mine" : "")">
                         <div class="message-content">
-                            <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
-                            <small style="float: right">
+                            @item.Content
+                            <small class="right">
                                 @Html.DisplayFor(model => item.Timestamp)
                             </small>
                         </div>
                         <div class="message-content">
-                            @item.Content
+                            <small>Message from @Html.ActionLink(item.UserName, item.UserName, "Profile", null, new { @class = "username" })</small>
                         </div>
                     </div>
                 </div>
             </li>
         }
+        <li>
+            <div class="message-body">
+                <div class="message-left" style="display: block; height: 54px; width: 54px;">
+                    &nbsp;
+                </div>
+                <div class="message-right message-mine message-write">
+                    <div class="message-content">
+                        @Html.Action("Create", "Messages", new { userId = ViewBag.UserIdWith })
+                    </div>
+                </div>
+            </div>
+        </li>
     </ul>
     
-    @Html.Action("Create", "Messages", new { userId = ViewBag.UserIdWith } )
+    
     
 </fieldset>
 
